@@ -1,0 +1,76 @@
+dp_id,standard,family,disclosure_requirement,description,datapoint_type
+E1-1,E1,Environment,Transition plan,Transition plan for climate change mitigation aligned with the Paris Agreement 1.5C goal,narrative
+E1-2,E1,Environment,Policies,Policies related to climate change mitigation and adaptation,narrative
+E1-3,E1,Environment,Actions,Actions and resources in relation to climate change policies including financial effects,semi-narrative
+E1-4,E1,Environment,Targets,Measurable targets for GHG emission reductions absolute and intensity with base year,quantitative
+E1-5,E1,Environment,Energy consumption,Energy consumption and mix total MWh by source renewable vs non-renewable,quantitative
+E1-6,E1,Environment,Gross Scopes 1 2 3 GHG emissions,Gross Scope 1 Scope 2 and Scope 3 GHG emissions tCO2e with methodology,quantitative
+E1-7,E1,Environment,GHG removals and mitigation,GHG removals and GHG mitigation projects financed through carbon credits,quantitative
+E1-8,E1,Environment,Internal carbon pricing,Internal carbon pricing schemes used to support decision making,semi-narrative
+E1-9,E1,Environment,Anticipated financial effects,Anticipated financial effects from material physical and transition risks and opportunities,quantitative
+E2-1,E2,Environment,Pollution policies,Policies related to pollution prevention and control including emerging pollutants,narrative
+E2-2,E2,Environment,Pollution actions,Actions and resources related to pollution,semi-narrative
+E2-3,E2,Environment,Pollution targets,Targets related to pollution reduction,quantitative
+E2-4,E2,Environment,Pollution emissions,Pollution of air water and soil by type of pollutant and medium,quantitative
+E2-5,E2,Environment,Substances of concern,Substances of concern and substances of very high concern produced used or sold,quantitative
+E3-1,E3,Environment,Water marine policies,Policies related to water and marine resources including water stewardship,narrative
+E3-2,E3,Environment,Water actions,Actions and resources related to water and marine resources,semi-narrative
+E3-3,E3,Environment,Water targets,Targets related to water and marine resources including water-stressed areas,quantitative
+E3-4,E3,Environment,Water consumption,Water consumption total and in water-stressed areas by source,quantitative
+E3-5,E3,Environment,Water financial effects,Anticipated financial effects from water and marine resources material risks and opportunities,quantitative
+E4-1,E4,Environment,Biodiversity transition plan,Transition plan and consideration of biodiversity and ecosystems in strategy,narrative
+E4-2,E4,Environment,Biodiversity policies,Policies related to biodiversity and ecosystems,narrative
+E4-3,E4,Environment,Biodiversity actions,Actions and resources related to biodiversity and ecosystems,semi-narrative
+E4-4,E4,Environment,Biodiversity targets,Targets related to biodiversity and ecosystems including no net loss commitments,quantitative
+E4-5,E4,Environment,Impact metrics biodiversity,Impact metrics related to biodiversity and ecosystems change including land use,quantitative
+E4-6,E4,Environment,Biodiversity financial effects,Anticipated financial effects from biodiversity and ecosystem risks and opportunities,quantitative
+E5-1,E5,Environment,Circular economy policies,Policies related to resource use and circular economy,narrative
+E5-2,E5,Environment,Circular economy actions,Actions and resources related to resource use and circular economy,semi-narrative
+E5-3,E5,Environment,Circular economy targets,Targets related to resource use and circular economy,quantitative
+E5-4,E5,Environment,Resource inflows,Resource inflows including materials by weight or volume and recycled content,quantitative
+E5-5,E5,Environment,Resource outflows,Resource outflows including products and waste by destination recycling reuse,quantitative
+E5-6,E5,Environment,Circular financial effects,Anticipated financial effects from resource use and circular economy risks and opportunities,quantitative
+S1-1,S1,Social,Own workforce policies,Policies related to own workforce including health safety D&I human rights,narrative
+S1-2,S1,Social,Workforce engagement,Processes for engaging with own workforce and workers representatives,semi-narrative
+S1-3,S1,Social,Workforce remediation,Channels for own workers to raise concerns and processes to remediate negative impacts,semi-narrative
+S1-4,S1,Social,Workforce actions,Actions and resources for own workforce including training D&I,semi-narrative
+S1-5,S1,Social,Workforce targets,Targets related to managing material impacts on own workforce,quantitative
+S1-6,S1,Social,Workforce characteristics,Characteristics of own workforce by gender country contract employment type,quantitative
+S1-7,S1,Social,Non-employees,Characteristics of non-employees in own workforce contractors agency,quantitative
+S1-14,S1,Social,Health and safety,Health and safety metrics coverage fatalities recordable injuries ill health rates,quantitative
+S1-16,S1,Social,Remuneration gender pay,Remuneration metrics including gender pay gap and total remuneration ratio,quantitative
+S1-17,S1,Social,Discrimination incidents,Incidents of discrimination and complaints mechanisms,quantitative
+S2-1,S2,Social,Value chain workers policies,Policies related to value chain workers including human rights due diligence,narrative
+S2-2,S2,Social,Value chain workers engagement,Processes for engaging with value chain workers,semi-narrative
+S2-3,S2,Social,Value chain workers remediation,Channels for value chain workers to raise concerns,semi-narrative
+S2-4,S2,Social,Value chain workers actions,Actions and resources for value chain workers,semi-narrative
+S2-5,S2,Social,Value chain workers targets,Targets related to managing material impacts on value chain workers,quantitative
+S3-1,S3,Social,Affected communities policies,Policies related to affected communities including Indigenous Peoples,narrative
+S3-2,S3,Social,Community engagement,Processes for engaging with affected communities,semi-narrative
+S3-3,S3,Social,Community remediation,Channels for affected communities to raise concerns and access to remedy,semi-narrative
+S3-4,S3,Social,Community actions,Actions and resources to address material impacts on affected communities,semi-narrative
+S3-5,S3,Social,Community targets,Targets related to managing material impacts on affected communities,quantitative
+S4-1,S4,Social,Consumer policies,Policies related to consumers and end users including privacy service quality access,narrative
+S4-2,S4,Social,Consumer engagement,Processes for engaging with consumers and end users,semi-narrative
+S4-3,S4,Social,Consumer remediation,Channels for consumers to raise concerns and complaint handling,semi-narrative
+S4-4,S4,Social,Consumer actions,Actions and resources to address consumer impacts including service continuity,semi-narrative
+S4-5,S4,Social,Consumer targets,Targets related to managing material impacts on consumers and end users,quantitative
+G1-1,G1,Governance,Business conduct governance,Role of the administrative management and supervisory bodies in business conduct,narrative
+G1-2,G1,Governance,Business conduct policies,Policies on business conduct matters including anti-corruption and anti-bribery,narrative
+G1-3,G1,Governance,Corruption prevention,Prevention and detection of corruption and bribery including training coverage,semi-narrative
+G1-4,G1,Governance,Corruption incidents,Confirmed incidents of corruption or bribery and public cases,quantitative
+G1-5,G1,Governance,Political engagement,Political influence and lobbying activities including contributions,quantitative
+G1-6,G1,Governance,Payment practices,Payment practices to suppliers including average payment days,quantitative
+G1-7,G1,Governance,Business ethics culture,Business ethics culture including whistleblower protection mechanisms,semi-narrative
+G1-8,G1,Governance,Data governance cyber,Data governance and cybersecurity practices for business critical systems,narrative
+AQ-DIG-1,AQ,Sector,Digital twin deployment,Deployment of digital twin of the water network and coverage percentage,quantitative
+AQ-DIG-2,AQ,Sector,AI for operations,Use of AI for demand prediction leak detection predictive maintenance,semi-narrative
+AQ-CYB-1,AQ,Sector,Cyber incident response plan,Cybersecurity incident response plan testing frequency and OT/IT scope,semi-narrative
+AQ-CYB-2,AQ,Sector,Cyber investment,Annual investment in cybersecurity and OT/IT security,quantitative
+AQ-FIN-1,AQ,Sector,Green bond issuance,Volume and coverage of green sustainability-linked and social bonds,quantitative
+AQ-FIN-2,AQ,Sector,EU Taxonomy alignment,EU Taxonomy eligible and aligned revenue CAPEX and OPEX,quantitative
+AQ-FIN-3,AQ,Sector,TNFD alignment,TNFD LEAP assessment coverage and nature-related financial disclosure,semi-narrative
+AQ-OPS-1,AQ,Sector,Non-revenue water,Non-revenue water NRW percentage by concession and trend,quantitative
+AQ-OPS-2,AQ,Sector,Energy intensity,Energy intensity kWh per m3 of water treated and distributed,quantitative
+AQ-OPS-3,AQ,Sector,Water reuse percentage,Percentage of treated wastewater reused and target pathway,quantitative
+AQ-OPS-4,AQ,Sector,Sludge valorisation,Sludge valorisation pathways and percentage treated,quantitative

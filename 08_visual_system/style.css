@@ -1,0 +1,84 @@
+/* Aqualia Datathon — shared stylesheet for Streamlit and GitHub Pages.
+   Palette and typography locked in visual_system.md. */
+
+:root {
+  --aqualia-navy:   #002f5f;
+  --aqualia-aqua:   #5db9d9;
+  --aqualia-deep:   #0b4f74;
+  --aqualia-sand:   #d6cdb7;
+  --aqualia-slate:  #4a5663;
+  --aqualia-paper:  #ffffff;
+  --aqualia-grid:   #e6e8eb;
+  --aqualia-red:    #c83c35;
+  --aqualia-amber:  #f2b039;
+  --aqualia-green:  #1b7f3b;
+  --aqualia-darkred:#6e1c1c;
+  --t1: #1f77b4;
+  --t2: #ff7f0e;
+  --t3: #2ca02c;
+}
+
+html, body, [class*="st-"] {
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif !important;
+  color: var(--aqualia-slate);
+}
+
+h1, h2, h3, h4 { color: var(--aqualia-navy); letter-spacing: -0.01em; }
+h1 { font-weight: 700; }
+h2 { font-weight: 700; border-bottom: 1px solid var(--aqualia-grid); padding-bottom: 6px; }
+h3 { font-weight: 600; }
+
+a { color: var(--aqualia-deep); }
+a:hover { color: var(--aqualia-navy); }
+
+/* Cards */
+.aq-card {
+  background: var(--aqualia-paper);
+  border: 1px solid var(--aqualia-grid);
+  border-radius: 10px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.aq-card--navy {
+  background: var(--aqualia-navy);
+  color: var(--aqualia-paper);
+  border: none;
+}
+.aq-card--accent { border-left: 4px solid var(--aqualia-red); }
+
+/* Callouts */
+.aq-callout {
+  background: #f4faff;
+  border-left: 4px solid var(--aqualia-aqua);
+  padding: 12px 14px;
+  border-radius: 6px;
+}
+
+/* Key-number ribbon */
+.aq-kpi {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--aqualia-navy);
+  font-size: 1.4em;
+}
+
+/* Topic chips */
+.aq-chip { display: inline-block; padding: 2px 10px; border-radius: 999px;
+           font-size: 0.85em; font-weight: 600; }
+.aq-chip--t1 { background: var(--t1); color: white; }
+.aq-chip--t2 { background: var(--t2); color: white; }
+.aq-chip--t3 { background: var(--t3); color: white; }
+
+/* Tables */
+table { border-collapse: collapse; }
+th { background: var(--aqualia-sand); color: var(--aqualia-navy);
+     text-align: left; padding: 6px 10px; }
+td { padding: 6px 10px; border-bottom: 1px solid var(--aqualia-grid); }
+
+/* Streamlit-specific overrides */
+.stButton>button { background: var(--aqualia-navy); color: white; border: none; }
+.stButton>button:hover { background: var(--aqualia-deep); color: white; }
+.stTabs [data-baseweb="tab-list"] { gap: 8px; }
+.stTabs [data-baseweb="tab"] { font-weight: 600; }
+.stTabs [aria-selected="true"] { color: var(--aqualia-navy) !important;
+                                  border-bottom-color: var(--aqualia-aqua) !important; }

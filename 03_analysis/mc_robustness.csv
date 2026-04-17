@@ -1,0 +1,13 @@
+scheme,topic,impact_mean,financial_mean,in_target_zone
+Equal,T1 Water Resilience & Equitable Access,3.98,3.07,True
+Equal,T2 Digital & Cyber Infrastructure,3.08,2.74,True
+Equal,T3 Green Finance & Integrity,3.24,2.42,False
+Regulator-heavy,T1 Water Resilience & Equitable Access,3.98,3.07,True
+Regulator-heavy,T2 Digital & Cyber Infrastructure,3.08,2.75,True
+Regulator-heavy,T3 Green Finance & Integrity,3.24,2.43,False
+Community-first,T1 Water Resilience & Equitable Access,3.98,3.07,True
+Community-first,T2 Digital & Cyber Infrastructure,3.08,2.75,True
+Community-first,T3 Green Finance & Integrity,3.24,2.42,False
+Investor-first,T1 Water Resilience & Equitable Access,3.98,3.07,True
+Investor-first,T2 Digital & Cyber Infrastructure,3.08,2.75,True
+Investor-first,T3 Green Finance & Integrity,3.24,2.42,False

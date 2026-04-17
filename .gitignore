@@ -4,8 +4,10 @@
 # app does not need them at runtime.
 02_sources/full_reports/
 
-# Extracted slide media from the Workshop PPT (reconstructable locally)
-00_brief/workshop1_media/
+# IE datathon brief materials (IE IP — keep local, reference via README)
+00_brief/
+# (Everything under 00_brief is local-only. The challenge brief PDF and
+# Workshop 1 PPT are cited in the report but not re-distributed.)
 
 # Node stuff from the docx build
 05_report/docx_build/node_modules/

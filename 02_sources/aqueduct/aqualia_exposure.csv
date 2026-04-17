@@ -1,0 +1,16 @@
+country,iso3,region_label,bws_category_2024,bws_score_2024,bws_category_2030_BAU,bws_score_2030_BAU,revenue_share_pct,satisfaction_2024,concession_note
+Spain,ESP,Segura basin (Murcia + parts of Alicante),Extremely High,4.6,Extremely High,4.7,14,88,Core concession; reuse + desalination CAPEX imperative
+Spain,ESP,Guadalquivir basin (Andalucía),High,3.6,Extremely High,4.2,12,88,Drought-cycle OPEX volatility
+Spain,ESP,Guadiana / Tagus (Madrid + Extremadura),Medium-High,2.8,High,3.4,15,88,Seasonal stress; storage-dependent
+Spain,ESP,Cantabrian + Galician,Low-Medium,1.4,Medium-High,2.3,14,88,Low stress today; climate-driven uptick by 2030
+Portugal,PRT,Algarve + Alentejo,High,3.5,Extremely High,4.2,6,65,Tourism-driven demand volatility
+Portugal,PRT,Porto / Douro,Medium-High,2.5,High,3.3,2,65,Lower stress north
+Italy,ITA,Po basin / Lombardy,High,3.7,Extremely High,4.3,6,67,2022 drought was a record; recurring risk
+Italy,ITA,Sicily,Extremely High,4.6,Extremely High,4.8,3,67,Structural scarcity
+Italy,ITA,Central / Umbria,Medium-High,2.7,High,3.2,3,67,Moderate today
+France,FRA,Languedoc / Provence,High,3.4,Extremely High,4.1,4,86,Climate-driven stress rising
+France,FRA,Other regions,Medium-High,2.4,High,3.0,1,86,Stable
+Czech Republic,CZE,Moravia / Bohemia,Low-Medium,1.6,Medium-High,2.5,7,90,Stable supply; resilience partner market
+Colombia,COL,Cundinamarca (Bogotá) - Paramo-fed,Medium-High,2.9,High,3.5,4,33,Paramo ecosystem fragility; 2024 rationing
+Colombia,COL,Other municipal,Medium-High,2.6,High,3.2,2,33,Variable
+Other,WLD,USA / Canada / UAE / Algeria projects,Mixed,2.8,High,3.4,7,n/a,Project-operation footprint
