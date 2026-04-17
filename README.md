@@ -344,7 +344,7 @@ Sustainability Datathon/
 | ESRS gap share per topic (70% avg) | `esrs_gap_heatmap_notes.md` §3 |
 | €1.4 B revenue anchor | `financials.md` A01 |
 | €500 M bond → €31 M PV savings | `financials.md` §3.3 |
-| Water-stress exposure ~60% rising to ~75% by 2030 | `water_stress.md` §2, §3 |
+| Water-stress exposure 45% today → 79% under BAU-2030 | `water_stress.md` §2; `01_research/aqueduct_overlay.py` |
 | Stakeholder weights (salience model) | `stakeholder_salience.md` §3 |
 
 ### 14.5  Workshop 1 Checklist — evidence per item

@@ -56,7 +56,7 @@ bands are expressed as % of **€1,400 M** — 0.5% = €7M (Moderate),
 | ID | Assumption | Basis |
 |---|---|---|
 | A01 | Revenue €1.4 B | FCC 2024 Universal Document (to verify Aqualia segment split) |
-| A03 | 4% of revenue at risk from water-stress concession loss (base) | Severn Trent ofwat PR24 allowed revenue-at-risk bands; adjusted for ~60% of Aqualia revenue in water-stressed geographies per WRI Aqueduct |
+| A03 | 4% of revenue at risk from water-stress concession loss (base) | Severn Trent ofwat PR24 allowed revenue-at-risk bands; adjusted for 45% of Aqualia revenue in High/Extreme stress basins today (79% under BAU-2030) per WRI Aqueduct 4.0 per-basin overlay |
 | A04 | Reuse market upside = 30% of EU water reuse TAM × Aqualia share | RD 1985/2024 + EC "Water Efficiency First" Plans (10% demand reduction by 2030) |
 | A05 | Energy costs +1.5%/yr above inflation under climate stress | EU ETS extension + Aqualia's own `O7` loss-of-competitive-capacity risk |
 | A06 | €85 M/yr CAPEX over 4 years = €340 M base | Triangulation: Aqualia already spends €40 M/yr on networks/sanitation; UWWTD recast requires additional energy-neutral investment; peer benchmark (Veolia desalination unit costs ≈ €1.5 M/MLD-capacity) |

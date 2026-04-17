@@ -142,9 +142,9 @@ find a direct one.
 > Sustainability Datathon 2026.
 >
 > We've used WRI Aqueduct 4.0 to overlay baseline water-stress on
-> Aqualia's service geography and estimate ~60% of their revenue
-> base sits in High or Extremely High stress basins today, rising to
-> ~75% under a BAU-2030 scenario. [Your company]'s public disclosure
+> Aqualia's service geography and estimate 45% of their revenue base
+> sits in High or Extremely High stress basins today, rising to 79%
+> under a BAU-2030 scenario (nearly doubling). [Your company]'s public disclosure
 > on water resilience was one of the references we drew on.
 >
 > Would you be open to a 15-minute call to sanity-check:

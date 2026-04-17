@@ -93,9 +93,9 @@ scenario analysis.
   markers over the top.
 - **Right half:** two stacked mini-maps (Colombia + Italy) because
   the Iberian map dominates visually otherwise.
-- **Caption:** *"~60% of Aqualia's revenue is in basins classified
-  High or Extremely High water stress. Under BAU-2030, that rises
-  to ~75%. Our T1 topic addresses this."*
+- **Caption:** *"45% of Aqualia's revenue is in basins classified
+  High or Extremely High water stress today — rising to 79% under
+  BAU-2030. Our T1 topic addresses this."*
 
 ### 4.2  Why it wins a jury slide
 - **Factual.** Aqueduct is peer-reviewed and public; nobody argues
@@ -218,9 +218,9 @@ if __name__ == "__main__":
 
 ## 6.  Numbers this exhibit unlocks for the pitch
 
-- *"Aqualia operates in ~60% water-stressed basins today, rising to
-  ~75% under a BAU-2030 scenario."*  → T1 impact severity and
-  probability anchors
+- *"45% of Aqualia's revenue sits in High or Extremely High water
+  stress basins today; that share nearly doubles to 79% under a
+  BAU-2030 scenario."*  → T1 impact severity and probability anchors
 - *"The Segura basin, home to some of Aqualia's most profitable
   concessions, sits in WRI's highest stress category."*  → Real
   Options desal-vs-reuse framing
