@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Aqualia · Double Materiality Framework 2027–2030</title>
-<meta name="description" content="CSRD-aligned double materiality assessment for Aqualia. IE Sustainability Datathon 2026." />
+<title>Aqualia · Double Materiality 2027–2030</title>
+<meta name="description" content="CSRD-aligned double materiality framework for Aqualia — three material topics and a €500M green bond programme. IE Sustainability Datathon 2026." />
+
+<link rel="icon" type="image/png" href="aqualia_logo.png" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <!-- Tailwind (CDN) -->
 <script src="https://cdn.tailwindcss.com"></script>
@@ -36,35 +38,20 @@ tailwind.config = {
         amber: '#f2b039',
         green: '#1b7f3b',
       },
-      animation: {
-        'fade-up': 'fadeUp 0.8s ease-out forwards',
-        'glow': 'glow 3s ease-in-out infinite',
-        'drift': 'drift 24s linear infinite',
-      },
-      keyframes: {
-        fadeUp:  { '0%': {opacity:0, transform:'translateY(18px)'}, '100%': {opacity:1, transform:'translateY(0)'} },
-        glow:    { '0%,100%': {opacity:0.55}, '50%': {opacity:1} },
-        drift:   { '0%': {transform:'translateX(0)'}, '100%': {transform:'translateX(-50%)'} },
-      }
     }
   }
 }
 </script>
 
-<!-- Plotly for interactive charts -->
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
-
-<!-- AOS for scroll animations -->
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<!-- GSAP for counter animation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <style>
   html { scroll-behavior: smooth; }
-  body { -webkit-font-smoothing: antialiased; font-feature-settings: "cv11", "ss01"; }
+  body { -webkit-font-smoothing: antialiased; }
 
   /* Animated gradient hero background */
   .hero-bg {
@@ -80,50 +67,79 @@ tailwind.config = {
     100% { background-position: 30% 30%, 70% 70%, 0 0; }
   }
 
-  /* Wave SVG at bottom of hero */
-  .wave-divider { position:absolute; bottom:-1px; left:0; width:100%; line-height:0; }
-  .wave-divider svg { width:100%; height:80px; }
+  /* Floating decorative circles */
+  .bubble { position:absolute; border-radius:50%; filter:blur(20px); opacity:0.35; pointer-events:none; }
 
-  /* Starfield-ish dots for depth */
+  /* Wave dividers */
+  .wave-divider { position:absolute; left:0; width:100%; line-height:0; }
+  .wave-divider.top { top:-1px; transform:rotate(180deg); }
+  .wave-divider.bot { bottom:-1px; }
+  .wave-divider svg { width:100%; height:100px; }
+
+  /* Dots backdrop */
   .dots {
-    position:absolute; inset:0; opacity:0.25; pointer-events:none;
+    position:absolute; inset:0; opacity:0.22; pointer-events:none;
     background-image: radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
-    background-size: 48px 48px;
+    background-size: 56px 56px;
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
   }
 
   /* Card hover */
-  .topic-card { transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s; }
-  .topic-card:hover { transform: translateY(-6px); box-shadow: 0 24px 48px -18px rgba(0,47,95,0.35); }
-  .topic-card::before {
-    content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent 60%);
-    opacity:0; transition:opacity .4s;
-  }
-  .topic-card:hover::before { opacity:1; }
+  .topic-card { transition: transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s; will-change: transform; }
+  .topic-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,47,95,0.35); }
 
-  /* Marquee */
-  .marquee { overflow:hidden; white-space:nowrap; }
-  .marquee > div { display:inline-block; animation: drift 40s linear infinite; }
-
-  /* KPI flicker */
+  /* KPI */
   .kpi-num { font-variant-numeric: tabular-nums; font-feature-settings:"tnum"; }
 
   /* Chip */
-  .chip { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:999px; font-size:0.72rem; font-weight:600; letter-spacing:0.02em; }
+  .chip { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:999px; font-size:0.82rem; font-weight:700; letter-spacing:0.02em; }
 
-  /* Glow pulse for Target Zone badge */
+  /* Pulse dot */
   .pulse-dot { position:relative; }
   .pulse-dot::after {
     content:''; position:absolute; inset:-6px; border-radius:50%;
-    background: currentColor; opacity:0.3; animation: pulse 2s infinite;
+    background: currentColor; opacity:0.3; animation: pulse 2.2s infinite;
   }
   @keyframes pulse {
     0% { transform: scale(1); opacity:0.4; }
-    100% { transform: scale(1.8); opacity:0; }
+    100% { transform: scale(2.0); opacity:0; }
   }
 
-  /* Subtle grid background on sections */
+  /* Marquee */
+  .marquee { overflow:hidden; white-space:nowrap; }
+  .marquee > div { display:inline-block; animation: drift 48s linear infinite; }
+  @keyframes drift { 0% {transform:translateX(0)} 100% {transform:translateX(-50%)} }
+
+  /* Heatmap cell */
+  .hm-cell { transition: transform .2s; }
+  .hm-cell:hover { transform: scale(1.35); z-index:10; box-shadow: 0 4px 14px rgba(0,0,0,0.30); }
+
+  /* Nav link */
+  .nav-link { position:relative; }
+  .nav-link::after {
+    content:''; position:absolute; left:0; bottom:-5px; width:0; height:2px;
+    background: #5db9d9; transition: width .3s;
+  }
+  .nav-link:hover::after { width:100%; }
+
+  /* Bar fill */
+  .bar-fill { transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+
+  /* Glass */
+  .glass {
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  /* Big section headings */
+  .section-kicker { font-size:.78rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; }
+
+  /* Icon circle */
+  .icon-circle { width:56px; height:56px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; }
+
+  /* Subtle grid bg */
   .bg-grid-subtle {
     background-image:
       linear-gradient(rgba(0,47,95,0.04) 1px, transparent 1px),
@@ -131,37 +147,19 @@ tailwind.config = {
     background-size: 48px 48px;
   }
 
-  /* Heatmap grid */
-  .hm-cell { transition: transform .2s; }
-  .hm-cell:hover { transform: scale(1.25); z-index:10; box-shadow: 0 2px 12px rgba(0,0,0,0.25); }
-
-  /* Nav */
-  .nav-link { position:relative; }
-  .nav-link::after {
-    content:''; position:absolute; left:0; bottom:-4px; width:0; height:2px;
-    background: #5db9d9; transition: width .3s;
-  }
-  .nav-link:hover::after { width:100%; }
-
   /* Reveal */
-  [data-reveal] { opacity:0; transform:translateY(14px); transition: opacity .8s, transform .8s; }
+  [data-reveal] { opacity:0; transform:translateY(14px); transition: opacity .9s, transform .9s; }
   [data-reveal].is-visible { opacity:1; transform:translateY(0); }
 
-  /* Bar-chart bar */
-  .bar-fill { transition: width 1.2s cubic-bezier(.2,.8,.2,1); }
+  /* Topic card accent bar */
+  .accent-bar { position:absolute; left:0; top:0; bottom:0; width:5px; border-radius:16px 0 0 16px; }
 
-  /* Progress ring */
-  .ring-track { stroke: rgba(255,255,255,0.15); }
-  .ring-fill  { stroke: #5db9d9; stroke-linecap: round;
-                transition: stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1); }
+  /* Pipe / value-chain illustration */
+  .pipe-node circle { transition: r .3s; }
+  .pipe-node:hover circle { r: 16; }
 
-  /* Utility for glass panels */
-  .glass {
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.08);
-  }
+  /* Footer */
+  footer a { color: #9ec8d9; }
 </style>
 </head>
 
@@ -170,13 +168,14 @@ tailwind.config = {
 <!-- ============================================================
      NAV
 ============================================================ -->
-<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-white/85 border-b border-grid">
-  <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="#top" class="flex items-center gap-2">
-      <span class="w-2.5 h-2.5 rounded-full bg-aqua pulse-dot text-aqua"></span>
-      <span class="font-bold text-navy tracking-tight">Aqualia · Double Materiality 2027–2030</span>
+<nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur bg-white/90 border-b border-grid">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-4">
+      <img src="aqualia_logo.png" alt="Aqualia" class="h-10 md:h-11 w-auto"/>
+      <span class="hidden md:inline text-slate/30 text-2xl font-light">|</span>
+      <span class="hidden md:inline font-semibold text-navy text-base tracking-tight">Double Materiality 2027&nbsp;–&nbsp;2030</span>
     </a>
-    <div class="hidden md:flex gap-7 text-sm font-medium text-slate">
+    <div class="hidden lg:flex gap-8 text-sm font-semibold text-slate">
       <a href="#topics"   class="nav-link">Topics</a>
       <a href="#matrix"   class="nav-link">Matrix</a>
       <a href="#findings" class="nav-link">Findings</a>
@@ -186,97 +185,117 @@ tailwind.config = {
       <a href="#roadmap"  class="nav-link">Roadmap</a>
     </div>
     <a href="https://github.com/ma731/Aqualia-Datathon"
-       class="hidden md:inline-block text-sm font-semibold text-navy hover:text-deep">
-      Repo ↗
+       class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-navy hover:text-deep border border-grid rounded-lg px-4 py-2 hover:bg-grid/60 transition">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"/></svg>
+      Source
     </a>
   </div>
 </nav>
 
+
 <!-- ============================================================
      HERO
 ============================================================ -->
-<section id="top" class="relative overflow-hidden hero-bg text-white pt-28 pb-28">
+<section id="top" class="relative overflow-hidden hero-bg text-white pt-36 pb-40">
   <div class="dots"></div>
+
+  <!-- Decorative bubbles -->
+  <div class="bubble" style="top:10%; left:-5%; width:240px; height:240px; background:#5db9d9"></div>
+  <div class="bubble" style="bottom:15%; right:-5%; width:320px; height:320px; background:#1f77b4; opacity:0.25"></div>
+  <div class="bubble" style="top:40%; right:20%; width:80px; height:80px; background:#5db9d9; opacity:0.6"></div>
 
   <div class="relative max-w-7xl mx-auto px-6">
 
-    <!-- Top chip -->
-    <div class="flex items-center gap-3 mb-8 animate-fade-up">
+    <!-- Top badges -->
+    <div class="flex items-center gap-3 mb-10" data-reveal>
       <span class="chip bg-white/10 border border-white/20 text-aqua">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/></svg>
         IE Sustainability Datathon · March 2026
       </span>
-      <span class="chip bg-white/10 border border-white/20 text-white/80">
-        CSRD · ESRS · TNFD
-      </span>
+      <span class="chip bg-white/10 border border-white/20 text-white/85">CSRD · ESRS · TNFD</span>
     </div>
 
     <!-- Headline -->
-    <h1 class="text-5xl md:text-7xl font-extrabold leading-[1.02] tracking-tight mb-6 max-w-4xl"
-        data-reveal>
-      Water as <span class="text-aqua">Strategy</span>.
+    <h1 class="text-6xl md:text-8xl font-black leading-[1.0] tracking-tight mb-8 max-w-5xl" data-reveal>
+      Water as&nbsp;<span class="text-aqua">Strategy</span>.
     </h1>
-    <p class="text-xl md:text-2xl text-white/80 max-w-3xl mb-12" data-reveal>
-      A Double Materiality Framework for Aqualia, 2027–2030.
-      Three material topics. One number. One ask.
+    <p class="text-2xl md:text-3xl text-white/85 max-w-4xl mb-16 leading-relaxed font-light" data-reveal>
+      A CSRD-aligned double materiality framework for Aqualia. Three material topics,
+      a <span class="text-aqua font-semibold">€500&nbsp;M green bond programme</span>, and a 2027–2030 strategic roadmap.
     </p>
 
     <!-- KPI triplet -->
     <div class="grid md:grid-cols-3 gap-6 mb-14">
-      <div class="glass rounded-2xl p-6" data-reveal>
-        <div class="text-xs uppercase tracking-[0.15em] text-aqua/90 mb-2">Under-weighted materiality</div>
-        <div class="kpi-num text-5xl md:text-6xl font-extrabold text-white">
-          €<span data-counter="18" data-suffix=" M/yr">0</span>
+      <div class="glass rounded-3xl p-8" data-reveal>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="icon-circle bg-aqua/20">
+            <svg class="w-7 h-7 text-aqua" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8M14 7h7v7"/></svg>
+          </div>
+          <div class="section-kicker text-aqua">Under-weighted materiality</div>
         </div>
-        <div class="text-sm text-white/60 mt-2">Annual financial impact Aqualia's framework currently misses.</div>
+        <div class="kpi-num text-6xl md:text-7xl font-black text-white leading-none">
+          €<span data-counter="18" data-suffix="M">0</span><span class="text-4xl text-white/50">/yr</span>
+        </div>
+        <div class="text-base text-white/70 mt-4">Net annual financial impact Aqualia's framework currently misses.</div>
       </div>
-      <div class="glass rounded-2xl p-6" data-reveal>
-        <div class="text-xs uppercase tracking-[0.15em] text-aqua/90 mb-2">Implied CAPEX 2027–2030</div>
-        <div class="kpi-num text-5xl md:text-6xl font-extrabold text-white">
-          €<span data-counter="440" data-suffix=" M">0</span>
+
+      <div class="glass rounded-3xl p-8" data-reveal>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="icon-circle bg-aqua/20">
+            <svg class="w-7 h-7 text-aqua" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 21V7a2 2 0 012-2h5l2 2h7a2 2 0 012 2v12M3 21h18M9 14l2 2 4-4"/></svg>
+          </div>
+          <div class="section-kicker text-aqua">Implied CAPEX 2027–2030</div>
         </div>
-        <div class="text-sm text-white/60 mt-2">Cumulative investment across water, digital, compliance.</div>
+        <div class="kpi-num text-6xl md:text-7xl font-black text-white leading-none">
+          €<span data-counter="440" data-suffix="M">0</span>
+        </div>
+        <div class="text-base text-white/70 mt-4">Cumulative investment across water, digital, compliance.</div>
       </div>
-      <div class="glass rounded-2xl p-6 border-aqua/50" style="border-color: rgba(93,185,217,0.35)" data-reveal>
-        <div class="text-xs uppercase tracking-[0.15em] text-aqua mb-2">Our ask — green bond programme</div>
-        <div class="kpi-num text-5xl md:text-6xl font-extrabold text-aqua">
-          €<span data-counter="500" data-suffix=" M">0</span>
+
+      <div class="glass rounded-3xl p-8 ring-2 ring-aqua/40" data-reveal>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="icon-circle bg-aqua">
+            <svg class="w-7 h-7 text-navy" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m-4-4h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div class="section-kicker text-aqua">Green bond programme</div>
         </div>
-        <div class="text-sm text-white/80 mt-2">EU-Taxonomy-aligned tranches → €31 M PV savings at 25 bp.</div>
+        <div class="kpi-num text-6xl md:text-7xl font-black text-aqua leading-none">
+          €<span data-counter="500" data-suffix="M">0</span>
+        </div>
+        <div class="text-base text-white/85 mt-4">EU-Taxonomy-aligned · four tranches · €31 M PV interest savings at 25 bp.</div>
       </div>
     </div>
 
     <!-- CTA row -->
-    <div class="flex flex-wrap gap-3">
-      <a href="#topics" class="px-6 py-3 rounded-xl bg-aqua text-navy font-bold hover:bg-white transition">
-        See the three topics →
+    <div class="flex flex-wrap gap-4">
+      <a href="#topics" class="px-8 py-4 rounded-2xl bg-aqua text-navy font-bold text-lg hover:bg-white transition shadow-lg shadow-aqua/30">
+        The three topics →
       </a>
-      <a href="#matrix" class="px-6 py-3 rounded-xl border border-white/30 text-white font-semibold hover:bg-white/10 transition">
-        Explore the matrix
-      </a>
-      <a href="https://github.com/ma731/Aqualia-Datathon" class="px-6 py-3 rounded-xl border border-white/20 text-white/80 font-semibold hover:bg-white/10 transition">
-        GitHub ↗
+      <a href="#matrix" class="px-8 py-4 rounded-2xl border-2 border-white/30 text-white font-bold text-lg hover:bg-white/10 transition">
+        Explore the framework
       </a>
     </div>
 
   </div>
 
   <!-- Wave divider -->
-  <div class="wave-divider">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" fill="#ffffff"/>
+  <div class="wave-divider bot">
+    <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+      <path d="M0,50 C240,100 480,0 720,50 C960,100 1200,0 1440,50 L1440,100 L0,100 Z" fill="#ffffff"/>
     </svg>
   </div>
 </section>
 
+
 <!-- Regulatory marquee -->
-<section class="bg-paper py-3 border-b border-grid">
-  <div class="marquee text-xs font-semibold text-slate uppercase tracking-widest">
+<section class="bg-white py-4 border-b border-grid">
+  <div class="marquee text-[11px] font-bold text-slate/60 uppercase tracking-[0.18em]">
     <div>
       ESRS 1 &middot; ESRS 2 &middot; ESRS E1–E5 &middot; ESRS S1–S4 &middot; ESRS G1 &middot;
       CSRD (EU) 2022/2464 &middot; EFRAG IG-1 &middot; SASB Water Utilities &middot;
       TCFD &middot; TNFD &middot; ISO 14001:2026 &middot; EU Taxonomy &middot;
       CSDDD &middot; EU Water Resilience Strategy 2025 &middot;
-      Directive 2024/3019 &middot; RD 1985/2024 &middot; Clean Industrial Deal &middot;
+      Directive 2024/3019 UWWTD &middot; RD 1985/2024 &middot; Clean Industrial Deal &middot;
       NGFS &middot; WRI Aqueduct 4.0 &middot;
       ESRS 1 &middot; ESRS 2 &middot; ESRS E1–E5 &middot; ESRS S1–S4 &middot; ESRS G1 &middot;
       CSRD (EU) 2022/2464 &middot; EFRAG IG-1 &middot; SASB Water Utilities &middot;
@@ -287,119 +306,214 @@ tailwind.config = {
 
 
 <!-- ============================================================
+     VALUE-CHAIN BANNER — visual anchor of what Aqualia does
+============================================================ -->
+<section class="py-14 bg-white border-b border-grid">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between mb-8" data-aos="fade-up">
+      <div>
+        <div class="section-kicker text-navy/60 mb-2">The Aqualia value chain</div>
+        <h2 class="text-3xl font-bold text-navy">End-to-end urban water cycle</h2>
+      </div>
+      <div class="hidden md:flex gap-6 text-right">
+        <div>
+          <div class="kpi-num text-3xl font-black text-navy">32M+</div>
+          <div class="text-xs text-slate/60 uppercase tracking-widest">Users served</div>
+        </div>
+        <div>
+          <div class="kpi-num text-3xl font-black text-navy">130+</div>
+          <div class="text-xs text-slate/60 uppercase tracking-widest">Year track record</div>
+        </div>
+        <div>
+          <div class="kpi-num text-3xl font-black text-navy">8</div>
+          <div class="text-xs text-slate/60 uppercase tracking-widest">Countries</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Value chain SVG -->
+    <div class="relative" data-aos="fade-up" data-aos-delay="100">
+      <svg viewBox="0 0 1200 180" class="w-full h-auto" preserveAspectRatio="xMidYMid meet">
+        <!-- Flow line -->
+        <line x1="80" y1="90" x2="1120" y2="90" stroke="#e6e8eb" stroke-width="4"/>
+        <!-- Animated flow -->
+        <line x1="80" y1="90" x2="1120" y2="90" stroke="url(#flowGrad)" stroke-width="4" stroke-dasharray="8,8">
+          <animate attributeName="stroke-dashoffset" from="0" to="-32" dur="1.2s" repeatCount="indefinite"/>
+        </line>
+        <defs>
+          <linearGradient id="flowGrad">
+            <stop offset="0%" stop-color="#5db9d9"/>
+            <stop offset="50%" stop-color="#1f77b4"/>
+            <stop offset="100%" stop-color="#5db9d9"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Nodes -->
+        <g class="pipe-node">
+          <circle cx="100" cy="90" r="14" fill="#5db9d9"/>
+          <text x="100" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Collection</text>
+          <text x="100" y="54" text-anchor="middle" font-size="11" fill="#4a5663">Source</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="270" cy="90" r="14" fill="#1f77b4"/>
+          <text x="270" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Treatment</text>
+          <text x="270" y="54" text-anchor="middle" font-size="11" fill="#4a5663">Potable</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="440" cy="90" r="14" fill="#0b4f74"/>
+          <text x="440" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Distribution</text>
+          <text x="440" y="54" text-anchor="middle" font-size="11" fill="#4a5663">NRW tracked</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="610" cy="90" r="14" fill="#002f5f"/>
+          <text x="610" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Use</text>
+          <text x="610" y="54" text-anchor="middle" font-size="11" fill="#4a5663">32 M users</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="780" cy="90" r="14" fill="#0b4f74"/>
+          <text x="780" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Sewerage</text>
+          <text x="780" y="54" text-anchor="middle" font-size="11" fill="#4a5663">Collection</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="950" cy="90" r="14" fill="#1f77b4"/>
+          <text x="950" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">WWTP</text>
+          <text x="950" y="54" text-anchor="middle" font-size="11" fill="#4a5663">UWWTD-aligned</text>
+        </g>
+        <g class="pipe-node">
+          <circle cx="1120" cy="90" r="14" fill="#2ca02c"/>
+          <text x="1120" y="135" text-anchor="middle" font-size="13" font-weight="700" fill="#002f5f">Reuse</text>
+          <text x="1120" y="54" text-anchor="middle" font-size="11" fill="#4a5663">RD 1985/2024</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
      TOPICS
 ============================================================ -->
-<section id="topics" class="relative py-24 bg-grid-subtle">
+<section id="topics" class="relative py-28 bg-grid-subtle">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="flex items-end justify-between mb-12" data-aos="fade-up">
+    <div class="flex items-end justify-between mb-14" data-aos="fade-up">
       <div>
-        <div class="chip bg-navy/5 text-navy mb-4">01 · Short-list</div>
-        <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">Three material topics.</h2>
-        <p class="text-lg text-slate/80 mt-3 max-w-2xl">
-          Absorbing <b class="text-navy">73% of Aqualia's 83 IROs</b> and surviving sensitivity
-          analysis under four stakeholder-weighting schemes.
+        <div class="section-kicker text-navy/60 mb-3">01 · Short-list</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Three material topics.</h2>
+        <p class="text-xl text-slate mt-5 max-w-2xl leading-relaxed">
+          Absorbing <b class="text-navy">73%</b> of Aqualia's 83 impacts, risks, and opportunities —
+          with positions stable across four stakeholder-weighting schemes.
         </p>
       </div>
       <div class="text-right hidden md:block">
-        <div class="text-xs uppercase tracking-widest text-slate/60">Coverage</div>
-        <div class="kpi-num text-4xl font-bold text-navy">61 / 83</div>
-        <div class="text-xs text-slate/60">IROs absorbed</div>
+        <div class="section-kicker text-slate/60">Coverage</div>
+        <div class="kpi-num text-5xl font-black text-navy">61 / 83</div>
+        <div class="text-xs text-slate/60 uppercase tracking-widest">IROs absorbed</div>
       </div>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
 
       <!-- T1 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-white border border-grid overflow-hidden"
-           data-aos="fade-up" data-aos-delay="0">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="chip bg-t1 text-white">T1</span>
-          <span class="chip bg-green/10 text-green flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-green"></span> Target Zone
-          </span>
+      <div class="topic-card relative rounded-3xl p-8 bg-white border border-grid overflow-hidden"
+           data-aos="fade-up">
+        <span class="accent-bar bg-t1"></span>
+        <div class="flex items-start justify-between mb-5">
+          <div class="icon-circle bg-t1/10">
+            <svg class="w-8 h-8 text-t1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 2.5s6 7 6 11a6 6 0 11-12 0c0-4 6-11 6-11z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            <span class="chip bg-t1 text-white text-xs">T1</span>
+            <span class="chip bg-green/10 text-green text-xs">Target Zone</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold text-navy leading-tight mb-2">Water Resilience &amp; Equitable Access</h3>
-        <p class="text-sm text-slate/80 mb-4">
+        <h3 class="text-2xl font-bold text-navy leading-snug mb-3">Water Resilience &amp; Equitable Access</h3>
+        <p class="text-base text-slate mb-5 leading-relaxed">
           Secure and equitable delivery of the urban water cycle under climate stress, across concessions.
         </p>
-        <div class="text-xs text-slate/60 mb-4">ESRS E1 + E3 + S4 · S3 restored · 26 IROs absorbed</div>
-        <div class="grid grid-cols-2 gap-3 text-sm">
-          <div>
-            <div class="text-xs text-slate/60">Impact</div>
-            <div class="kpi-num text-2xl font-bold text-navy">3.98</div>
-            <div class="text-[10px] text-slate/60">p5–p95: 3.87–4.09</div>
+        <div class="text-xs text-slate/60 mb-5 uppercase tracking-wider">ESRS E1 · E3 · S4 · S3 restored · 26 IROs</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Impact</div>
+            <div class="kpi-num text-3xl font-black text-navy">3.98</div>
+            <div class="text-[11px] text-slate/60">p5–p95 · 3.87–4.09</div>
           </div>
-          <div>
-            <div class="text-xs text-slate/60">Financial</div>
-            <div class="kpi-num text-2xl font-bold text-navy">3.07</div>
-            <div class="text-[10px] text-slate/60">p5–p95: 2.85–3.30</div>
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Financial</div>
+            <div class="kpi-num text-3xl font-black text-navy">3.07</div>
+            <div class="text-[11px] text-slate/60">p5–p95 · 2.85–3.30</div>
           </div>
-        </div>
-        <div class="mt-5 pt-4 border-t border-grid text-xs text-slate/70">
-          <b class="text-navy">Hero finding:</b> Colombia 33% satisfaction vs 86–98% elsewhere — ESRS S3 absorbed into S4 buries a material equity signal.
         </div>
       </div>
 
       <!-- T2 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-white border border-grid overflow-hidden"
+      <div class="topic-card relative rounded-3xl p-8 bg-white border border-grid overflow-hidden"
            data-aos="fade-up" data-aos-delay="120">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="chip bg-t2 text-white">T2</span>
-          <span class="chip bg-green/10 text-green flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-green"></span> Target Zone
-          </span>
+        <span class="accent-bar bg-t2"></span>
+        <div class="flex items-start justify-between mb-5">
+          <div class="icon-circle bg-t2/10">
+            <svg class="w-8 h-8 text-t2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM11 9h2v6h-2V9z"/>
+            </svg>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            <span class="chip bg-t2 text-white text-xs">T2</span>
+            <span class="chip bg-green/10 text-green text-xs">Target Zone</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold text-navy leading-tight mb-2">Digital &amp; Cyber Infrastructure</h3>
-        <p class="text-sm text-slate/80 mb-4">
+        <h3 class="text-2xl font-bold text-navy leading-snug mb-3">Digital &amp; Cyber Infrastructure</h3>
+        <p class="text-base text-slate mb-5 leading-relaxed">
           Digital-twin-enabled operational resilience, with cybersecurity as a first-order financial risk.
         </p>
-        <div class="text-xs text-slate/60 mb-4">AQ-Tech + AQ-Digital + AQ-Cyber · 11 IROs · Blind spot</div>
-        <div class="grid grid-cols-2 gap-3 text-sm">
-          <div>
-            <div class="text-xs text-slate/60">Impact</div>
-            <div class="kpi-num text-2xl font-bold text-navy">3.08</div>
-            <div class="text-[10px] text-slate/60">p5–p95: 2.93–3.24</div>
+        <div class="text-xs text-slate/60 mb-5 uppercase tracking-wider">AQ-Tech · AQ-Digital · AQ-Cyber · 11 IROs · Blind spot</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Impact</div>
+            <div class="kpi-num text-3xl font-black text-navy">3.08</div>
+            <div class="text-[11px] text-slate/60">p5–p95 · 2.93–3.24</div>
           </div>
-          <div>
-            <div class="text-xs text-slate/60">Financial</div>
-            <div class="kpi-num text-2xl font-bold text-navy">2.75</div>
-            <div class="text-[10px] text-slate/60">p5–p95: 2.50–3.01</div>
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Financial</div>
+            <div class="kpi-num text-3xl font-black text-navy">2.75</div>
+            <div class="text-[11px] text-slate/60">p5–p95 · 2.50–3.01</div>
           </div>
-        </div>
-        <div class="mt-5 pt-4 border-t border-grid text-xs text-slate/70">
-          <b class="text-navy">Hero finding:</b> Digitalisation scored just 2 IROs — the lowest — yet produces 3 HIGH operational risks (O8, O9, O10). The framework misses it.
         </div>
       </div>
 
       <!-- T3 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-white border border-grid overflow-hidden"
+      <div class="topic-card relative rounded-3xl p-8 bg-white border border-grid overflow-hidden"
            data-aos="fade-up" data-aos-delay="240">
-        <div class="flex items-center gap-2 mb-4">
-          <span class="chip bg-t3 text-white">T3</span>
-          <span class="chip bg-amber/10 text-amber flex items-center gap-1.5">
-            <span class="w-1.5 h-1.5 rounded-full bg-amber"></span> Borderline
-          </span>
+        <span class="accent-bar bg-t3"></span>
+        <div class="flex items-start justify-between mb-5">
+          <div class="icon-circle bg-t3/10">
+            <svg class="w-8 h-8 text-t3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 6h18M3 14h18M5 18h14"/>
+              <circle cx="12" cy="12" r="9" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="flex flex-col items-end gap-1">
+            <span class="chip bg-t3 text-white text-xs">T3</span>
+            <span class="chip bg-amber/10 text-amber text-xs">Borderline</span>
+          </div>
         </div>
-        <h3 class="text-xl font-bold text-navy leading-tight mb-2">Green Finance &amp; Integrity</h3>
-        <p class="text-sm text-slate/80 mb-4">
+        <h3 class="text-2xl font-bold text-navy leading-snug mb-3">Green Finance &amp; Integrity</h3>
+        <p class="text-base text-slate mb-5 leading-relaxed">
           EU-Taxonomy-aligned financing of the 2027–2030 CAPEX pipeline, underpinned by compliance depth.
         </p>
-        <div class="text-xs text-slate/60 mb-4">G1 cluster + Green-Finance AQ · 24 IROs · Differentiator</div>
-        <div class="grid grid-cols-2 gap-3 text-sm">
-          <div>
-            <div class="text-xs text-slate/60">Impact</div>
-            <div class="kpi-num text-2xl font-bold text-navy">3.24</div>
-            <div class="text-[10px] text-slate/60">p5–p95: 3.08–3.41</div>
+        <div class="text-xs text-slate/60 mb-5 uppercase tracking-wider">G1 cluster · Green Finance AQ · 24 IROs · Differentiator</div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Impact</div>
+            <div class="kpi-num text-3xl font-black text-navy">3.24</div>
+            <div class="text-[11px] text-slate/60">p5–p95 · 3.08–3.41</div>
           </div>
-          <div>
-            <div class="text-xs text-slate/60">Financial</div>
-            <div class="kpi-num text-2xl font-bold text-navy">2.42</div>
-            <div class="text-[10px] text-slate/60">Conditionally material</div>
+          <div class="bg-grid/40 rounded-xl p-3">
+            <div class="text-xs text-slate/60 uppercase tracking-wider">Financial</div>
+            <div class="kpi-num text-3xl font-black text-navy">2.42</div>
+            <div class="text-[11px] text-slate/60">Conditionally material</div>
           </div>
-        </div>
-        <div class="mt-5 pt-4 border-t border-grid text-xs text-slate/70">
-          <b class="text-navy">Hero finding:</b> Aqualia promotes green finance to stand-alone material status ahead of peers. Our €500 M bond ask amplifies that edge.
         </div>
       </div>
 
@@ -411,22 +525,22 @@ tailwind.config = {
 <!-- ============================================================
      MATRIX
 ============================================================ -->
-<section id="matrix" class="relative py-24 bg-white border-t border-grid">
+<section id="matrix" class="relative py-28 bg-white border-t border-grid">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10" data-aos="fade-up">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-12" data-aos="fade-up">
       <div>
-        <div class="chip bg-navy/5 text-navy mb-4">02 · Methodology</div>
-        <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">Not a point. A distribution.</h2>
-        <p class="text-lg text-slate/80 mt-3 max-w-2xl">
-          10,000 Monte Carlo draws per topic. 90% χ² confidence ellipses.
-          Ranking stable across four stakeholder weighting schemes.
+        <div class="section-kicker text-navy/60 mb-3">02 · Methodology</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Not a point.<br><span class="text-aqua">A distribution.</span></h2>
+        <p class="text-xl text-slate mt-5 max-w-2xl leading-relaxed">
+          10,000 Monte Carlo draws per topic. 90% χ² confidence ellipses. Positions stable across
+          four stakeholder-weighting schemes.
         </p>
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-xs uppercase tracking-widest text-slate/60">Stakeholder weighting</label>
-        <select id="scheme-select" class="px-4 py-2.5 border border-grid rounded-xl bg-white font-semibold text-navy">
-          <option value="Salience">Salience (Mitchell-Agle-Wood)</option>
+        <label class="section-kicker text-slate/70">Stakeholder weighting</label>
+        <select id="scheme-select" class="px-5 py-3 border-2 border-grid rounded-2xl bg-white font-bold text-navy text-base focus:border-aqua outline-none">
+          <option value="Salience">Salience (Mitchell–Agle–Wood)</option>
           <option value="Equal">Equal — 11 groups</option>
           <option value="Regulator-heavy">Regulator-heavy</option>
           <option value="Community-first">Community-first</option>
@@ -436,32 +550,33 @@ tailwind.config = {
     </div>
 
     <div class="grid md:grid-cols-3 gap-8 items-start">
-      <div class="md:col-span-2 bg-white rounded-2xl border border-grid p-4" data-aos="fade-up">
-        <div id="mc-matrix" style="height: 560px;"></div>
+      <div class="md:col-span-2 bg-white rounded-3xl border border-grid p-6" data-aos="fade-up">
+        <div id="mc-matrix" style="height: 600px;"></div>
       </div>
 
-      <div class="space-y-4" data-aos="fade-up" data-aos-delay="120">
+      <div class="space-y-5" data-aos="fade-up" data-aos-delay="120">
 
-        <div class="bg-navy text-white rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-widest text-aqua mb-2">Robustness</div>
-          <div class="text-3xl font-extrabold">0 ranking flips</div>
-          <div class="text-sm text-white/70 mt-1">across 4 stakeholder-weighting schemes.</div>
+        <div class="bg-navy text-white rounded-3xl p-7 relative overflow-hidden">
+          <svg class="absolute -right-6 -bottom-6 w-32 h-32 text-aqua/10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l2.09 6.26L20 9.27l-5 4.87L16.18 21 12 17.77 7.82 21 9 14.14l-5-4.87 5.91-1.01L12 2z"/></svg>
+          <div class="section-kicker text-aqua mb-3">Robustness</div>
+          <div class="text-5xl font-black leading-none">0</div>
+          <div class="text-lg text-white/80 mt-2 leading-tight">ranking flips across 4 stakeholder-weighting schemes.</div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-grid p-6">
-          <div class="text-xs uppercase tracking-widest text-slate/60 mb-2">Target Zone</div>
-          <p class="text-sm text-slate/80">
-            Both axes ≥ 2.5 (Workshop 1 convention). Ellipse entirely inside = <b class="text-navy">robust material</b>.
+        <div class="bg-white rounded-3xl border border-grid p-7">
+          <div class="section-kicker text-slate/60 mb-3">Target Zone</div>
+          <p class="text-base text-slate leading-relaxed">
+            Both axes ≥ 2.5 (Workshop 1 threshold). Ellipse inside = <b class="text-navy">robust material</b>.
             Ellipse straddling threshold = <b class="text-amber">conditionally material</b>.
           </p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-grid p-6">
-          <div class="text-xs uppercase tracking-widest text-slate/60 mb-3">Top sensitivity drivers</div>
-          <ul class="text-sm space-y-2 text-slate/80">
-            <li class="flex items-start gap-2"><span class="chip bg-t1 text-white flex-shrink-0 mt-0.5">T1</span> R-stress-revenue (financial) · E1-adaptation probability</li>
-            <li class="flex items-start gap-2"><span class="chip bg-t2 text-white flex-shrink-0 mt-0.5">T2</span> Tech-pace probability · O-tender-uplift magnitude</li>
-            <li class="flex items-start gap-2"><span class="chip bg-t3 text-white flex-shrink-0 mt-0.5">T3</span> CSDDD enforcement · CoC saving magnitude</li>
+        <div class="bg-white rounded-3xl border border-grid p-7">
+          <div class="section-kicker text-slate/60 mb-4">Top sensitivity drivers</div>
+          <ul class="text-base space-y-3 text-slate">
+            <li class="flex items-start gap-3"><span class="chip bg-t1 text-white text-xs flex-shrink-0">T1</span><span>R-stress-revenue (financial) · E1-adaptation probability</span></li>
+            <li class="flex items-start gap-3"><span class="chip bg-t2 text-white text-xs flex-shrink-0">T2</span><span>Tech-pace probability · O-tender-uplift magnitude</span></li>
+            <li class="flex items-start gap-3"><span class="chip bg-t3 text-white text-xs flex-shrink-0">T3</span><span>CSDDD enforcement · CoC saving magnitude</span></li>
           </ul>
         </div>
       </div>
@@ -474,68 +589,79 @@ tailwind.config = {
 <!-- ============================================================
      FINDINGS
 ============================================================ -->
-<section id="findings" class="relative py-24 bg-gradient-to-b from-white to-[#f6f9fc]">
+<section id="findings" class="relative py-28 bg-gradient-to-b from-white to-[#f4f8fb]">
   <div class="max-w-7xl mx-auto px-6">
     <div data-aos="fade-up">
-      <div class="chip bg-navy/5 text-navy mb-4">03 · Findings</div>
-      <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">Three stories the jury will remember.</h2>
+      <div class="section-kicker text-navy/60 mb-3">03 · Findings</div>
+      <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Three findings.<br>One strategy.</h2>
+      <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
+        Each finding is traceable to Aqualia's own 2025 review data and confirms a strategic
+        repositioning — not a hypothetical gap.
+      </p>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-5 mt-10">
+    <div class="grid md:grid-cols-3 gap-5 mt-14">
 
       <!-- Finding 1 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-navy text-white overflow-hidden"
+      <div class="topic-card relative rounded-3xl p-8 bg-navy text-white overflow-hidden"
            data-aos="fade-up">
-        <div class="absolute -top-6 -right-6 text-[180px] font-extrabold text-white/5 leading-none">01</div>
+        <div class="absolute -top-8 -right-6 text-[220px] font-black text-white/5 leading-none select-none">01</div>
         <div class="relative">
-          <h3 class="text-xl font-bold text-aqua mb-3">The Colombia outlier</h3>
-          <div class="text-5xl font-extrabold kpi-num mb-2">33<span class="text-aqua">%</span></div>
-          <p class="text-sm text-white/80 mb-4">
-            Customer satisfaction in Colombia — versus 86–98% across six European markets.
-            Aqualia folded ESRS S3 into S4, hiding a material equity signal our methodology surfaces.
+          <div class="chip bg-aqua/20 text-aqua mb-4">Equity signal</div>
+          <h3 class="text-2xl font-bold text-white mb-4">The Colombia outlier</h3>
+          <div class="flex items-baseline gap-3 mb-5">
+            <div class="kpi-num text-7xl font-black text-aqua leading-none">33<span class="text-5xl">%</span></div>
+          </div>
+          <p class="text-base text-white/85 mb-5 leading-relaxed">
+            Customer satisfaction in Colombia — versus <b class="text-white">86–98%</b> across six European and
+            institutional markets. Aqualia's current framework absorbs ESRS S3 into S4,
+            obscuring a material equity signal.
           </p>
-          <div class="flex items-center gap-3 text-xs text-white/60">
+          <div class="flex items-center gap-2 text-xs">
             <span class="chip bg-white/10 text-white/90">ESRS S3 restoration</span>
-            <span class="chip bg-white/10 text-white/90">Concession risk</span>
+            <span class="chip bg-white/10 text-white/90">Concession renewal risk</span>
           </div>
         </div>
       </div>
 
       <!-- Finding 2 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-navy text-white overflow-hidden"
-           data-aos="fade-up" data-aos-delay="100">
-        <div class="absolute -top-6 -right-6 text-[180px] font-extrabold text-white/5 leading-none">02</div>
+      <div class="topic-card relative rounded-3xl p-8 bg-navy text-white overflow-hidden"
+           data-aos="fade-up" data-aos-delay="120">
+        <div class="absolute -top-8 -right-6 text-[220px] font-black text-white/5 leading-none select-none">02</div>
         <div class="relative">
-          <h3 class="text-xl font-bold text-aqua mb-3">Digitalisation blind spot</h3>
-          <div class="flex items-baseline gap-3 mb-2">
-            <div class="text-5xl font-extrabold kpi-num">2</div>
-            <div class="text-xs text-white/60 uppercase tracking-widest">IROs assigned</div>
+          <div class="chip bg-aqua/20 text-aqua mb-4">Blind spot</div>
+          <h3 class="text-2xl font-bold text-white mb-4">Digitalisation under-weighted</h3>
+          <div class="flex items-baseline gap-4 mb-5">
+            <div class="kpi-num text-7xl font-black text-aqua leading-none">2</div>
+            <div class="text-sm text-white/60 uppercase tracking-widest">IROs<br>assigned</div>
           </div>
-          <p class="text-sm text-white/80 mb-4">
-            Lowest of any topic — yet peers (Veolia AquaCIS, Suez Aquadvanced, GoAigua) treat digital as core,
-            EU Water Resilience Strategy names it Action Area 3 of 5, and 3 of Aqualia's own HIGH operational risks sit here.
+          <p class="text-base text-white/85 mb-5 leading-relaxed">
+            The lowest of any topic. Peers treat digital as core; the EU Water Resilience Strategy
+            names it Action Area 3 of 5; three HIGH operational risks in Aqualia's own Risk Map sit here.
           </p>
-          <div class="flex items-center gap-3 text-xs text-white/60">
-            <span class="chip bg-badred/20 text-white/90">O8 HIGH</span>
-            <span class="chip bg-badred/20 text-white/90">O9 HIGH</span>
-            <span class="chip bg-badred/20 text-white/90">O10 GDPR</span>
+          <div class="flex items-center gap-2 text-xs flex-wrap">
+            <span class="chip bg-badred/25 text-white/95">O8 HIGH</span>
+            <span class="chip bg-badred/25 text-white/95">O9 HIGH</span>
+            <span class="chip bg-badred/25 text-white/95">O10 GDPR</span>
           </div>
         </div>
       </div>
 
       <!-- Finding 3 -->
-      <div class="topic-card relative rounded-2xl p-7 bg-navy text-white overflow-hidden"
-           data-aos="fade-up" data-aos-delay="200">
-        <div class="absolute -top-6 -right-6 text-[180px] font-extrabold text-white/5 leading-none">03</div>
+      <div class="topic-card relative rounded-3xl p-8 bg-navy text-white overflow-hidden"
+           data-aos="fade-up" data-aos-delay="240">
+        <div class="absolute -top-8 -right-6 text-[220px] font-black text-white/5 leading-none select-none">03</div>
         <div class="relative">
-          <h3 class="text-xl font-bold text-aqua mb-3">Green-finance differentiator</h3>
-          <div class="text-5xl font-extrabold kpi-num mb-2">
-            €<span data-counter-findings="31" data-suffix=" M">0</span>
+          <div class="chip bg-aqua/20 text-aqua mb-4">Differentiator</div>
+          <h3 class="text-2xl font-bold text-white mb-4">Green-finance edge</h3>
+          <div class="flex items-baseline gap-3 mb-5">
+            <div class="kpi-num text-7xl font-black text-aqua leading-none">€<span data-counter-findings="31">0</span><span class="text-5xl">M</span></div>
           </div>
-          <p class="text-sm text-white/80 mb-4">
-            Present-value interest savings at 25 bp spread over a €500 M EU-Taxonomy-aligned green bond programme (10-year tenor, 8% DR).
+          <p class="text-base text-white/85 mb-5 leading-relaxed">
+            PV interest savings at 25 bp spread over a €500 M EU-Taxonomy-aligned green bond programme
+            (10-year tenor, 8% DR). Aqualia is already ahead of peers on green-finance disclosure.
           </p>
-          <div class="flex items-center gap-3 text-xs text-white/60">
+          <div class="flex items-center gap-2 text-xs flex-wrap">
             <span class="chip bg-white/10 text-aqua">Tranche 2027</span>
             <span class="chip bg-white/10 text-aqua">CSRD-aligned</span>
           </div>
@@ -548,46 +674,45 @@ tailwind.config = {
 
 
 <!-- ============================================================
-     CAPITAL MARKETS
+     CAPITAL
 ============================================================ -->
-<section id="capital" class="relative py-24 bg-white border-t border-grid">
+<section id="capital" class="relative py-28 bg-white border-t border-grid">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div data-aos="fade-up" class="mb-10">
-      <div class="chip bg-navy/5 text-navy mb-4">04 · Capital</div>
-      <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">The capital-markets opportunity.</h2>
-      <p class="text-lg text-slate/80 mt-3 max-w-3xl">
-        A €500 M EU-Taxonomy-aligned green / sustainability-linked bond programme,
-        phased across four years, funds the 2027–2030 CAPEX pipeline and captures the current
-        25 bp green-bond spread before it closes.
+    <div data-aos="fade-up" class="mb-12">
+      <div class="section-kicker text-navy/60 mb-3">04 · Capital</div>
+      <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">The capital-markets<br><span class="text-aqua">opportunity.</span></h2>
+      <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
+        A €500 M EU-Taxonomy-aligned green / sustainability-linked bond programme, phased across four years,
+        funds the 2027–2030 CAPEX pipeline and captures the current 25 bp green-bond spread.
       </p>
     </div>
 
     <!-- Coupon bridge -->
-    <div class="grid md:grid-cols-5 gap-4 items-center mb-12" data-aos="fade-up">
-      <div class="bg-grid text-slate rounded-2xl p-6 text-center">
-        <div class="text-xs uppercase tracking-widest text-slate/60">Vanilla IG coupon</div>
-        <div class="kpi-num text-4xl font-bold text-slate">4.00<span class="text-2xl">%</span></div>
+    <div class="grid md:grid-cols-5 gap-5 items-center mb-14" data-aos="fade-up">
+      <div class="bg-grid/60 rounded-3xl p-8 text-center">
+        <div class="section-kicker text-slate/60 mb-2">Vanilla IG</div>
+        <div class="kpi-num text-5xl font-black text-slate">4.00<span class="text-3xl">%</span></div>
       </div>
-      <div class="text-center text-aqua text-3xl font-bold">−</div>
-      <div class="bg-aqua text-navy rounded-2xl p-6 text-center">
-        <div class="text-xs uppercase tracking-widest opacity-80">ESG spread</div>
-        <div class="kpi-num text-4xl font-bold">25<span class="text-2xl"> bp</span></div>
+      <div class="text-center text-aqua text-4xl font-black">−</div>
+      <div class="bg-aqua text-navy rounded-3xl p-8 text-center shadow-xl shadow-aqua/30">
+        <div class="section-kicker mb-2 opacity-85">ESG spread</div>
+        <div class="kpi-num text-5xl font-black">25<span class="text-3xl"> bp</span></div>
       </div>
-      <div class="text-center text-navy text-3xl font-bold">=</div>
-      <div class="bg-navy text-white rounded-2xl p-6 text-center">
-        <div class="text-xs uppercase tracking-widest text-aqua">PV savings · 10y · 8%</div>
-        <div class="kpi-num text-4xl font-bold text-aqua">€31<span class="text-2xl"> M</span></div>
+      <div class="text-center text-navy text-4xl font-black">=</div>
+      <div class="bg-navy text-white rounded-3xl p-8 text-center shadow-xl shadow-navy/30">
+        <div class="section-kicker text-aqua mb-2">PV savings · 10y · 8%</div>
+        <div class="kpi-num text-5xl font-black text-aqua">€31<span class="text-3xl"> M</span></div>
       </div>
     </div>
 
     <!-- Tranche schedule -->
-    <div class="bg-white border border-grid rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-      <div class="flex items-center justify-between mb-6">
-        <div class="text-sm font-bold text-navy">Tranche schedule · 2027–2030</div>
-        <div class="text-xs text-slate/60">Target: €500 M cumulative · aligned to CAPEX drawdown</div>
+    <div class="bg-gradient-to-br from-white to-grid/40 border border-grid rounded-3xl p-8" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex items-center justify-between mb-8">
+        <h3 class="text-2xl font-bold text-navy">Tranche schedule · 2027 – 2030</h3>
+        <div class="section-kicker text-slate/60">€500 M cumulative · aligned to CAPEX drawdown</div>
       </div>
-      <div class="grid grid-cols-4 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
         <div class="tranche" data-y="2027" data-amount="150"></div>
         <div class="tranche" data-y="2028" data-amount="150"></div>
         <div class="tranche" data-y="2029" data-amount="120"></div>
@@ -602,49 +727,63 @@ tailwind.config = {
 <!-- ============================================================
      ESRS HEATMAP
 ============================================================ -->
-<section id="heatmap" class="relative py-24 bg-[#f6f9fc]">
+<section id="heatmap" class="relative py-28 bg-[#f4f8fb]">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="flex items-end justify-between mb-8" data-aos="fade-up">
+    <div class="flex items-end justify-between mb-10" data-aos="fade-up">
       <div>
-        <div class="chip bg-navy/5 text-navy mb-4">05 · Evidence</div>
-        <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">ESRS disclosure gap — seen on one chart.</h2>
-        <p class="text-lg text-slate/80 mt-3 max-w-3xl">
-          75 ESRS datapoints × 873 chunks from Aqualia's 2022–2025 Sustainability Reports.
-          Bilingual TF-IDF classifier. Adaptive percentile-based thresholds.
+        <div class="section-kicker text-navy/60 mb-3">05 · Evidence</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">ESRS disclosure gap.<br><span class="text-aqua">One chart.</span></h2>
+        <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
+          75 ESRS datapoints × 873 paragraph chunks from Aqualia's 2022–2025 Sustainability Reports,
+          classified by bilingual TF-IDF with adaptive percentile bands.
         </p>
       </div>
     </div>
 
     <!-- Coverage KPI row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8" data-aos="fade-up" data-aos-delay="80">
-      <div class="bg-green/10 border border-green/20 rounded-xl p-4">
-        <div class="text-xs uppercase tracking-widest text-green mb-1">Green — strong</div>
-        <div class="kpi-num text-3xl font-bold text-green">16%</div>
-        <div class="text-[11px] text-slate/60">12 of 75 datapoints</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10" data-aos="fade-up" data-aos-delay="80">
+      <div class="bg-white border-2 border-green/20 rounded-2xl p-6">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="w-4 h-4 rounded-full bg-green"></span>
+          <div class="section-kicker text-green">Strong</div>
+        </div>
+        <div class="kpi-num text-5xl font-black text-green">16<span class="text-3xl">%</span></div>
+        <div class="text-sm text-slate/60 mt-1">12 of 75 datapoints</div>
       </div>
-      <div class="bg-amber/10 border border-amber/20 rounded-xl p-4">
-        <div class="text-xs uppercase tracking-widest text-amber mb-1">Amber — partial</div>
-        <div class="kpi-num text-3xl font-bold text-amber">19%</div>
-        <div class="text-[11px] text-slate/60">14 of 75</div>
+      <div class="bg-white border-2 border-amber/20 rounded-2xl p-6">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="w-4 h-4 rounded-full bg-amber"></span>
+          <div class="section-kicker text-amber">Partial</div>
+        </div>
+        <div class="kpi-num text-5xl font-black text-amber">19<span class="text-3xl">%</span></div>
+        <div class="text-sm text-slate/60 mt-1">14 of 75</div>
       </div>
-      <div class="bg-badred/10 border border-badred/20 rounded-xl p-4">
-        <div class="text-xs uppercase tracking-widest text-badred mb-1">Red — weak</div>
-        <div class="kpi-num text-3xl font-bold text-badred">25%</div>
-        <div class="text-[11px] text-slate/60">19 of 75</div>
+      <div class="bg-white border-2 border-badred/20 rounded-2xl p-6">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="w-4 h-4 rounded-full bg-badred"></span>
+          <div class="section-kicker text-badred">Weak</div>
+        </div>
+        <div class="kpi-num text-5xl font-black text-badred">25<span class="text-3xl">%</span></div>
+        <div class="text-sm text-slate/60 mt-1">19 of 75</div>
       </div>
-      <div class="bg-[#6e1c1c]/10 border border-[#6e1c1c]/20 rounded-xl p-4">
-        <div class="text-xs uppercase tracking-widest text-[#6e1c1c] mb-1">Dark red — gap</div>
-        <div class="kpi-num text-3xl font-bold text-[#6e1c1c]">40%</div>
-        <div class="text-[11px] text-slate/60">30 of 75</div>
+      <div class="bg-white border-2 border-[#6e1c1c]/20 rounded-2xl p-6">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="w-4 h-4 rounded-full" style="background:#6e1c1c"></span>
+          <div class="section-kicker" style="color:#6e1c1c">Gap</div>
+        </div>
+        <div class="kpi-num text-5xl font-black" style="color:#6e1c1c">40<span class="text-3xl">%</span></div>
+        <div class="text-sm text-slate/60 mt-1">30 of 75</div>
       </div>
     </div>
 
-    <!-- Heatmap visual -->
-    <div class="bg-white rounded-2xl border border-grid p-6" data-aos="fade-up">
+    <div class="bg-white rounded-3xl border border-grid p-8" data-aos="fade-up">
       <div id="heatmap-grid"></div>
-      <div class="text-xs text-slate/60 mt-4">
-        Hover any cell for the ESRS datapoint description and the top-matching Aqualia chunk. S3 row stays dark-red across the full corpus — confirmation of the equity-access blind spot.
+      <div class="text-sm text-slate/70 mt-6 leading-relaxed">
+        <b class="text-navy">Reading guide.</b> Each cell is one ESRS datapoint; colour is the coverage
+        band from Aqualia's four-year sustainability corpus. Hover any cell for the matching text.
+        Note the <b class="text-navy">S3 row</b>: entirely dark-red across the full corpus — the structural
+        gap that our ESRS S3 restoration addresses.
       </div>
     </div>
 
@@ -655,14 +794,14 @@ tailwind.config = {
 <!-- ============================================================
      WATER STRESS
 ============================================================ -->
-<section id="water" class="relative py-24 bg-white border-t border-grid">
+<section id="water" class="relative py-28 bg-white border-t border-grid">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10 gap-4" data-aos="fade-up">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4" data-aos="fade-up">
       <div>
-        <div class="chip bg-navy/5 text-navy mb-4">06 · Water stress</div>
-        <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">45% today. 79% by 2030.</h2>
-        <p class="text-lg text-slate/80 mt-3 max-w-3xl">
+        <div class="section-kicker text-navy/60 mb-3">06 · Water stress</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">45% today.<br><span class="text-badred">79% by 2030.</span></h2>
+        <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
           WRI Aqueduct 4.0 baseline + BAU-2030 (SSP3/RCP 7.0) overlaid on Aqualia's concession geography.
           The share of revenue exposed to High or Extremely High stress <b class="text-navy">nearly doubles</b>.
         </p>
@@ -670,24 +809,26 @@ tailwind.config = {
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
-      <div class="md:col-span-2 bg-white rounded-2xl border border-grid p-6" data-aos="fade-up">
+      <div class="md:col-span-2 bg-white rounded-3xl border border-grid p-6" data-aos="fade-up">
         <div id="aqueduct-bars"></div>
       </div>
       <div class="space-y-4" data-aos="fade-up" data-aos-delay="120">
-        <div class="bg-navy text-white rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-widest text-aqua mb-1">Today (baseline)</div>
-          <div class="kpi-num text-5xl font-extrabold">45%</div>
-          <div class="text-sm text-white/70 mt-1">of Aqualia revenue in High / Extreme basins</div>
+        <div class="bg-navy text-white rounded-3xl p-8 relative overflow-hidden">
+          <svg class="absolute -right-4 -top-4 w-28 h-28 text-aqua/10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.5s6 7 6 11a6 6 0 11-12 0c0-4 6-11 6-11z"/></svg>
+          <div class="section-kicker text-aqua mb-2">Today (baseline)</div>
+          <div class="kpi-num text-6xl font-black">45<span class="text-4xl">%</span></div>
+          <div class="text-sm text-white/80 mt-2 leading-snug">of revenue in High / Extreme stress basins</div>
         </div>
-        <div class="bg-badred text-white rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-widest text-white/80 mb-1">BAU-2030</div>
-          <div class="kpi-num text-5xl font-extrabold">79%</div>
-          <div class="text-sm text-white/90 mt-1">under SSP3/RCP 7.0 climate scenario</div>
+        <div class="bg-badred text-white rounded-3xl p-8 relative overflow-hidden">
+          <svg class="absolute -right-4 -top-4 w-28 h-28 text-white/10" fill="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01M5.07 19H19a2 2 0 001.73-3l-7-12a2 2 0 00-3.46 0l-7 12A2 2 0 004.27 19z"/></svg>
+          <div class="section-kicker text-white/90 mb-2">BAU-2030</div>
+          <div class="kpi-num text-6xl font-black">79<span class="text-4xl">%</span></div>
+          <div class="text-sm text-white/95 mt-2 leading-snug">SSP3 / RCP 7.0 climate scenario</div>
         </div>
-        <div class="bg-white border border-grid rounded-2xl p-6">
-          <div class="text-xs uppercase tracking-widest text-slate/60 mb-1">Concession focus</div>
-          <div class="text-lg font-bold text-navy">Segura basin</div>
-          <div class="text-sm text-slate/70">Extremely High today <b>and</b> in BAU-2030 — drives Real Options desal vs reuse</div>
+        <div class="bg-white border border-grid rounded-3xl p-6">
+          <div class="section-kicker text-slate/60 mb-2">Concession focus</div>
+          <div class="text-2xl font-bold text-navy mb-1">Segura basin</div>
+          <div class="text-sm text-slate leading-relaxed">Extremely High today <b>and</b> under BAU-2030 — drives the Real Options desal-vs-reuse CAPEX decision.</div>
         </div>
       </div>
     </div>
@@ -699,93 +840,93 @@ tailwind.config = {
 <!-- ============================================================
      ROADMAP
 ============================================================ -->
-<section id="roadmap" class="relative py-24 bg-[#f6f9fc]">
+<section id="roadmap" class="relative py-28 bg-[#f4f8fb]">
   <div class="max-w-7xl mx-auto px-6">
 
-    <div class="mb-10" data-aos="fade-up">
-      <div class="chip bg-navy/5 text-navy mb-4">07 · Roadmap</div>
-      <h2 class="text-4xl md:text-5xl font-bold text-navy tracking-tight">Owned, measurable, aligned.</h2>
-      <p class="text-lg text-slate/80 mt-3 max-w-3xl">
+    <div class="mb-12" data-aos="fade-up">
+      <div class="section-kicker text-navy/60 mb-3">07 · Roadmap</div>
+      <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Owned. Measurable.<br><span class="text-aqua">Aligned.</span></h2>
+      <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
         Every cell has a named Executive Committee owner from Aqualia's Risk Map, a measurable KPI,
         and an ESRS disclosure anchor. The roadmap extends PESA 2024–2026 into the next horizon.
       </p>
     </div>
 
-    <div class="bg-white rounded-2xl border border-grid overflow-hidden" data-aos="fade-up">
+    <div class="bg-white rounded-3xl border border-grid overflow-hidden shadow-sm" data-aos="fade-up">
       <div class="grid grid-cols-5 text-sm">
-        <div class="p-4 bg-sand text-navy font-bold"></div>
-        <div class="p-4 bg-sand text-navy font-bold text-center">2027</div>
-        <div class="p-4 bg-sand text-navy font-bold text-center">2028</div>
-        <div class="p-4 bg-sand text-navy font-bold text-center">2029</div>
-        <div class="p-4 bg-sand text-navy font-bold text-center">2030</div>
+        <div class="p-6 bg-sand/60 text-navy font-bold"></div>
+        <div class="p-6 bg-sand/60 text-navy font-bold text-center text-lg">2027</div>
+        <div class="p-6 bg-sand/60 text-navy font-bold text-center text-lg">2028</div>
+        <div class="p-6 bg-sand/60 text-navy font-bold text-center text-lg">2029</div>
+        <div class="p-6 bg-sand/60 text-navy font-bold text-center text-lg">2030</div>
 
-        <!-- T1 row -->
-        <div class="p-4 bg-t1/10 border-l-4 border-t1 font-bold text-navy flex items-center">T1</div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Restore</div>
-          <div class="font-semibold text-navy">S3 + Colombia review</div>
-          <div class="text-[11px] text-slate/60 mt-1">Ops Director · sat ≥ 60%</div>
+        <!-- T1 -->
+        <div class="p-6 bg-t1/10 border-l-4 border-t1 flex items-center"><span class="chip bg-t1 text-white">T1</span></div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Restore</div>
+          <div class="font-bold text-navy text-base leading-snug">S3 + Colombia review</div>
+          <div class="text-xs text-slate/70 mt-2">Ops Director · sat ≥ 60%</div>
         </div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Pilot</div>
-          <div class="font-semibold text-navy">Segura reuse</div>
-          <div class="text-[11px] text-slate/60 mt-1">NRW −3 pp</div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Pilot</div>
+          <div class="font-bold text-navy text-base leading-snug">Segura reuse</div>
+          <div class="text-xs text-slate/70 mt-2">NRW −3 pp</div>
         </div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Deploy</div>
-          <div class="font-semibold text-navy">Italy adaptation CAPEX</div>
-          <div class="text-[11px] text-slate/60 mt-1">−10% tCO₂e/m³</div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Deploy</div>
+          <div class="font-bold text-navy text-base leading-snug">Italy adaptation CAPEX</div>
+          <div class="text-xs text-slate/70 mt-2">−10% tCO₂e/m³</div>
         </div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Scale</div>
-          <div class="font-semibold text-navy">Reuse ≥ 25%</div>
-          <div class="text-[11px] text-slate/60 mt-1">RD 1985/2024</div>
-        </div>
-
-        <!-- T2 row -->
-        <div class="p-4 bg-t2/10 border-l-4 border-t2 font-bold text-navy flex items-center">T2</div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Pilot</div>
-          <div class="font-semibold text-navy">Digital-twin Phase 1</div>
-          <div class="text-[11px] text-slate/60 mt-1">3 concessions</div>
-        </div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Harden</div>
-          <div class="font-semibold text-navy">OT/IT segmentation</div>
-          <div class="text-[11px] text-slate/60 mt-1">NIS2 ≥ 90%</div>
-        </div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Deploy</div>
-          <div class="font-semibold text-navy">AI demand prediction</div>
-          <div class="text-[11px] text-slate/60 mt-1">leak MTTR −30%</div>
-        </div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Target</div>
-          <div class="font-semibold text-navy">Cyber MTTR &lt; 4h</div>
-          <div class="text-[11px] text-slate/60 mt-1">~1% rev cyber spend</div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Scale</div>
+          <div class="font-bold text-navy text-base leading-snug">Reuse ≥ 25%</div>
+          <div class="text-xs text-slate/70 mt-2">RD 1985/2024</div>
         </div>
 
-        <!-- T3 row -->
-        <div class="p-4 bg-t3/10 border-l-4 border-t3 font-bold text-navy flex items-center">T3</div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Issue</div>
-          <div class="font-semibold text-navy">Tranche 1 — €150 M</div>
-          <div class="text-[11px] text-slate/60 mt-1">EU Taxonomy</div>
+        <!-- T2 -->
+        <div class="p-6 bg-t2/10 border-l-4 border-t2 flex items-center"><span class="chip bg-t2 text-white">T2</span></div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Pilot</div>
+          <div class="font-bold text-navy text-base leading-snug">Digital twin Phase 1</div>
+          <div class="text-xs text-slate/70 mt-2">3 concessions</div>
         </div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Issue</div>
-          <div class="font-semibold text-navy">Tranche 2 — €150 M</div>
-          <div class="text-[11px] text-slate/60 mt-1">CSRD + assurance</div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Harden</div>
+          <div class="font-bold text-navy text-base leading-snug">OT/IT segmentation</div>
+          <div class="text-xs text-slate/70 mt-2">NIS2 ≥ 90%</div>
         </div>
-        <div class="p-4 border-t border-grid">
-          <div class="text-xs text-slate/60 mb-1">Issue</div>
-          <div class="font-semibold text-navy">Tranche 3 — €120 M</div>
-          <div class="text-[11px] text-slate/60 mt-1">ISO 14001:2026</div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Deploy</div>
+          <div class="font-bold text-navy text-base leading-snug">AI demand prediction</div>
+          <div class="text-xs text-slate/70 mt-2">leak MTTR −30%</div>
         </div>
-        <div class="p-4 border-t border-grid bg-white/60">
-          <div class="text-xs text-slate/60 mb-1">Issue</div>
-          <div class="font-semibold text-navy">Tranche 4 — €80 M</div>
-          <div class="text-[11px] text-slate/60 mt-1">TCFD + TNFD full</div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Target</div>
+          <div class="font-bold text-navy text-base leading-snug">Cyber MTTR &lt; 4h</div>
+          <div class="text-xs text-slate/70 mt-2">~1% rev cyber spend</div>
+        </div>
+
+        <!-- T3 -->
+        <div class="p-6 bg-t3/10 border-l-4 border-t3 flex items-center"><span class="chip bg-t3 text-white">T3</span></div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Issue</div>
+          <div class="font-bold text-navy text-base leading-snug">Tranche 1 · €150 M</div>
+          <div class="text-xs text-slate/70 mt-2">EU Taxonomy</div>
+        </div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Issue</div>
+          <div class="font-bold text-navy text-base leading-snug">Tranche 2 · €150 M</div>
+          <div class="text-xs text-slate/70 mt-2">CSRD + assurance</div>
+        </div>
+        <div class="p-5 border-t border-grid">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Issue</div>
+          <div class="font-bold text-navy text-base leading-snug">Tranche 3 · €120 M</div>
+          <div class="text-xs text-slate/70 mt-2">ISO 14001:2026</div>
+        </div>
+        <div class="p-5 border-t border-grid bg-grid/30">
+          <div class="text-[10px] text-slate/60 uppercase tracking-widest mb-2">Issue</div>
+          <div class="font-bold text-navy text-base leading-snug">Tranche 4 · €80 M</div>
+          <div class="text-xs text-slate/70 mt-2">TCFD + TNFD full</div>
         </div>
 
       </div>
@@ -798,26 +939,31 @@ tailwind.config = {
 <!-- ============================================================
      CLOSE
 ============================================================ -->
-<section class="relative py-24 bg-navy text-white overflow-hidden">
-  <div class="dots opacity-40"></div>
+<section class="relative py-36 bg-navy text-white overflow-hidden">
+  <div class="dots opacity-30"></div>
+  <div class="bubble" style="top:10%; left:-5%; width:280px; height:280px; background:#5db9d9; opacity:0.25"></div>
+  <div class="bubble" style="bottom:10%; right:-5%; width:340px; height:340px; background:#1f77b4; opacity:0.25"></div>
+
   <div class="relative max-w-5xl mx-auto px-6 text-center">
-    <div class="chip bg-white/10 border border-white/20 text-aqua mb-6">Close</div>
-    <h2 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-tight mb-6">
+
+    <img src="aqualia_logo.png" alt="Aqualia" class="h-14 w-auto mx-auto mb-10 bg-white rounded-2xl px-6 py-3"/>
+
+    <h2 class="text-5xl md:text-7xl font-black leading-[1.05] tracking-tight mb-8">
       Three material topics.<br>
       <span class="text-aqua">€18 M/yr</span> of under-weighted materiality.<br>
-      A <span class="text-aqua">€500 M</span> green bond programme that funds the answer.
+      A <span class="text-aqua">€500 M</span> green bond programme<br>that funds the answer.
     </h2>
-    <p class="text-lg text-white/70 max-w-2xl mx-auto mb-10">
-      The full 13-page report, Monte Carlo pipeline, ESRS heatmap, Aqueduct overlay,
-      and expert outreach templates live in the repo.
+    <p class="text-xl text-white/75 max-w-2xl mx-auto mb-12 leading-relaxed font-light">
+      The full 13-page report, Monte Carlo pipeline, ESRS heatmap, Aqueduct overlay, and
+      methodology live in the repository.
     </p>
     <div class="flex flex-wrap gap-4 justify-center">
       <a href="https://github.com/ma731/Aqualia-Datathon"
-         class="px-7 py-3 rounded-xl bg-aqua text-navy font-bold hover:bg-white transition">
-        Open the repo ↗
+         class="px-8 py-4 rounded-2xl bg-aqua text-navy font-bold text-lg hover:bg-white transition shadow-lg shadow-aqua/30">
+        Open the repository →
       </a>
       <a href="#top"
-         class="px-7 py-3 rounded-xl border border-white/30 text-white font-semibold hover:bg-white/10 transition">
+         class="px-8 py-4 rounded-2xl border-2 border-white/30 text-white font-bold text-lg hover:bg-white/10 transition">
         Back to top
       </a>
     </div>
@@ -826,10 +972,13 @@ tailwind.config = {
 
 
 <!-- FOOTER -->
-<footer class="bg-navy border-t border-white/10 text-white/50 text-xs py-6">
-  <div class="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 justify-between">
-    <div>Team @ma731 · IE Sustainability Datathon March 2026</div>
-    <div class="font-mono">v1.0 · 2026-04-17</div>
+<footer class="bg-[#001a38] border-t border-white/10 text-white/50 text-sm py-8">
+  <div class="max-w-7xl mx-auto px-6 flex flex-wrap gap-4 justify-between items-center">
+    <div class="flex items-center gap-4">
+      <img src="aqualia_logo.png" alt="Aqualia" class="h-8 w-auto bg-white rounded-lg px-3 py-1.5 opacity-90"/>
+      <span>Team @ma731 · IE Sustainability Datathon · March 2026</span>
+    </div>
+    <div class="font-mono text-xs">v1.1 · 2026-04-17</div>
   </div>
 </footer>
 
@@ -840,7 +989,7 @@ tailwind.config = {
 <script src="data.js"></script>
 <script>
 
-// -------- 1. Animated counters (count up on viewport enter) ----------
+// -------- 1. Counters --------
 (function(){
   document.querySelectorAll('[data-counter], [data-counter-findings]').forEach(el => {
     const target = parseFloat(el.dataset.counter || el.dataset.counterFindings);
@@ -854,7 +1003,7 @@ tailwind.config = {
   });
 })();
 
-// -------- 2. Reveal utility ---------------------------------------
+// -------- 2. Reveal --------
 (function(){
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => e.isIntersecting && e.target.classList.add('is-visible'));
@@ -862,13 +1011,11 @@ tailwind.config = {
   document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 })();
 
-// -------- 3. AOS (scroll animations) ------------------------------
-AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 60 });
+// -------- 3. AOS --------
+AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 80 });
 
-// -------- 4. Monte Carlo matrix (Plotly) with scheme toggle -------
-function kFromScheme(scheme) {
-  // Small adjustments to positions per scheme (derived from mc_robustness.csv)
-  // Empirically very small; ranking unchanged — that's the robustness story.
+// -------- 4. Monte Carlo matrix --------
+function shiftsForScheme(scheme) {
   const shifts = {
     "Salience":        { T1: [0.00, 0.00], T2: [0.00, 0.00], T3: [0.00, 0.00] },
     "Equal":           { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
@@ -878,7 +1025,6 @@ function kFromScheme(scheme) {
   };
   return shifts[scheme] || shifts.Salience;
 }
-
 function buildEllipse(cx, cy, rx, ry, angleDeg) {
   const ang = angleDeg * Math.PI / 180;
   const pts = { x: [], y: [] };
@@ -891,19 +1037,15 @@ function buildEllipse(cx, cy, rx, ry, angleDeg) {
   }
   return pts;
 }
-
 function renderMatrix(scheme = "Salience") {
-  const shift = kFromScheme(scheme);
+  const shift = shiftsForScheme(scheme);
   const COLORS = { T1: '#1f77b4', T2: '#ff7f0e', T3: '#2ca02c' };
   const traces = [];
-
-  // Target Zone shading
   traces.push({
     type: 'scatter', mode: 'none', x:[2.5,5,5,2.5,2.5], y:[2.5,2.5,5,5,2.5],
     fill: 'toself', fillcolor: 'rgba(44,160,44,0.10)',
     hoverinfo: 'skip', showlegend: false,
   });
-
   window.DATA.mc.forEach(row => {
     const key = row.topic.startsWith('T1') ? 'T1' : row.topic.startsWith('T2') ? 'T2' : 'T3';
     const [dx, dy] = shift[key];
@@ -911,62 +1053,49 @@ function renderMatrix(scheme = "Salience") {
     const cy = row.impact_mean + dy;
     const pts = buildEllipse(cx, cy,
       row.ellipse_width / 2, row.ellipse_height / 2, row.ellipse_angle);
-
     traces.push({
       type: 'scatter', mode: 'lines', x: pts.x, y: pts.y,
       fill: 'toself', fillcolor: COLORS[key] + '40',
-      line: { color: COLORS[key], width: 2.5 },
+      line: { color: COLORS[key], width: 3 },
       name: row.topic, hoverinfo: 'name',
     });
     traces.push({
       type: 'scatter', mode: 'markers+text', x: [cx], y: [cy],
-      marker: { size: 14, color: COLORS[key],
-                line: { color: 'white', width: 2.5 } },
+      marker: { size: 18, color: COLORS[key], line: { color: 'white', width: 3 } },
       text: [key], textposition: 'middle center',
-      textfont: { color: 'white', size: 10, family: 'Inter', weight: 700 },
+      textfont: { color: 'white', size: 12, family: 'Inter', weight: 700 },
       showlegend: false,
-      hovertemplate: `<b>${row.topic}</b><br>` +
-                     `Financial: ${cx.toFixed(2)}<br>Impact: ${cy.toFixed(2)}<extra></extra>`,
+      hovertemplate: `<b>${row.topic}</b><br>Financial: ${cx.toFixed(2)}<br>Impact: ${cy.toFixed(2)}<extra></extra>`,
     });
   });
-
-  // Thresholds
   const layout = {
-    margin: { l: 60, r: 30, t: 40, b: 60 },
+    margin: { l: 70, r: 30, t: 40, b: 70 },
     paper_bgcolor: 'white', plot_bgcolor: 'white',
-    font: { family: 'Inter', size: 12, color: '#4a5663' },
-    xaxis: { title: 'Financial Severity', range: [1.4, 5], dtick: 0.5,
-             gridcolor: '#e6e8eb', zeroline: false },
-    yaxis: { title: 'Impact Severity',    range: [1.4, 5], dtick: 0.5,
-             gridcolor: '#e6e8eb', zeroline: false, scaleanchor: 'x' },
+    font: { family: 'Inter', size: 13, color: '#4a5663' },
+    xaxis: { title: { text: 'Financial Severity', font: { size: 14, color: '#002f5f' } },
+             range: [1.4, 5], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false },
+    yaxis: { title: { text: 'Impact Severity', font: { size: 14, color: '#002f5f' } },
+             range: [1.4, 5], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false, scaleanchor: 'x' },
     shapes: [
-      { type: 'line', x0: 2.5, x1: 2.5, y0: 1.4, y1: 5,
-        line: { color: '#888', width: 1, dash: 'dash' } },
-      { type: 'line', x0: 1.4, x1: 5, y0: 2.5, y1: 2.5,
-        line: { color: '#888', width: 1, dash: 'dash' } },
+      { type: 'line', x0: 2.5, x1: 2.5, y0: 1.4, y1: 5, line: { color: '#888', width: 1.2, dash: 'dash' } },
+      { type: 'line', x0: 1.4, x1: 5, y0: 2.5, y1: 2.5, line: { color: '#888', width: 1.2, dash: 'dash' } },
     ],
     annotations: [
       { x: 4.95, y: 4.9, xanchor: 'right', yanchor: 'top',
         text: '<b>TARGET ZONE</b>', showarrow: false,
-        font: { color: '#2ca02c', size: 11 } }
+        font: { color: '#2ca02c', size: 13 } }
     ],
-    legend: { orientation: 'h', y: -0.18, x: 0.5, xanchor: 'center' },
+    legend: { orientation: 'h', y: -0.18, x: 0.5, xanchor: 'center', font: { size: 12 } },
   };
-
-  Plotly.react('mc-matrix', traces, layout,
-    { displayModeBar: false, responsive: true });
+  Plotly.react('mc-matrix', traces, layout, { displayModeBar: false, responsive: true });
 }
-
 renderMatrix();
-document.getElementById('scheme-select').addEventListener('change', e => {
-  renderMatrix(e.target.value);
-});
+document.getElementById('scheme-select').addEventListener('change', e => renderMatrix(e.target.value));
 
 
-// -------- 5. ESRS heatmap (custom SVG/DOM grid) ------------------
+// -------- 5. ESRS heatmap --------
 function renderHeatmap() {
   const el = document.getElementById('heatmap-grid');
-  // Group by standard
   const groups = {};
   window.DATA.coverage.forEach(r => {
     const std = r.standard;
@@ -975,34 +1104,29 @@ function renderHeatmap() {
   });
   const order = ['E1','E2','E3','E4','E5','S1','S2','S3','S4','G1','AQ'];
   const bandColor = {
-    'green':   '#1b7f3b',
-    'amber':   '#f2b039',
-    'red':     '#c83c35',
-    'dark_red':'#6e1c1c',
-    'grey':    '#bbbbbb',
+    'green': '#1b7f3b', 'amber': '#f2b039',
+    'red': '#c83c35', 'dark_red': '#6e1c1c', 'grey': '#bbbbbb',
   };
-
   const maxCols = Math.max(...order.map(s => (groups[s]||[]).length));
-  let html = `<div class="overflow-x-auto"><div class="grid gap-1"
-     style="grid-template-columns: 60px repeat(${maxCols}, minmax(28px,1fr));">`;
-  // Header row — numbers 1..N
+  let html = `<div class="overflow-x-auto"><div class="grid gap-1.5"
+     style="grid-template-columns: 72px repeat(${maxCols}, minmax(36px,1fr));">`;
   html += `<div></div>`;
   for (let i = 1; i <= maxCols; i++) {
-    html += `<div class="text-[10px] text-slate/60 text-center font-mono">${i}</div>`;
+    html += `<div class="text-[11px] text-slate/60 text-center font-mono font-bold">${i}</div>`;
   }
-  // Rows
   order.forEach(std => {
     const rows = groups[std] || [];
-    html += `<div class="text-xs font-bold text-navy flex items-center pr-2">${std}</div>`;
+    html += `<div class="text-sm font-black text-navy flex items-center pr-2">${std}</div>`;
     for (let i = 0; i < maxCols; i++) {
       const r = rows[i];
       if (!r) {
-        html += `<div class="h-8 rounded-sm bg-grid/50"></div>`;
+        html += `<div class="h-10 rounded-md bg-grid/50"></div>`;
       } else {
-        const tooltip = `${r.dp_id} · ${r.standard}\n${r.description.slice(0,110)}\nScore: ${(+r.coverage_score).toFixed(3)} · ${r.band.toUpperCase()}`;
-        html += `<div class="hm-cell h-8 rounded-sm cursor-pointer flex items-center justify-center text-[9px] font-bold text-white"
+        const tooltip = `${r.dp_id} · ${r.standard}\n${r.description.slice(0,120)}\nScore: ${(+r.coverage_score).toFixed(3)} · ${r.band.toUpperCase()}`;
+        const label = (r.dp_id.split('-').slice(-1)[0] || '').slice(0, 4);
+        html += `<div class="hm-cell h-10 rounded-md cursor-pointer flex items-center justify-center text-[10px] font-black text-white"
                     style="background:${bandColor[r.band]}"
-                    title="${tooltip.replace(/"/g,'&quot;')}">${(r.dp_id.split('-').slice(-1)[0] || '').slice(0,4)}</div>`;
+                    title="${tooltip.replace(/"/g,'&quot;')}">${label}</div>`;
       }
     }
   });
@@ -1012,28 +1136,22 @@ function renderHeatmap() {
 renderHeatmap();
 
 
-// -------- 6. Aqueduct bar chart ---------------------------------
+// -------- 6. Aqueduct bar chart --------
 function renderAqueduct() {
   const data = window.DATA.aqueduct;
   const bandColor = {
-    'Low':             '#7fbf7f',
-    'Low-Medium':      '#9ee29f',
-    'Medium-High':     '#f2b039',
-    'High':            '#e48a3e',
-    'Extremely High':  '#c83c35',
-    'Mixed':           '#bbbbbb',
+    'Low': '#7fbf7f', 'Low-Medium': '#9ee29f',
+    'Medium-High': '#f2b039', 'High': '#e48a3e',
+    'Extremely High': '#c83c35', 'Mixed': '#bbbbbb',
   };
   const BAND_ORDER = ['Low','Low-Medium','Medium-High','High','Extremely High','Mixed'];
   const bandN = b => BAND_ORDER.indexOf(b);
   const sorted = [...data].sort((a,b) =>
     bandN(b.bws_category_2024) - bandN(a.bws_category_2024)
     || (b.revenue_share_pct||0) - (a.revenue_share_pct||0));
-
   const labels = sorted.map(r => `${r.country} — ${r.region_label}`);
-  const y = sorted.map((_,i) => i);
   const score24 = sorted.map(r => +r.bws_score_2024);
   const score30 = sorted.map(r => +r.bws_score_2030_BAU);
-
   const trace24 = {
     type: 'bar', orientation: 'h',
     x: score24, y: labels,
@@ -1044,36 +1162,33 @@ function renderAqueduct() {
   const trace30 = {
     type: 'bar', orientation: 'h',
     x: score30, y: labels,
-    marker: { color: sorted.map(r => bandColor[r.bws_category_2030_BAU]),
-              opacity: 0.55 },
+    marker: { color: sorted.map(r => bandColor[r.bws_category_2030_BAU]), opacity: 0.55 },
     name: 'BAU-2030',
     hovertemplate: '%{y}<br>BWS 2030: %{x:.2f}<extra></extra>',
   };
-
   const layout = {
     barmode: 'group',
-    margin: { l: 280, r: 40, t: 30, b: 50 },
-    height: Math.max(420, labels.length * 30),
+    margin: { l: 290, r: 40, t: 30, b: 60 },
+    height: Math.max(460, labels.length * 34),
     paper_bgcolor: 'white', plot_bgcolor: 'white',
-    font: { family: 'Inter', size: 11, color: '#4a5663' },
-    xaxis: { range: [0, 5.5], title: 'WRI Aqueduct 4.0 Baseline Water Stress',
+    font: { family: 'Inter', size: 12, color: '#4a5663' },
+    xaxis: { range: [0, 5.5], title: { text: 'WRI Aqueduct 4.0 Baseline Water Stress', font: { size: 13, color: '#002f5f' } },
              gridcolor: '#e6e8eb',
              tickvals: [0,1,2,3,4,5],
              ticktext: ['0','Low','Low-Med','Med-High','High','Extreme'] },
-    yaxis: { autorange: 'reversed', tickfont: { size: 10 } },
+    yaxis: { autorange: 'reversed', tickfont: { size: 11 } },
     legend: { orientation: 'h', y: -0.12, x: 0.5, xanchor: 'center' },
     shapes: [{ type: 'line', x0: 3, x1: 3, y0: -0.5, y1: labels.length - 0.5,
                line: { color: '#888', width: 1, dash: 'dash' } },
              { type: 'line', x0: 4, x1: 4, y0: -0.5, y1: labels.length - 0.5,
                line: { color: '#c83c35', width: 1, dash: 'dash' } }],
   };
-  Plotly.react('aqueduct-bars', [trace24, trace30], layout,
-    { displayModeBar: false, responsive: true });
+  Plotly.react('aqueduct-bars', [trace24, trace30], layout, { displayModeBar: false, responsive: true });
 }
 renderAqueduct();
 
 
-// -------- 7. Tranche schedule bars animate in -------------------
+// -------- 7. Tranche bars --------
 (function(){
   const tranches = document.querySelectorAll('.tranche');
   const max = 150;
@@ -1083,20 +1198,20 @@ renderAqueduct();
     const pct = (amt / max) * 100;
     t.innerHTML = `
       <div class="text-center">
-        <div class="text-xs text-slate/60 mb-1">${year}</div>
-        <div class="kpi-num text-2xl font-extrabold text-navy">€${amt} M</div>
+        <div class="section-kicker text-slate/60 mb-2">${year}</div>
+        <div class="kpi-num text-4xl font-black text-navy">€${amt}<span class="text-2xl"> M</span></div>
       </div>
-      <div class="mt-3 h-2 rounded-full bg-grid overflow-hidden">
+      <div class="mt-4 h-3 rounded-full bg-grid overflow-hidden">
         <div class="bar-fill h-full rounded-full bg-gradient-to-r from-aqua to-navy" style="width:0%"></div>
       </div>`;
     const bar = t.querySelector('.bar-fill');
-    gsap.to(bar, { width: pct + '%', duration: 1.4, ease: 'power2.out',
+    gsap.to(bar, { width: pct + '%', duration: 1.5, ease: 'power2.out',
       scrollTrigger: { trigger: t, start: 'top 85%', once: true } });
   });
 })();
 
 
-// -------- 8. Nav shadow on scroll -------------------------------
+// -------- 8. Nav shadow --------
 (function(){
   const nav = document.querySelector('nav');
   const onScroll = () => {
