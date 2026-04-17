@@ -1,0 +1,48 @@
+# --- Large binaries we don't want in the public repo -------------------
+# The 4 full Aqualia Sustainability Reports are ~180 MB total and are
+# Aqualia's own publicly-available PDFs. Keep them local; the Streamlit
+# app does not need them at runtime.
+02_sources/full_reports/
+
+# Extracted slide media from the Workshop PPT (reconstructable locally)
+00_brief/workshop1_media/
+
+# Node stuff from the docx build
+05_report/docx_build/node_modules/
+05_report/docx_build/package-lock.json
+05_report/docx_build/package.json
+05_report/docx_build/
+
+# Aqueduct large shapefile (when downloaded)
+02_sources/aqueduct/Aqueduct40_*.shp
+02_sources/aqueduct/Aqueduct40_*.dbf
+02_sources/aqueduct/Aqueduct40_*.shx
+02_sources/aqueduct/Aqueduct40_*.prj
+02_sources/aqueduct/Aqueduct40_*.cpg
+02_sources/aqueduct/*.gpkg
+
+# Bogus landing HTML we saved when probing Aqualia's WAF
+02_sources/full_reports/*.html
+
+# --- Python --- --------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+.env
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Editors / OS ------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- Streamlit runtime -------------------------------------------------
+.streamlit/secrets.toml
