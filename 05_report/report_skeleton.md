@@ -268,9 +268,13 @@ reviewer.
 - [ ] All 17 exhibits produced in consistent visual system
 - [ ] Bibliography complete (`references.md`)
 - [ ] Every numeric claim has a footnote or in-line citation
+- [ ] Evidence tiers applied to all numeric assumptions (A/B/C tags)
+- [ ] No headline metric depends on Tier C assumptions alone
 - [ ] Limitations section co-signed by full team
 - [ ] Cross-read by one person who has NOT been close to the project
 - [ ] Spanish-language check (some source documents are in Spanish — verify any translated quote)
 - [ ] Final PDF export with embedded fonts, linearised
 - [ ] Appendix H data-and-code paths tested on a clean machine
 - [ ] Read-aloud test: executive summary in under 60 seconds
+- [ ] Reproducibility check passed (matrix regenerated from frozen inputs)
+- [ ] Submission integrity gate passed (traceability, consistency, citations)

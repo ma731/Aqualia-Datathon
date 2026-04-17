@@ -158,6 +158,19 @@ mean of the top-k IRO (or R&O) scores where k = max(3, round(N × 0.6)).
 Top-k aggregation mirrors standard practice of pricing materiality off
 the most material subset rather than an undifferentiated mean.
 
+### 3.2.1 Reproducibility protocol
+
+To ensure this is auditable and repeatable:
+
+1. Each score entry carries an Assumption ID and source ID.
+2. Raw input tables are frozen in CSV before any charting.
+3. Matrix outputs are generated from script, not manual plotting.
+4. Any change to threshold logic triggers a full rerun and changelog
+   entry with timestamp and reason.
+
+This protocol is designed to satisfy jury scrutiny on "traceability
+from assumption to matrix position."
+
 ### 3.3 Threshold calibration
 Threshold bands for every sub-criterion are documented in
 `03_analysis/scoring_rubric.md` §2–§3 and reproduced in Appendix A.
@@ -373,6 +386,19 @@ For each channel we estimate a triangular distribution (low / base /
 high) anchored to Aqualia's public financial scale, peer disclosures,
 and regulatory cost factors. Full assumption log A01–A17 is in
 Appendix B; detail at `financials.md`.
+
+### 6.0.1 Financial causal bridge (how ESG hits P&L/BS/CF)
+
+For each topic, we explicitly map:
+
+- **Revenue:** tariff pressure, concession renewals, tender win rates.
+- **Costs (OPEX):** energy, treatment, cyber operations, compliance.
+- **Assets/CAPEX:** infrastructure reinforcement, digitalisation, systems.
+- **Liabilities:** fines, claims, covenant pressure, refinancing penalties.
+- **Cash flow timing:** short/medium/long horizon with discount treatment.
+
+This avoids narrative-only financial materiality and enforces a direct
+link to corporate finance metrics.
 
 **T1 (€ per year where applicable; € cumulative where CAPEX):**
 Revenue at risk **€25–110 M** from concession loss and tariff pressure
@@ -632,6 +658,16 @@ Six honest limitations, each with a remediation path.
    methodological judgement. Remediation: sensitivity to this
    perturbation is reported at PERTURB = 1.0 in the appendix;
    topic rankings are stable.
+
+### 9.4 Submission integrity checks
+
+Before final submission we run a final gate:
+
+- All headline numbers trace to a table cell and source reference.
+- All Tier C assumptions have at least one corroborating Tier A/B source.
+- All three topic positions are reproducible by re-running scripts.
+- Language consistency pass (single language per section; no mixed labels).
+- Citation pass (regulatory references complete and correctly named).
 
 ### 9.2 Reverse stress test (Exhibit 17)
 For each topic, we ask: *what would inputs have to do for this topic

@@ -27,6 +27,22 @@ Threshold reminder (from `scoring_rubric.md §3.1`): Financial Severity
 bands are expressed as % of **€1,400 M** — 0.5% = €7M (Moderate),
 2% = €28M (Major), 5% = €70M (Severe).
 
+### 0.1  Evidence tiers (source quality control)
+
+Every numeric input in this sheet is tagged:
+
+- **Tier A (auditable):** company disclosures, regulation text, audited
+  financials, official standards.
+- **Tier B (benchmark):** peer disclosures, established industry reports,
+  rating methodology notes.
+- **Tier C (expert estimate):** model assumptions and reasoned
+  interpolation where no direct source exists.
+
+Publication rule:
+- No final headline number can rely on Tier C alone.
+- Any Tier C line must be triangulated with at least one Tier A or
+  Tier B source before final submission.
+
 ---
 
 ## 1.  T1 — Water Resilience & Equitable Access
@@ -61,6 +77,10 @@ bands are expressed as % of **€1,400 M** — 0.5% = €7M (Moderate),
 | A05 | Energy costs +1.5%/yr above inflation under climate stress | EU ETS extension + Aqualia's own `O7` loss-of-competitive-capacity risk |
 | A06 | €85 M/yr CAPEX over 4 years = €340 M base | Triangulation: Aqualia already spends €40 M/yr on networks/sanitation; UWWTD recast requires additional energy-neutral investment; peer benchmark (Veolia desalination unit costs ≈ €1.5 M/MLD-capacity) |
 | A07 | Fines + write-downs ~0.5× annual OPEX impact | SASB Water Utilities effluent non-compliance benchmark |
+
+Evidence tier note:
+- A03, A04, A05, A06, A07 are currently Tier B/C composites and must be
+  upgraded with at least one Tier A anchor each before final print.
 
 ---
 
@@ -102,6 +122,10 @@ bands are expressed as % of **€1,400 M** — 0.5% = €7M (Moderate),
 | A10 | Cyber OPEX baseline 0.3–0.7% of revenue; sector target 0.8–1.2% | Gartner water-utility cyber spend benchmark 2024 |
 | A11 | Digital twin + AI predictive maintenance CAPEX = €15–40/serviced person over 4 years | Global Omnium GoAigua public figures + SWAN Forum utility benchmarks |
 | A12 | NIS2 fines capped at 2% global revenue; GDPR at 4%; probability 10-30% over the period | NIS2 Directive Art. 34; GDPR Art. 83 |
+
+Evidence tier note:
+- A12 is Tier A (regulatory caps); A08-A11 are Tier B/C and should be
+  validated with one utility cyber-insurance or annual-report datapoint.
 
 ---
 
@@ -151,6 +175,10 @@ The single number the pitch closes on:
 | A15 | ~€1.2 B refinanceable long-dated debt; 15-40 bp saving phased over refinancing cycle | Typical water-utility debt maturity profile |
 | A16 | €18 M one-off CSRD + CSDDD + ISO 14001:2026 compliance implementation | Deloitte 2025 CSRD readiness survey (large undertakings avg €15-25M) |
 | A17 | CSDDD liability risk probability 10% in the period; Omnibus I relief ~30% | CSDDD Art. 29 + Omnibus I Simplification Package (Dec 2024) |
+
+Evidence tier note:
+- A14-A17 are Tier B/C and require one Tier A financing or issuance
+  anchor from FCC/Aqualia investor documentation before publication.
 
 ---
 

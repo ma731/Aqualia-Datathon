@@ -9,6 +9,10 @@
 # (Everything under 00_brief is local-only. The challenge brief PDF and
 # Workshop 1 PPT are cited in the report but not re-distributed.)
 
+# Local working copy of Aqualia challenge PDFs + extracted text snippets.
+# Same policy as 00_brief/ and 02_sources/full_reports/ — keep local.
+_review_docs/
+
 # Node stuff from the docx build
 05_report/docx_build/node_modules/
 05_report/docx_build/package-lock.json

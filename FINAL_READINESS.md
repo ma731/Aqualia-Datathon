@@ -81,6 +81,16 @@ lands the 5-minute pitch on a €-number close.**
 - **Expected uplift:** large. Judges unconsciously reward visual
   coherence.
 
+### P1.5 — Credibility hardening pass (done in core docs, apply in final outputs)
+- **Status:** methodology hardening integrated into core files:
+  reproducibility protocol, evidence tiers, shortlist selection formula,
+  and expanded judge-attack Q&A.
+- **Action left:** mirror these controls in final report PDF and final
+  slide deck export.
+- **Effort:** 1.5–2 hours.
+- **Gate:** no uncited headline metrics; matrix reproducible from frozen
+  inputs; presenter can answer all 15 attack questions in <20 sec.
+
 ---
 
 ## 🟠 Priority 2 — High perceived lift, moderate effort

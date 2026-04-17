@@ -111,6 +111,9 @@ solid", "T2 confirmed", "T3 knife-edge".
 **Key verbal numbers:** 10,000 draws · 90% ellipse · 4 weighting
 schemes · no ranking flip.
 
+**Presenter discipline note:** matrix positions are script-generated
+from frozen inputs; no manual chart positioning.
+
 **Hand-off line:** "The blind spot is the most interesting story
 on this slide, so let me zoom in."
 
@@ -184,6 +187,10 @@ on this slide, so let me zoom in."
 **Key verbal numbers:** €440 M CAPEX · €500 M bond · 25 bp spread ·
 €31 M PV savings · 10-year tenor.
 
+**Credibility safeguard line (optional):**
+> "All financial assumptions are tier-tagged; estimate-only inputs are
+> triangulated before final publication."
+
 ---
 
 ## SLIDE 6 — Roadmap 2027–2030 (3:45 → 4:35, 50 sec)
@@ -246,10 +253,10 @@ Stop. Do not add anything. Judges will ask questions.
 
 ---
 
-## Q&A preparation — anticipated challenges
+## Q&A preparation — judge attack pack (15)
 
-Every one of these should have a prepared 20-second answer.
-Rehearse them until automatic.
+Every one of these should have a prepared 15–20 second answer.
+Rehearse until automatic and consistent across teammates.
 
 ### Q1. *"Your €1.4 B revenue number — where did you get it?"*
 > "Triangulated from FCC Group segment disclosures; Aqualia is FCC's
@@ -296,6 +303,50 @@ Rehearse them until automatic.
 > framework cannot. The concession-renewal risk it implies is
 > uncapped."
 
+### Q8. *"How do we know your three-topic selection isn't subjective?"*
+> "Selection uses a published composite formula in `short_list_lock.md`
+> with explicit weights for impact, financial score, salience coverage,
+> regulatory pressure, and differentiation. We also apply lock rules:
+> one sector-core topic, one blind-spot/differentiator, and low IRO
+> overlap."
+
+### Q9. *"Your matrix looks polished — did you hand-place points?"*
+> "No. Matrix centroids and ellipses are script-generated from frozen
+> CSV inputs and reproducible Monte Carlo draws. If needed, we can rerun
+> with the same seed and recover the same positions."
+
+### Q10. *"You use assumptions. Why trust your headline number?"*
+> "We tier every input by evidence quality: Tier A auditable,
+> Tier B benchmarked, Tier C estimated. Publication rule: no headline
+> number may rely on Tier C alone; each estimate is triangulated before
+> final print."
+
+### Q11. *"Why include T3 if it's only borderline material?"*
+> "Because borderline is decision-relevant. Our framework separates
+> robust from conditional materiality. T3 turns material under plausible
+> tightening of enforcement or spread movements, which is exactly why it
+> belongs in strategy now."
+
+### Q12. *"What if green-spread compression disappears?"*
+> "Then T3 loses some upside, but the financing rationale remains due to
+> compliance-linked access and refinancing resilience. We stress-test the
+> spread in sensitivity and keep T1/T2 investment logic intact."
+
+### Q13. *"Why not prioritize biodiversity (E4) directly?"*
+> "E4 is not ignored; it is integrated into T1 where operational and
+> financial channels are strongest. This avoids double-counting and keeps
+> the executive shortlist focused on action clusters."
+
+### Q14. *"How will Aqualia operationalize this after the datathon?"*
+> "We propose a semi-annual matrix refresh with script reruns, named
+> executive owners per topic, and KPI thresholds that trigger committee
+> review when positions shift materially over two consecutive cycles."
+
+### Q15. *"What's the single biggest risk in your approach?"*
+> "Input quality, not model structure. That's why we added evidence
+> tiers, reproducibility controls, and a submission integrity gate that
+> blocks unsupported headline claims."
+
 ---
 
 ## Rehearsal protocol — the real work starts here
@@ -312,6 +363,9 @@ Six rehearsals minimum. Three recorded and watched back. Protocol:
    the QR code. Have backup if it fails.
 6. **Rehearsal 6 — final, the night before.** Record. If timing or
    energy is off, adjust slides, not script (script is cardinal).
+
+7. **Q&A drill — 15 attacks, rapid-fire.** Every teammate answers any
+   5 random questions without notes.
 
 **Rules.**
 - Never read from the slide.

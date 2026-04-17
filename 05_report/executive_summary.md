@@ -70,6 +70,11 @@ robustness check; (iv) an LLM-assisted ESRS disclosure-gap heatmap
 classifying the available Aqualia corpus against seventy-five
 datapoints. All assumptions numbered and cited (A01–A17).
 
+**Evidence quality control.** Financial assumptions are tagged by
+evidence tier: Tier A (auditable disclosures/regulation), Tier B
+(benchmark sources), Tier C (reasoned estimates). Publication rule:
+no headline number relies on Tier C assumptions alone.
+
 **What we did not do.** We did not consult external Aqualia
 stakeholders directly; we did not access granular asset-level
 financials; our Real Options exhibit on desalination-vs-water-reuse is

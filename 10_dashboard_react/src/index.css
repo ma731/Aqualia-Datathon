@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans text-slate2 bg-paper antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+  ::selection {
+    background: rgba(93, 185, 217, 0.35);
+    color: #002f5f;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply max-w-7xl mx-auto px-6;
+  }
+  .kicker {
+    @apply text-[0.78rem] font-bold tracking-[0.22em] uppercase text-aqua;
+  }
+  .chip {
+    @apply inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[0.78rem] font-bold tracking-wide;
+  }
+  .nav-link {
+    @apply relative text-sm font-semibold text-slate2 hover:text-navy transition-colors;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute left-0 -bottom-1.5 w-0 h-[2px] bg-aqua transition-all duration-300;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+  .card {
+    @apply bg-white rounded-2xl shadow-ring border border-grid;
+  }
+  .card-glass {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-aqua text-navy font-bold hover:bg-aqua2 transition-all shadow-soft;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl border border-white/30 text-white font-semibold hover:bg-white/10 transition-all;
+  }
+  .bg-grid-subtle {
+    background-image: linear-gradient(rgba(0, 47, 95, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 47, 95, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.22;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+  }
+  .shine {
+    background: linear-gradient(
+      110deg,
+      transparent 35%,
+      rgba(255, 255, 255, 0.35) 50%,
+      transparent 65%
+    );
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+  .num-tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+  .accent-bar {
+    @apply absolute left-0 top-0 bottom-0 w-[5px] rounded-l-2xl;
+  }
+}
+
+/* Plotly minor overrides so the charts feel native */
+.js-plotly-plot .modebar {
+  background: transparent !important;
+}
+.js-plotly-plot .modebar-btn path {
+  fill: #4a5663 !important;
+}

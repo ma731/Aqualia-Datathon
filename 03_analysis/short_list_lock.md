@@ -23,6 +23,34 @@ the high-IRO-density areas of Aqualia's 2025 review, and cover all
 five sector-core areas peers universally prioritise. *See §4 for the
 defence against the "why not the other 13" challenge.*
 
+### 0.1  Selection algorithm (audit-friendly)
+
+Before locking the shortlist, every candidate topic is scored on a
+0-100 composite:
+
+```
+Selection Score = 0.35 * Impact Score
+                + 0.30 * Financial Score
+                + 0.15 * Stakeholder Salience Coverage
+                + 0.10 * Regulatory Pressure
+                + 0.10 * Differentiation Potential
+```
+
+Rules:
+- Impact and Financial Scores come from `scoring_rubric.md`.
+- Stakeholder Salience Coverage is the weighted share of high-salience
+  groups materially affected by the topic.
+- Regulatory Pressure is a 1-5 rating (converted to 0-100) based on
+  direct CSRD/ESRS and water-sector mandates.
+- Differentiation Potential is a 1-5 rating (converted to 0-100) from
+  the peer benchmark: blind spot or defensible advantage.
+
+Lock criteria:
+- Include the top three scoring topics **subject to**:
+  1) at least one topic must be a sector-core E/S theme,
+  2) at least one topic must represent a blind spot or differentiator,
+  3) no selected pair can be >70% overlapping by IRO set.
+
 ---
 
 ## 1.  T1 — Water Resilience & Equitable Access

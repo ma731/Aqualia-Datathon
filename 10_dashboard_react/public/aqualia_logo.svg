@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 160" role="img" aria-label="Aqualia">
+  <title>Aqualia</title>
+  <defs>
+    <style>
+      .aq-text {
+        font-family: 'Fraunces', 'Clarika', 'Inter', 'Segoe UI', Arial, sans-serif;
+        font-weight: 500;
+        font-size: 92px;
+        letter-spacing: -3px;
+        fill: #2a8ec2;
+      }
+    </style>
+  </defs>
+
+  <!-- Arrows -->
+  <g stroke="#0f3b5a" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Blue arrow (back) -->
+    <path
+      d="M 12 46
+         C 18 42, 42 32, 62 26
+         L 58 22
+         C 56 19, 58 15, 62 15
+         L 102 11
+         C 106 10.5, 109 13, 109 16.5
+         L 112 50
+         C 112 54, 108 56, 105 54
+         L 97 48
+         C 78 56, 44 66, 22 66
+         C 12 66, 8 50, 12 46 Z"
+      fill="#258ac2"
+    />
+    <!-- Green arrow (front, slightly higher + right) -->
+    <path
+      d="M 70 44
+         C 76 40, 100 30, 120 24
+         L 116 20
+         C 114 17, 116 13, 120 13
+         L 160 9
+         C 164 8.5, 167 11, 167 14.5
+         L 170 48
+         C 170 52, 166 54, 163 52
+         L 155 46
+         C 136 54, 102 64, 80 64
+         C 70 64, 66 48, 70 44 Z"
+      fill="#8cc640"
+    />
+  </g>
+
+  <!-- Wordmark -->
+  <text x="8" y="140" class="aq-text">aqualia</text>
+</svg>
