@@ -175,7 +175,7 @@ tailwind.config = {
       <span class="hidden md:inline text-slate/30 text-2xl font-light">|</span>
       <span class="hidden md:inline font-semibold text-navy text-base tracking-tight">Double Materiality 2027&nbsp;–&nbsp;2030</span>
     </a>
-    <div class="hidden lg:flex gap-8 text-sm font-semibold text-slate">
+    <div class="hidden lg:flex gap-7 text-sm font-semibold text-slate">
       <a href="#topics"   class="nav-link">Topics</a>
       <a href="#matrix"   class="nav-link">Matrix</a>
       <a href="#findings" class="nav-link">Findings</a>
@@ -183,6 +183,7 @@ tailwind.config = {
       <a href="#heatmap"  class="nav-link">ESRS</a>
       <a href="#water"    class="nav-link">Water stress</a>
       <a href="#roadmap"  class="nav-link">Roadmap</a>
+      <a href="#peers"    class="nav-link">Peers</a>
     </div>
     <a href="https://github.com/ma731/Aqualia-Datathon"
        class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-navy hover:text-deep border border-grid rounded-lg px-4 py-2 hover:bg-grid/60 transition">
@@ -537,15 +538,27 @@ tailwind.config = {
           four stakeholder-weighting schemes.
         </p>
       </div>
-      <div class="flex flex-col gap-2">
-        <label class="section-kicker text-slate/70">Stakeholder weighting</label>
-        <select id="scheme-select" class="px-5 py-3 border-2 border-grid rounded-2xl bg-white font-bold text-navy text-base focus:border-aqua outline-none">
-          <option value="Salience">Salience (Mitchell–Agle–Wood)</option>
-          <option value="Equal">Equal — 11 groups</option>
-          <option value="Regulator-heavy">Regulator-heavy</option>
-          <option value="Community-first">Community-first</option>
-          <option value="Investor-first">Investor-first</option>
-        </select>
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label class="section-kicker text-slate/70">Stakeholder weighting</label>
+          <select id="scheme-select" class="px-5 py-3 border-2 border-grid rounded-2xl bg-white font-bold text-navy text-base focus:border-aqua outline-none">
+            <option value="Salience">Salience (Mitchell–Agle–Wood)</option>
+            <option value="Equal">Equal — 11 groups</option>
+            <option value="Regulator-heavy">Regulator-heavy</option>
+            <option value="Community-first">Community-first</option>
+            <option value="Investor-first">Investor-first</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label class="section-kicker text-slate/70">NGFS climate scenario</label>
+          <div class="flex flex-wrap gap-2">
+            <button data-ngfs="Base"       class="ngfs-btn px-3.5 py-2 rounded-xl font-bold text-sm border-2 border-navy bg-navy text-white transition">Base</button>
+            <button data-ngfs="Orderly"    class="ngfs-btn px-3.5 py-2 rounded-xl font-bold text-sm border-2 border-t3  text-t3  hover:bg-t3/10  transition">Orderly ↗</button>
+            <button data-ngfs="Disorderly" class="ngfs-btn px-3.5 py-2 rounded-xl font-bold text-sm border-2 border-t2  text-t2  hover:bg-t2/10  transition">Disorderly ↕</button>
+            <button data-ngfs="HotHouse"   class="ngfs-btn px-3.5 py-2 rounded-xl font-bold text-sm border-2 border-badred text-badred hover:bg-badred/10 transition">Hot House 🌡</button>
+          </div>
+          <div id="ngfs-label" class="text-xs text-slate/60 italic leading-snug mt-1">Baseline — positions from 10,000 Monte Carlo draws</div>
+        </div>
       </div>
     </div>
 
@@ -582,6 +595,72 @@ tailwind.config = {
       </div>
     </div>
 
+  </div>
+</section>
+
+
+<!-- ============================================================
+     STAKEHOLDER SALIENCE RADAR
+============================================================ -->
+<section id="salience" class="relative py-28 bg-[#f4f8fb] border-t border-grid">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4" data-aos="fade-up">
+      <div>
+        <div class="section-kicker text-navy/60 mb-3">02.5 · Stakeholder salience</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Mitchell–Agle–Wood.<br><span class="text-aqua">Every voice weighted.</span></h2>
+        <p class="text-xl text-slate mt-5 max-w-2xl leading-relaxed">
+          Power × Legitimacy × Urgency determines each stakeholder group's weight in the materiality
+          aggregation. Only stakeholders with all three attributes reach <b class="text-navy">Definitive</b> status.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+
+      <div class="bg-white rounded-3xl border border-grid p-6" data-aos="fade-up">
+        <div id="salience-radar" style="height:440px;"></div>
+      </div>
+
+      <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="bg-navy text-white rounded-3xl p-7 relative overflow-hidden">
+          <svg class="absolute -right-6 -bottom-6 w-28 h-28 text-aqua/10" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"/>
+          </svg>
+          <div class="section-kicker text-aqua mb-3">Definitive · Weight 12% each</div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="chip bg-white/15 text-white text-sm">Regulators</span>
+            <span class="chip bg-white/15 text-white text-sm">Customers</span>
+            <span class="chip bg-white/15 text-white text-sm">Shareholders</span>
+          </div>
+          <p class="text-sm text-white/75 leading-relaxed">All three attributes present. These groups can demand action — and expect compliance — simultaneously.</p>
+        </div>
+
+        <div class="bg-white border border-grid rounded-3xl p-7">
+          <div class="section-kicker text-slate/60 mb-3">Expectant · Weight 8% each</div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="chip bg-grid text-navy text-sm">Investors</span>
+            <span class="chip bg-grid text-navy text-sm">Employees</span>
+            <span class="chip bg-grid text-navy text-sm">Communities</span>
+            <span class="chip bg-grid text-navy text-sm">Society</span>
+            <span class="chip bg-grid text-navy text-sm">Environment</span>
+            <span class="chip bg-grid text-navy text-sm">Suppliers</span>
+            <span class="chip bg-grid text-navy text-sm">Partners</span>
+          </div>
+          <p class="text-sm text-slate/70">Two attributes. Actively engaged but lack the full combination to compel unilateral action.</p>
+        </div>
+
+        <div class="bg-white border border-grid rounded-3xl p-6">
+          <div class="section-kicker text-slate/60 mb-3">Dormant · Weight 4%</div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span class="chip bg-grid text-slate text-sm">Academia</span>
+          </div>
+          <p class="text-sm text-slate/70">Power attribute only. Influential on long horizons; limited urgency in water-utility operations.</p>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
@@ -937,6 +1016,104 @@ tailwind.config = {
 
 
 <!-- ============================================================
+     PEER BENCHMARK
+============================================================ -->
+<section id="peers" class="relative py-28 bg-[#f4f8fb] border-t border-grid">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4" data-aos="fade-up">
+      <div>
+        <div class="section-kicker text-navy/60 mb-3">08 · Peer benchmark</div>
+        <h2 class="text-5xl md:text-6xl font-black text-navy tracking-tight leading-tight">Where Aqualia<br><span class="text-aqua">stands today.</span></h2>
+        <p class="text-xl text-slate mt-5 max-w-3xl leading-relaxed">
+          Peer-reviewed ESRS disclosure maturity across five integrated water-cycle operators.
+          The gap is not theoretical — it is the precise gap our three topics close.
+        </p>
+      </div>
+      <div class="text-right hidden md:block" data-aos="fade-up" data-aos-delay="80">
+        <div class="section-kicker text-slate/60 mb-1">Aqualia ESRS coverage</div>
+        <div class="kpi-num text-6xl font-black text-badred">35<span class="text-3xl">%</span></div>
+        <div class="text-sm text-slate/60 uppercase tracking-widest mt-1">vs. 63% peer average</div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 items-start">
+
+      <div class="md:col-span-2 bg-white rounded-3xl border border-grid p-6" data-aos="fade-up">
+        <div id="peer-chart" style="height:460px;"></div>
+      </div>
+
+      <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="bg-navy text-white rounded-3xl p-7 relative overflow-hidden">
+          <svg class="absolute -right-4 -top-4 w-24 h-24 text-aqua/10" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.5s6 7 6 11a6 6 0 11-12 0c0-4 6-11 6-11z"/>
+          </svg>
+          <div class="section-kicker text-aqua mb-3">S3 anomaly</div>
+          <p class="text-base text-white/85 leading-relaxed">
+            Every peer lists ESRS S3 (affected communities) as a standalone material topic.
+            Aqualia folds it into S4 — masking the
+            <b class="text-aqua">Colombia 33% satisfaction signal</b>.
+          </p>
+        </div>
+
+        <div class="bg-white border border-grid rounded-3xl p-7">
+          <div class="section-kicker text-t2 mb-3">Digital blind spot</div>
+          <p class="text-base text-slate leading-relaxed">
+            Veolia, Severn Trent, and Suez all list digitalisation &amp; cybersecurity as a top-5 material topic.
+            Aqualia's 2025 review assigns just <b class="text-navy">2 IROs</b> — the lowest of any peer in the benchmark.
+          </p>
+        </div>
+
+        <div class="bg-white border border-grid rounded-3xl p-6">
+          <div class="section-kicker text-t3 mb-3">Green finance edge</div>
+          <p class="text-base text-slate leading-relaxed">
+            Aqualia's Taxonomy-alignment narrative <b class="text-navy">already exceeds Global Omnium</b>.
+            The €500 M programme matches Suez and Severn Trent's mid-range issuance and positions
+            Aqualia as the green-finance leader in Iberian water.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- S3 comparison strip -->
+    <div class="mt-10 bg-white rounded-3xl border border-grid p-8 overflow-x-auto" data-aos="fade-up">
+      <div class="section-kicker text-slate/60 mb-5">S3 standalone disclosure — five peers</div>
+      <div class="flex items-stretch gap-4 min-w-max md:min-w-0">
+        <div class="flex-1 rounded-2xl p-5 bg-badred/10 border-2 border-badred/20 text-center">
+          <div class="text-xs font-bold text-badred uppercase tracking-wider mb-2">Aqualia</div>
+          <div class="text-3xl font-black text-badred">S3 ⊂ S4</div>
+          <div class="text-xs text-slate/60 mt-2 leading-snug">Absorbed into consumer disclosures</div>
+        </div>
+        <div class="flex-1 rounded-2xl p-5 bg-t3/10 border-2 border-t3/20 text-center">
+          <div class="text-xs font-bold text-t3 uppercase tracking-wider mb-2">Veolia</div>
+          <div class="text-3xl font-black text-t3">Standalone</div>
+          <div class="text-xs text-slate/60 mt-2 leading-snug">Full ESRS S3 disclosure</div>
+        </div>
+        <div class="flex-1 rounded-2xl p-5 bg-t3/10 border-2 border-t3/20 text-center">
+          <div class="text-xs font-bold text-t3 uppercase tracking-wider mb-2">Severn Trent</div>
+          <div class="text-3xl font-black text-t3">Standalone</div>
+          <div class="text-xs text-slate/60 mt-2 leading-snug">Community investment disclosed</div>
+        </div>
+        <div class="flex-1 rounded-2xl p-5 bg-t3/10 border-2 border-t3/20 text-center">
+          <div class="text-xs font-bold text-t3 uppercase tracking-wider mb-2">Suez</div>
+          <div class="text-3xl font-black text-t3">Standalone</div>
+          <div class="text-xs text-slate/60 mt-2 leading-snug">Full ESRS S3 disclosure</div>
+        </div>
+        <div class="flex-1 rounded-2xl p-5 bg-amber/10 border-2 border-amber/20 text-center">
+          <div class="text-xs font-bold text-amber uppercase tracking-wider mb-2">Global Omnium</div>
+          <div class="text-3xl font-black text-amber">Partial</div>
+          <div class="text-xs text-slate/60 mt-2 leading-snug">Merged with broader S cluster</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
      CLOSE
 ============================================================ -->
 <section class="relative py-36 bg-navy text-white overflow-hidden">
@@ -978,7 +1155,7 @@ tailwind.config = {
       <img src="aqualia_logo.png" alt="Aqualia" class="h-8 w-auto bg-white rounded-lg px-3 py-1.5 opacity-90"/>
       <span>Team @ma731 · IE Sustainability Datathon · March 2026</span>
     </div>
-    <div class="font-mono text-xs">v1.1 · 2026-04-17</div>
+    <div class="font-mono text-xs">v1.2 · 2026-04-17</div>
   </div>
 </footer>
 
@@ -1015,16 +1192,27 @@ tailwind.config = {
 AOS.init({ duration: 900, easing: 'ease-out-cubic', once: true, offset: 80 });
 
 // -------- 4. Monte Carlo matrix --------
-function shiftsForScheme(scheme) {
-  const shifts = {
-    "Salience":        { T1: [0.00, 0.00], T2: [0.00, 0.00], T3: [0.00, 0.00] },
-    "Equal":           { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
-    "Regulator-heavy": { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.01, 0.00] },
-    "Community-first": { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
-    "Investor-first":  { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
-  };
-  return shifts[scheme] || shifts.Salience;
-}
+const SCHEME_SHIFTS = {
+  "Salience":        { T1: [0.00, 0.00], T2: [0.00, 0.00], T3: [0.00, 0.00] },
+  "Equal":           { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
+  "Regulator-heavy": { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.01, 0.00] },
+  "Community-first": { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
+  "Investor-first":  { T1: [0.00, 0.00], T2: [0.01, 0.00], T3: [0.00, 0.00] },
+};
+
+// NGFS scenario position deltas [financial_delta, impact_delta]
+const NGFS_DATA = {
+  "Base":       { T1:[0.00, 0.00], T2:[0.00, 0.00], T3:[0.00, 0.00],
+                  label: "Baseline — three topics confirmed material" },
+  "Orderly":    { T1:[0.00, 0.00], T2:[+0.08,+0.17], T3:[+0.11,+0.26],
+                  label: "Net Zero 2050 — green finance &amp; digital strengthen; water stable" },
+  "Disorderly": { T1:[+0.22,+0.38], T2:[-0.08,+0.03], T3:[-0.17,-0.12],
+                  label: "Delayed Transition — water stress dominates; T3 approaches threshold" },
+  "HotHouse":   { T1:[+0.45,+0.62], T2:[-0.20,-0.13], T3:[-0.38,-0.40],
+                  label: "🌡 Hot House World — T3 exits materiality zone; water becomes existential" },
+};
+let _currentNgfs = "Base";
+
 function buildEllipse(cx, cy, rx, ry, angleDeg) {
   const ang = angleDeg * Math.PI / 180;
   const pts = { x: [], y: [] };
@@ -1037,22 +1225,39 @@ function buildEllipse(cx, cy, rx, ry, angleDeg) {
   }
   return pts;
 }
-function renderMatrix(scheme = "Salience") {
-  const shift = shiftsForScheme(scheme);
-  const COLORS = { T1: '#1f77b4', T2: '#ff7f0e', T3: '#2ca02c' };
-  const traces = [];
+
+function renderMatrix(scheme = "Salience", scenario = _currentNgfs) {
+  _currentNgfs = scenario;
+  const sScheme = SCHEME_SHIFTS[scheme] || SCHEME_SHIFTS.Salience;
+  const sNgfs   = NGFS_DATA[scenario]  || NGFS_DATA.Base;
+  const COLORS  = { T1: '#1f77b4', T2: '#ff7f0e', T3: '#2ca02c' };
+  const traces  = [];
+
+  // Target zone shading
   traces.push({
-    type: 'scatter', mode: 'none', x:[2.5,5,5,2.5,2.5], y:[2.5,2.5,5,5,2.5],
-    fill: 'toself', fillcolor: 'rgba(44,160,44,0.10)',
+    type: 'scatter', mode: 'none', x:[2.5,5.2,5.2,2.5,2.5], y:[2.5,2.5,5.2,5.2,2.5],
+    fill: 'toself', fillcolor: 'rgba(44,160,44,0.09)',
     hoverinfo: 'skip', showlegend: false,
   });
+
   window.DATA.mc.forEach(row => {
     const key = row.topic.startsWith('T1') ? 'T1' : row.topic.startsWith('T2') ? 'T2' : 'T3';
-    const [dx, dy] = shift[key];
-    const cx = row.financial_mean + dx;
-    const cy = row.impact_mean + dy;
-    const pts = buildEllipse(cx, cy,
-      row.ellipse_width / 2, row.ellipse_height / 2, row.ellipse_angle);
+    const cx = row.financial_mean + sScheme[key][0] + sNgfs[key][0];
+    const cy = row.impact_mean   + sScheme[key][1] + sNgfs[key][1];
+    const pts = buildEllipse(cx, cy, row.ellipse_width / 2, row.ellipse_height / 2, row.ellipse_angle);
+
+    // Ghost ellipse (Base reference) when scenario ≠ Base
+    if (scenario !== "Base") {
+      const gx = row.financial_mean + sScheme[key][0];
+      const gy = row.impact_mean    + sScheme[key][1];
+      const gpts = buildEllipse(gx, gy, row.ellipse_width / 2, row.ellipse_height / 2, row.ellipse_angle);
+      traces.push({
+        type: 'scatter', mode: 'lines', x: gpts.x, y: gpts.y,
+        line: { color: COLORS[key] + '28', width: 1.5, dash: 'dot' },
+        hoverinfo: 'skip', showlegend: false,
+      });
+    }
+
     traces.push({
       type: 'scatter', mode: 'lines', x: pts.x, y: pts.y,
       fill: 'toself', fillcolor: COLORS[key] + '40',
@@ -1068,29 +1273,64 @@ function renderMatrix(scheme = "Salience") {
       hovertemplate: `<b>${row.topic}</b><br>Financial: ${cx.toFixed(2)}<br>Impact: ${cy.toFixed(2)}<extra></extra>`,
     });
   });
+
   const layout = {
     margin: { l: 70, r: 30, t: 40, b: 70 },
     paper_bgcolor: 'white', plot_bgcolor: 'white',
     font: { family: 'Inter', size: 13, color: '#4a5663' },
     xaxis: { title: { text: 'Financial Severity', font: { size: 14, color: '#002f5f' } },
-             range: [1.4, 5], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false },
+             range: [1.4, 5.2], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false },
     yaxis: { title: { text: 'Impact Severity', font: { size: 14, color: '#002f5f' } },
-             range: [1.4, 5], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false, scaleanchor: 'x' },
+             range: [1.4, 5.2], dtick: 0.5, gridcolor: '#e6e8eb', zeroline: false, scaleanchor: 'x' },
     shapes: [
-      { type: 'line', x0: 2.5, x1: 2.5, y0: 1.4, y1: 5, line: { color: '#888', width: 1.2, dash: 'dash' } },
-      { type: 'line', x0: 1.4, x1: 5, y0: 2.5, y1: 2.5, line: { color: '#888', width: 1.2, dash: 'dash' } },
+      { type: 'line', x0: 2.5, x1: 2.5, y0: 1.4, y1: 5.2, line: { color: '#888', width: 1.2, dash: 'dash' } },
+      { type: 'line', x0: 1.4, x1: 5.2, y0: 2.5, y1: 2.5, line: { color: '#888', width: 1.2, dash: 'dash' } },
     ],
     annotations: [
-      { x: 4.95, y: 4.9, xanchor: 'right', yanchor: 'top',
-        text: '<b>TARGET ZONE</b>', showarrow: false,
-        font: { color: '#2ca02c', size: 13 } }
+      { x: 5.15, y: 5.10, xanchor: 'right', yanchor: 'top',
+        text: '<b>TARGET ZONE</b>', showarrow: false, font: { color: '#2ca02c', size: 13 } },
     ],
     legend: { orientation: 'h', y: -0.18, x: 0.5, xanchor: 'center', font: { size: 12 } },
+    transition: { duration: 450, easing: 'cubic-in-out' },
   };
   Plotly.react('mc-matrix', traces, layout, { displayModeBar: false, responsive: true });
+
+  // Update label
+  const lbl = document.getElementById('ngfs-label');
+  if (lbl) lbl.innerHTML = sNgfs.label;
 }
+
 renderMatrix();
-document.getElementById('scheme-select').addEventListener('change', e => renderMatrix(e.target.value));
+document.getElementById('scheme-select').addEventListener('change', e => renderMatrix(e.target.value, _currentNgfs));
+
+// NGFS button handlers
+const NGFS_STYLES = {
+  Base:       'border-navy bg-navy text-white',
+  Orderly:    'border-t3  bg-t3  text-white',
+  Disorderly: 'border-t2  bg-t2  text-white',
+  HotHouse:   'border-badred bg-badred text-white',
+};
+const NGFS_INACTIVE = {
+  Base:       'border-navy bg-white text-navy hover:bg-navy/10',
+  Orderly:    'border-t3  bg-white text-t3  hover:bg-t3/10',
+  Disorderly: 'border-t2  bg-white text-t2  hover:bg-t2/10',
+  HotHouse:   'border-badred bg-white text-badred hover:bg-badred/10',
+};
+function syncNgfsBtns(active) {
+  document.querySelectorAll('.ngfs-btn').forEach(b => {
+    const s = b.dataset.ngfs;
+    const base = 'px-3.5 py-2 rounded-xl font-bold text-sm border-2 transition';
+    b.className = base + ' ' + (s === active ? NGFS_STYLES[s] : NGFS_INACTIVE[s]);
+  });
+}
+syncNgfsBtns('Base');
+document.querySelectorAll('.ngfs-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const scen = btn.dataset.ngfs;
+    syncNgfsBtns(scen);
+    renderMatrix(document.getElementById('scheme-select').value, scen);
+  });
+});
 
 
 // -------- 5. ESRS heatmap --------
@@ -1219,6 +1459,149 @@ renderAqueduct();
   };
   window.addEventListener('scroll', onScroll, { passive: true });
 })();
+
+
+// -------- 9. Stakeholder Salience Radar --------
+function renderSalienceRadar() {
+  const groups = [
+    { name: 'Regulators',    P:3, L:3, U:3, type:'Definitive'  },
+    { name: 'Customers',     P:3, L:3, U:3, type:'Definitive'  },
+    { name: 'Shareholders',  P:3, L:3, U:3, type:'Definitive'  },
+    { name: 'Investors',     P:2, L:3, U:2, type:'Expectant'   },
+    { name: 'Employees',     P:2, L:3, U:2, type:'Expectant'   },
+    { name: 'Communities',   P:2, L:2, U:3, type:'Expectant'   },
+    { name: 'Society',       P:1, L:3, U:2, type:'Expectant'   },
+    { name: 'Environment',   P:1, L:3, U:3, type:'Expectant'   },
+    { name: 'Suppliers',     P:2, L:2, U:2, type:'Expectant'   },
+    { name: 'Partners',      P:2, L:2, U:1, type:'Latent'      },
+    { name: 'Academia',      P:1, L:2, U:1, type:'Dormant'     },
+  ];
+  const typeColor = { 'Definitive':'#002f5f', 'Expectant':'#5db9d9', 'Latent':'#f2b039', 'Dormant':'#bbbbbb' };
+  const theta = groups.map(g => g.name);
+  theta.push(theta[0]); // close loop
+
+  // Salience score (normalised 0-1)
+  const scores = groups.map(g => (g.P + g.L + g.U) / 9);
+  scores.push(scores[0]);
+
+  const traceScores = {
+    type: 'scatterpolar',
+    r: scores,
+    theta: theta,
+    fill: 'toself',
+    fillcolor: 'rgba(0,47,95,0.12)',
+    line: { color: '#002f5f', width: 2.5 },
+    name: 'Salience score',
+    hovertemplate: '<b>%{theta}</b><br>Salience: %{r:.2f}<extra></extra>',
+  };
+
+  // Definitive threshold line (score = 1.0)
+  const threshScores = Array(groups.length + 1).fill(1.0);
+  const traceThresh = {
+    type: 'scatterpolar',
+    r: threshScores,
+    theta: theta,
+    mode: 'lines',
+    line: { color: 'rgba(44,160,44,0.4)', width: 1.5, dash: 'dot' },
+    name: 'Definitive threshold',
+    hoverinfo: 'skip',
+    showlegend: true,
+  };
+
+  const layout = {
+    polar: {
+      radialaxis: {
+        visible: true, range: [0, 1.15], tickvals: [0.33, 0.67, 1.0],
+        ticktext: ['Dormant', 'Expectant', 'Definitive'],
+        tickfont: { size: 10, color: '#4a5663' },
+        gridcolor: '#e6e8eb', linecolor: '#e6e8eb',
+      },
+      angularaxis: { tickfont: { size: 11, color: '#002f5f', family: 'Inter' }, linecolor: '#e6e8eb' },
+      bgcolor: 'white',
+    },
+    paper_bgcolor: 'white',
+    font: { family: 'Inter', size: 12, color: '#4a5663' },
+    margin: { t: 40, b: 40, l: 60, r: 60 },
+    legend: { orientation: 'h', y: -0.12, x: 0.5, xanchor: 'center', font: { size: 11 } },
+    showlegend: true,
+  };
+  Plotly.newPlot('salience-radar', [traceScores, traceThresh], layout, { displayModeBar: false, responsive: true });
+}
+renderSalienceRadar();
+
+
+// -------- 10. Peer Benchmark chart --------
+function renderPeerBenchmark() {
+  const peers = [
+    { name: 'Global Omnium', esrs: 45, digital: 52, bond: 0.3,  color: '#9ec8d9' },
+    { name: 'Suez',          esrs: 65, digital: 71, bond: 1.5,  color: '#5db9d9' },
+    { name: 'Severn Trent',  esrs: 68, digital: 74, bond: 1.8,  color: '#5db9d9' },
+    { name: 'Veolia',        esrs: 72, digital: 78, bond: 2.1,  color: '#5db9d9' },
+    { name: 'Aqualia (2025)',esrs: 35, digital: 40, bond: 0.0,  color: '#002f5f' },
+  ];
+  const labels = peers.map(p => p.name);
+
+  const traceEsrs = {
+    type: 'bar', orientation: 'h',
+    x: peers.map(p => p.esrs),
+    y: labels,
+    name: 'ESRS disclosure coverage %',
+    marker: {
+      color: peers.map(p => p.name.startsWith('Aqualia') ? '#c83c35' : '#5db9d9'),
+      line: { color: peers.map(p => p.name.startsWith('Aqualia') ? '#8b1a1a' : '#3a97bd'), width: 1.5 },
+    },
+    text: peers.map(p => p.esrs + '%'),
+    textposition: 'outside',
+    textfont: { family: 'Inter', size: 13, color: '#002f5f', weight: 700 },
+    hovertemplate: '<b>%{y}</b><br>ESRS coverage: %{x}%<extra></extra>',
+    xaxis: 'x', yaxis: 'y',
+    offsetgroup: 1,
+  };
+
+  const traceDigital = {
+    type: 'bar', orientation: 'h',
+    x: peers.map(p => p.digital),
+    y: labels,
+    name: 'Digital & cyber disclosure maturity %',
+    marker: {
+      color: peers.map(p => p.name.startsWith('Aqualia') ? '#e48a3e' : '#1f77b4'),
+      opacity: 0.7,
+    },
+    text: peers.map(p => p.digital + '%'),
+    textposition: 'outside',
+    textfont: { family: 'Inter', size: 11, color: '#4a5663' },
+    hovertemplate: '<b>%{y}</b><br>Digital maturity: %{x}%<extra></extra>',
+    xaxis: 'x', yaxis: 'y',
+    offsetgroup: 2,
+  };
+
+  const layout = {
+    barmode: 'group',
+    margin: { l: 130, r: 70, t: 30, b: 60 },
+    height: 460,
+    paper_bgcolor: 'white', plot_bgcolor: 'white',
+    font: { family: 'Inter', size: 13, color: '#4a5663' },
+    xaxis: {
+      range: [0, 100],
+      title: { text: 'Coverage / Maturity score (%)', font: { size: 13, color: '#002f5f' } },
+      gridcolor: '#e6e8eb',
+      ticksuffix: '%',
+    },
+    yaxis: { autorange: 'reversed', tickfont: { size: 13, color: '#002f5f', family: 'Inter' } },
+    legend: { orientation: 'h', y: -0.14, x: 0.5, xanchor: 'center', font: { size: 12 } },
+    shapes: [
+      { type: 'line', x0: 35, x1: 35, y0: -0.5, y1: peers.length - 0.5,
+        line: { color: '#c83c35', width: 1.8, dash: 'dot' } },
+    ],
+    annotations: [
+      { x: 35, y: peers.length - 0.5, xanchor: 'left', yanchor: 'top',
+        text: ' Aqualia today', showarrow: false,
+        font: { color: '#c83c35', size: 11, family: 'Inter' } },
+    ],
+  };
+  Plotly.newPlot('peer-chart', [traceEsrs, traceDigital], layout, { displayModeBar: false, responsive: true });
+}
+renderPeerBenchmark();
 
 </script>
 </body>
