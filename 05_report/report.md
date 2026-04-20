@@ -9,72 +9,100 @@
 
 ## 1. Executive Summary
 
-**Commission.** A CSRD/ESRS-aligned double materiality assessment for
-Aqualia, FCC Group's integrated water-cycle operator across eight
-countries and ~32 million users, under the IE Sustainability Datathon
-2026 mandate. Our team operates as external ESG consultants with a
-specific brief: identify three strategically relevant material topics,
-assess each along impact and financial dimensions, construct a
-defensible matrix, and translate findings into a 2027–2030 strategic
-roadmap.
+Aqualia is the integrated water-cycle operator of the FCC Group,
+serving roughly 32 million users across eight countries. Its 2025
+double materiality review, the most recent cycle, catalogued sixteen
+material topics and eighty-three specific impacts, risks, and
+opportunities. That is comprehensive work. It is also, in our view,
+too broad to drive a 2027–2030 strategic plan: sixteen equal
+priorities is operationally indistinguishable from none.
 
-**Three material topics.** From Aqualia's 2025 review of sixteen
-topics, eighty-three IROs, and a stakeholder ecosystem of ten groups,
-we concentrate strategic priority on three topics that absorb
-**seventy-three percent of the IRO mass** and that survive sensitivity
-analysis under four alternate stakeholder-weighting schemes:
+Our brief, simulating an external ESG advisory engagement, was to
+reduce those sixteen topics to three, score each with enough
+transparency to survive executive-committee review, and translate the
+analysis into a funded, scheduled roadmap. What follows is that
+deliverable.
 
-1. **Water Resilience and Equitable Access** (ESRS E1+E3+S4 service
-   resilience + S3 restored). Impact Severity **3.98**; Financial
-   Severity **3.07**. Solidly in the Target Zone.
-2. **Digital and Cyber Infrastructure** (Aqualia AQ-Tech +
-   AQ-Digital + AQ-Cyber cluster). Impact **3.08**; Financial
-   **2.75**. Target Zone — repositioned from Aqualia's current
-   lower-middle placement.
-3. **Green Finance and Integrity** (ESRS G1 compliance cluster +
-   Green-Finance AQ). Impact **3.24**; Financial **2.42**.
-   Borderline — *conditionally* material and trigger-sensitive.
+### The three topics
 
-**The blind spot.** Aqualia's 2025 review assigns Digitalisation only
-**two IROs** — the lowest of any topic — while peers treat digital as
-core, the EU Water Resilience Strategy names digitalisation one of
-five Action Areas, and Aqualia's own Risk Map logs three HIGH
-operational risks in this cluster. Our Monte Carlo repositions it
-firmly into the Target Zone.
+The short-list is Water Resilience and Equitable Access (T1), Digital
+and Cyber Infrastructure (T2), and Green Finance and Integrity (T3).
+Together they absorb 73% of Aqualia's 83 IROs, and their matrix
+positions hold under four alternative stakeholder-weighting schemes.
+T1 sits solidly in the Target Zone, at Impact Severity **3.98** and
+Financial Severity **3.07**. T2 is also Target Zone at (3.08, 2.75),
+repositioned upward from Aqualia's current lower-middle placement: a
+direct consequence of what we read as an under-weighting of
+digitalisation in the 2025 review, which assigns it only two of the
+83 IROs. T3 is borderline at (3.24, 2.42), conditionally material on
+the financial axis, a status we treat as diagnostic rather than
+defective.
 
-**The equity finding.** Aqualia folds ESRS S3 (affected communities)
-into S4 (consumers). Customer satisfaction ranges 86–98% across six
-European and institutional markets, **but 33% in Colombia**. Restoring
-S3 converts a methodological shortcut into a concession-renewal risk
-we flag formally.
+### Three findings
 
-**The financial case.** Across the three topics, net annual financial
-materiality under-weighted by the current framework totals
-**€18 M/yr**, against a cumulative 2027–2030 CAPEX implication of
-**€440 M** already embedded in Aqualia's own Risk Map. The topics are
-linked: T1 drives the CAPEX, T2 de-risks delivery, T3 finances it at a
-differential cost of capital.
+A blind spot, a missing voice, a differentiator.
 
-**The recommendation.** A phased **€500 M EU-Taxonomy-aligned green /
-sustainability-linked bond programme, 2027–2030**, issued in four
-tranches aligned to CAPEX drawdown. At a 25 bp coupon spread — the
-current IG Euro water-utility level for green issuance — the
-programme delivers **€31 M of present-value interest savings over its
-ten-year life**.
+The blind spot is digital. Aqualia's framework carries two IROs on
+digitalisation. Veolia, Suez, Severn Trent, and Global Omnium each
+treat digital-and-cyber as a top-five strategic topic; the EU Water
+Resilience Strategy names it Action Area 3 of 5; Aqualia's own Risk
+Map logs three operational risks in this cluster as HIGH. Our Monte
+Carlo repositions the topic firmly inside the Target Zone.
 
-**Method, in one sentence.** We preserve Aqualia's 2025 scoring
-structure (Severity × Probability for impact; Magnitude × Probability
-for financial) and extend it with (i) explicit 1–5 thresholds cited to
-ESRS/EFRAG/MSCI/SASB/WRI, (ii) a Mitchell–Agle–Wood stakeholder-
-salience model applied to Aqualia's own ten-group ecosystem, (iii) a
-10,000-draw Monte Carlo producing 90% confidence ellipses with
-sensitivity tornado and four-scheme robustness, and (iv) an
-LLM-assisted ESRS disclosure-gap heatmap across 873 chunks of Aqualia's
-2022–2025 sustainability reporting.
+The missing voice is community. Aqualia's framework folds ESRS S3
+(affected communities) into ESRS S4 (consumers). Their own 2024
+customer-satisfaction survey, in a sample of more than seven thousand
+respondents, reports satisfaction ranging 86–98% across Spain,
+Portugal, France, Italy, Czech Republic, and institutional markets,
+and **33% in Colombia**. A 55-point spread sits inside a single
+group-average metric. Under ESRS S3 the same data tells a different
+story, with different remediation and concession-renewal
+implications. We recommend restoring S3 as a stand-alone disclosure
+from the 2027 reporting cycle.
 
-**Bottom line.** Three material topics. Eighteen million euros per
-year of under-weighted financial materiality. A five-hundred-million-
-euro green bond programme that funds the answer.
+The differentiator is green finance. Aqualia already leads Iberian
+water peers on EU Taxonomy alignment and green-finance disclosure.
+The financial upside of that lead, priced in basis points of cost of
+capital saved, is not quantified in the 2025 framework. We quantify
+it.
+
+### The numbers
+
+Net annual financial materiality that Aqualia's current framework
+leaves un-priced, aggregated across the three topics, is
+**€18 M/yr**. Implied 2027–2030 CAPEX is **€440 M** base case, with a
+sensitivity range of €285–685 M. Our funding recommendation is a
+**€500 M EU-Taxonomy-aligned green / sustainability-linked bond
+programme**, issued in four tranches aligned to CAPEX drawdown. At
+the prevailing 25 basis-point green-bond spread for investment-grade
+Euro water-utility issuance (Climate Bonds Initiative, 2024 Green
+Bond Pricing Report), the programme captures approximately **€31 M**
+of present-value interest savings over its ten-year life.
+
+### A note on method
+
+We did not replace Aqualia's scoring structure. We preserve it,
+severity multiplied by probability on the impact axis and magnitude
+multiplied by probability and a horizon discount on the financial
+axis, so that our output reads as directly comparable to their 2025
+work. We then extend the framework in four ways. Every 1–5 threshold
+in the rubric cites a public source (ESRS 1 §43–51, EFRAG IG-1, SASB
+Water Utilities, WRI Aqueduct, MSCI 2024). Stakeholders are weighted
+under the Mitchell–Agle–Wood (1997) salience model applied to
+Aqualia's own ten-group ecosystem. Uncertainty is propagated via
+10,000 Monte Carlo draws per topic, producing 90% confidence
+ellipses rather than false-precision point estimates. And the ESRS
+disclosure landscape is audited by a bilingual TF-IDF match of 75
+canonical datapoints against 873 paragraph chunks drawn from
+Aqualia's 2022–2025 sustainability reports.
+
+Our view is that materiality is not a static categorisation exercise
+but an ongoing strategic input. The three topics here are designed
+to become the spine of a 2027–2030 plan. The €500 M programme is the
+financial instrument that makes the plan executable without a budget
+trade-off against Aqualia's existing infrastructure spend.
+
+The rest of this report documents each step.
 
 ---
 
@@ -90,17 +118,17 @@ reporting both how their activities impact society and the environment
 financial performance and enterprise value (financial materiality,
 "outside-in"). The European Sustainability Reporting Standards (ESRS;
 Commission Delegated Regulation (EU) 2023/2772) operationalise the
-Directive across twelve topical standards — E1–E5, S1–S4, G1 — and a
-cross-cutting set of ~1,144 datapoints documented in EFRAG
-Implementation Guidance IG 3.
+Directive across twelve topical standards (E1–E5, S1–S4, G1) and a
+cross-cutting set of approximately 1,144 datapoints documented in
+EFRAG Implementation Guidance IG 3.
 
 ### 2.2 Aqualia's operating context
 Aqualia is the integrated water-cycle operator of the FCC Group. Its
-activity spans the end-to-end urban water cycle — collection,
-treatment, distribution, sewerage, wastewater treatment, and reuse —
-across Spain, Portugal, Italy, France, Czech Republic, Colombia, and
-several project-operation markets. Its public disclosures cite 130+
-years of track record, service to >32 million people, and
+activity covers the end-to-end urban water cycle (collection,
+treatment, distribution, sewerage, wastewater treatment, reuse) across
+Spain, Portugal, Italy, France, Czech Republic, Colombia, and several
+project-operation markets. Public disclosures cite 130+ years of
+operating record, service to more than 32 million people, and
 €40 M/year of sustained infrastructure investment
 (`Corporate context and sustainability framework_2025_ENG.pdf`).
 
@@ -190,9 +218,9 @@ sub-weights.
 The Financial Magnitude scale is anchored to an Aqualia revenue proxy
 of **€1.4 B** (Assumption A01), drawn from FCC Group 2024 segment
 disclosure with the Aqualia water segment at ~28% of group revenue.
-Band 3 (Moderate) corresponds to 0.5–2% of revenue (€7–28 M) — a
+Band 3 (Moderate) corresponds to 0.5–2% of revenue (€7–28 M), a
 material budget line but recoverable from normal operations. Band 5
-(Severe) exceeds 5% (€70 M) — enterprise-level impact. Section 7 of
+(Severe) exceeds 5% (€70 M), enterprise-level impact. Section 7 of
 `financials.md` shows that rank ordering of topics is stable under
 ±20% revenue anchor shifts.
 
@@ -200,8 +228,8 @@ material budget line but recoverable from normal operations. Band 5
 Aqualia's 2025 review was scored internally by its Sustainability
 Department without external stakeholder consultation (their
 methodology acknowledges this). We restore a salience input by
-applying the Mitchell–Agle–Wood (1997) model — the canonical framework
-in stakeholder theory — to Aqualia's own ten-group stakeholder map.
+applying the Mitchell–Agle–Wood (1997) model, the canonical framework
+in stakeholder theory, to Aqualia's own ten-group stakeholder map.
 Each stakeholder is scored 0/1 on Power, Legitimacy, and Urgency;
 the salience score (0–3) becomes a normalised weight in [0, 1]
 summing to 1.000. **Exhibit 2** in the appendix reproduces the full
@@ -258,9 +286,9 @@ overlay (three areas where Aqualia is demonstrably ahead of peers).
 
 ### 4.2 Peer benchmarking (Exhibit 3)
 We constructed a 14-column benchmarking matrix comparing Aqualia's 16
-topics to the declared material topics of five peers — Veolia, Suez,
-Saur, Facsa, Global Omnium (the five named in Aqualia's own 2025
-benchmark) — with Severn Trent as a CSRD-adjacent UK comparator.
+topics to the declared material topics of five peers (Veolia, Suez,
+Saur, Facsa, Global Omnium, the five named in Aqualia's own 2025
+benchmark) and with Severn Trent as a CSRD-adjacent UK comparator.
 Detail in `01_research/peer_benchmark.md`.
 
 **Shared sector core (universal across all peers):** climate mitigation
@@ -376,8 +404,8 @@ We highlight this as a standalone finding. The spread between Colombia
 spread to Italy (67%) is 34 points; to Spain (88%) is 55 points.
 Aqualia's 2025 review does not discuss Colombia specifically in the
 S4 topic; the framing treats satisfaction as a group-level customer-
-experience measure. Under ESRS S3 — which specifically concerns
-"affected communities" rather than end-users — a 33% satisfaction
+experience measure. Under ESRS S3, which specifically concerns
+affected communities rather than end-users, a 33% satisfaction
 market with ongoing supply reliability issues (documented in the
 2024 report, pp. 148–155) represents material impact on affected
 communities. Our recommendation is to re-surface S3 as its own
@@ -503,9 +531,9 @@ issued in four tranches: **€150 M in 2027**, **€150 M in 2028**,
 proceeds vs sustainability-linked; coupon-step-up KPIs tied to NRW
 reduction and water-reuse ratio) are detailed in §8 roadmap T3 entries.
 
-At a **25 bp coupon spread** — the current 2024–2025 level for
+At a **25 bp coupon spread**, the current 2024–2025 level for
 investment-grade Euro water-utility green issuance per Climate Bonds
-Initiative data — the programme delivers **€31 M of present-value
+Initiative data, the programme delivers **€31 M of present-value
 interest savings** over the bond life (10-year tenor, 4.0% vanilla vs
 3.75% green coupon, 8% discount rate). The calculation is a
 discounted annuity of the coupon saving: 500 × 25 bp × A(10, 8%)
@@ -533,10 +561,10 @@ classified "conditionally material."
 bounded well away from both threshold lines. T1 is robust material
 under every test we ran.
 
-**T2 centroid (2.75, 3.08).** Ellipse lies inside Target Zone. The
-financial-axis p5 is 2.50 — at the boundary — confirming that T2's
-Target Zone membership is directly attributable to our repositioning
-of the blind-spot cluster. Under Aqualia's original qualitative
+**T2 centroid (2.75, 3.08).** Ellipse lies inside Target Zone; the
+financial-axis fifth-percentile sits at 2.50, right on the boundary.
+That fact confirms T2's Target Zone membership is directly attributable
+to our repositioning of the blind-spot cluster. Under Aqualia's original qualitative
 framework (2 IROs on Digitalisation alone), T2 would not be material;
 under our methodology it is.
 
@@ -568,15 +596,15 @@ For each topic, the top six inputs by absolute swing are:
   Compl-CSRD.scale (impact); O-green-bond-prem.mag (financial);
   Green-fin-access.scale (impact); O-coc-saving.mag (financial).
   T3's position is a bet on regulatory enforcement pace plus
-  cost-of-capital spread — both observable and both directly
-  targeted by the €500 M bond programme.
+  cost-of-capital spread, both observable and both directly targeted
+  by the €500 M bond programme.
 
 ### 7.4 Robustness (Exhibit 14)
 Under four alternate stakeholder-weighting schemes (Equal, Regulator-
 heavy, Community-first, Investor-first), no topic flips Target-Zone
-status. T1 remains in; T2 remains in; T3 remains borderline. The
-stability is a direct consequence of top-k aggregation — the most
-material subset of IROs/R&Os drives position, and that subset is
+status. T1 remains in; T2 remains in; T3 remains borderline. The stability
+is a direct consequence of top-k aggregation: the most material
+subset of IROs and R&Os drives position, and that subset is
 insensitive to modest re-weighting.
 
 ---
@@ -684,10 +712,10 @@ Six honest limitations, each with a remediation path.
    Remediation: use EEA Europe's State of Water 2024 to refine at the
    river-basin level; acquire Aqualia service-polygon GIS data to
    do pixel-level intersections.
-6. **Monte Carlo perturbation = ±0.7 on the 1–5 scale** — a
-   methodological judgement. Remediation: sensitivity to this
-   perturbation is reported at PERTURB = 1.0 in the appendix;
-   topic rankings are stable.
+6. **Monte Carlo perturbation = ±0.7 on the 1–5 scale** is a
+   methodological judgement call. Remediation: sensitivity to this
+   parameter is reported at PERTURB = 1.0 in the appendix, and topic
+   rankings are stable.
 
 ### 9.2 Reverse stress test (Exhibit 17)
 For each topic, we ask: *what would inputs have to do for this topic
@@ -717,7 +745,7 @@ topics to Aqualia's 2025 comprehensive Double Materiality Review
 contribution is a methodological extension, not a replacement. All
 benchmark material is drawn from publicly disclosed peer reports; no
 confidential or proprietary information is used. Where we identify
-blind spots, the framing is corrective rather than adversarial — the
+blind spots, the framing is corrective rather than adversarial. The
 purpose is to strengthen Aqualia's framework, which is already among
 the most mature in the Spanish water sector.
 
