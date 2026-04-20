@@ -25,6 +25,7 @@ NAVY = RGBColor(0x00, 0x2F, 0x5F)
 AQUA = RGBColor(0x5D, 0xB9, 0xD9)
 DEEP = RGBColor(0x0B, 0x4F, 0x74)
 SLATE = RGBColor(0x4A, 0x56, 0x63)
+INK = RGBColor(0x2C, 0x33, 0x3B)   # near-black body/heading text
 SAND_RGB = "d6cdb7"
 GRID_RGB = "e6e8eb"
 
@@ -61,10 +62,15 @@ def set_paragraph_spacing(p, before=0, after=120, line=1.35) -> None:
 
 def add_styled_runs(p, text: str, base_font=BODY_FONT, base_size=11,
                     base_color=SLATE, bold=False) -> None:
-    """Parse **bold** and `code` inline markdown within plain text."""
+    """Parse **bold** and `code` inline markdown within plain text.
+
+    Bold runs stay in the body colour (slate). Colour is reserved for
+    structural accents (headings, table headers, blockquote rail, cover
+    page) so bolded emphasis in prose does not overload the eye with
+    blue — a common machine-generated report tell.
+    """
     if not text:
         return
-    # Split on **bold** and `code`
     parts = re.split(r"(\*\*[^*]+\*\*|`[^`]+`)", text)
     for part in parts:
         if not part:
@@ -78,7 +84,7 @@ def add_styled_runs(p, text: str, base_font=BODY_FONT, base_size=11,
         if part.startswith("**") and part.endswith("**"):
             r.text = part[2:-2]
             r.bold = True
-            r.font.color.rgb = NAVY
+            # Keep slate. Do NOT colour inline bolds navy.
         elif part.startswith("`") and part.endswith("`"):
             r.text = part[1:-1]
             r.font.name = "Consolas"
@@ -116,7 +122,9 @@ def add_heading(doc: Document, text: str, level: int) -> None:
     r = p.add_run(text.strip())
     r.font.name = HEADING_FONT
     r.font.size = Pt(size)
-    r.font.color.rgb = NAVY
+    # Navy reserved for H1 and H2 (true section markers).
+    # H3 and H4 use near-black ink so the page is not washed in blue.
+    r.font.color.rgb = NAVY if level <= 2 else INK
     r.bold = True
 
     # Level-2 bottom rule
@@ -167,7 +175,8 @@ def add_blockquote(doc: Document, text: str) -> None:
     pBdr.append(left)
     pPr.append(pBdr)
     p.paragraph_format.left_indent = Cm(0.4)
-    # Use italic-navy styling for quoted emphasis
+    # Quote body stays in slate. Aqua colour lives on the left rail
+    # only, so there is at most one blue element per quote block.
     parts = re.split(r"(\*\*[^*]+\*\*|`[^`]+`|\*[^*]+\*)", text)
     for part in parts:
         if not part:
@@ -175,21 +184,19 @@ def add_blockquote(doc: Document, text: str) -> None:
         r = p.add_run()
         r.font.name = BODY_FONT
         r.font.size = Pt(11)
+        r.font.color.rgb = SLATE
         if part.startswith("**") and part.endswith("**"):
             r.text = part[2:-2]
             r.bold = True
-            r.font.color.rgb = NAVY
         elif part.startswith("*") and part.endswith("*") and not part.startswith("**"):
             r.text = part[1:-1]
             r.italic = True
-            r.font.color.rgb = DEEP
         elif part.startswith("`") and part.endswith("`"):
             r.text = part[1:-1]
             r.font.name = "Consolas"
             r.font.size = Pt(10)
         else:
             r.text = part
-            r.font.color.rgb = SLATE
 
 
 def add_table(doc: Document, rows: list[list[str]]) -> None:
@@ -518,15 +525,16 @@ def build(doc_path: Path, out_path: Path) -> None:
             add_body_paragraph(doc, "")
             prev_was_blank = False
         elif kind == "hr":
-            # Use a thin navy line instead of a blank divider
+            # Light grey divider — a fine hair between sections, not a
+            # shouting navy underline. Colour matches our grid token.
             p = doc.add_paragraph()
-            set_paragraph_spacing(p, before=6, after=10)
+            set_paragraph_spacing(p, before=8, after=10)
             pPr = p._p.get_or_add_pPr()
             pBdr = OxmlElement("w:pBdr")
             bottom = OxmlElement("w:bottom")
             bottom.set(qn("w:val"), "single")
-            bottom.set(qn("w:sz"), "6")
-            bottom.set(qn("w:color"), "002f5f")
+            bottom.set(qn("w:sz"), "4")
+            bottom.set(qn("w:color"), "c9ced3")
             pBdr.append(bottom)
             pPr.append(pBdr)
             prev_was_blank = False

@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, initial-scale=1" />
+<title>Water as Strategy · Aqualia Double Materiality · Los Gatos de Datos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    fontFamily: { sans: ['Inter','system-ui','sans-serif'], mono: ['JetBrains Mono','monospace'] },
+    colors: {
+      navy:'#002f5f', deep:'#0b4f74', aqua:'#5db9d9', sand:'#d6cdb7',
+      ink:'#2c333b', slate:'#4a5663', grid:'#e6e8eb',
+      t1:'#1f77b4', t2:'#ff7f0e', t3:'#2ca02c',
+      bad:'#c83c35', amber:'#f2b039',
+    },
+  } }
+}
+</script>
+
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+<style>
+  html, body { margin:0; padding:0; background:#000; overflow:hidden; font-family:'Inter',sans-serif; }
+  * { -webkit-font-smoothing: antialiased; }
+
+  /* Slide strip */
+  .deck { display:flex; width:800vw; height:100vh; transition: transform .55s cubic-bezier(.2,.85,.2,1); }
+  .slide {
+    flex: 0 0 100vw;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Tabular numerals for all monetary / score output */
+  .tnum { font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+  /* Accent kickers */
+  .kicker { font-size: 0.78rem; font-weight:700; letter-spacing:.24em; text-transform:uppercase; }
+
+  /* Large display headings */
+  .display { font-weight: 900; letter-spacing:-0.028em; line-height: 0.98; }
+
+  /* Card */
+  .card { background: white; border: 1px solid #e6e8eb; border-radius: 18px; }
+
+  /* Glass on dark */
+  .glass { background: rgba(255,255,255,0.07); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.12); }
+
+  /* Aqua ambient hero bg */
+  .hero-bg {
+    background:
+      radial-gradient(ellipse at top left,  rgba(93,185,217,0.18) 0%, transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(31,119,180,0.22) 0%, transparent 60%),
+      #001a38;
+  }
+
+  /* Dot navigation */
+  .dots { position: fixed; right: 32px; bottom: 32px; display:flex; gap:10px; z-index:100; }
+  .dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.25); cursor:pointer; transition: all .3s; }
+  .dots span.active { background: #5db9d9; transform: scale(1.3); }
+  .slide.light ~ .dots span { background: rgba(0,47,95,0.2); }
+  .slide.light ~ .dots span.active { background: #002f5f; }
+
+  /* Speaker note toggle */
+  .notes {
+    position: fixed; left: 32px; bottom: 32px; max-width: 720px;
+    padding: 20px 24px; background: rgba(0,0,0,0.88); color: white;
+    border-left: 3px solid #5db9d9; border-radius: 10px; font-size: 13px;
+    line-height: 1.55; display: none; z-index: 200; pointer-events:none;
+  }
+  .notes.visible { display: block; }
+  .notes .caps { font-size: 10px; font-weight: 700; color: #5db9d9; letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 6px; }
+
+  /* Print: one slide per landscape page */
+  @page { size: 1920px 1080px; margin: 0; }
+  @media print {
+    html, body { background: white; overflow: visible; }
+    .deck { width: 100vw; display: block; transform: none !important; transition: none; }
+    .slide { width: 1920px; height: 1080px; page-break-after: always; transform: none !important; }
+    .dots, .notes, .helpOverlay { display: none !important; }
+  }
+
+  /* Tranche bar */
+  .tranche-bar { height: 120px; background: linear-gradient(180deg, #5db9d9 0%, #002f5f 100%); border-radius: 6px; position: relative; }
+  .tranche-bar.small { height: 80px; }
+  .tranche-bar.medium { height: 100px; }
+
+  /* Help overlay */
+  .helpOverlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9); color: white;
+    display: none; align-items:center; justify-content:center; z-index:300;
+    font-size: 16px; line-height: 1.7;
+  }
+  .helpOverlay.visible { display: flex; }
+  .helpOverlay table { border-collapse: collapse; }
+  .helpOverlay td { padding: 6px 18px; }
+  .helpOverlay td:first-child { font-family: 'JetBrains Mono', monospace; color: #5db9d9; text-align: right; }
+
+  /* Divider rule */
+  .rule-aqua { height: 2px; background: #5db9d9; border: 0; }
+
+  /* Big number wrapper */
+  .bignum { font-family: 'Inter'; font-weight: 900; letter-spacing: -0.035em; font-variant-numeric: tabular-nums; }
+
+  /* Flow line (animated) */
+  @keyframes dashflow { to { stroke-dashoffset: -24; } }
+  .flow-dash { animation: dashflow 1.2s linear infinite; }
+</style>
+</head>
+
+<body>
+
+<div class="deck" id="deck">
+
+<!-- ====================================================================
+     SLIDE 1 · SINCE 1894 — Hero
+==================================================================== -->
+<section class="slide hero-bg text-white" id="s1" data-note-caps="Slide 1 · 0:00 – 0:25"
+         data-note="Aqualia has been delivering water since 1894. Across eight countries. To thirty-two million people. That is the inheritance. And that trust — the fact that a tap turns on and clean water comes out — is no longer something we can take for granted. This deck is about what it takes to keep the promise.">
+  <div class="absolute inset-0 flex flex-col justify-between p-20">
+
+    <!-- Top row -->
+    <div class="flex items-start justify-between">
+      <div class="flex items-center gap-5">
+        <div class="bg-white rounded-xl px-4 py-2">
+          <svg viewBox="0 0 120 40" class="h-10 w-auto" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 18 L15 10 L18 14 L8 22 Z" fill="#1f77b4"/>
+            <path d="M22 18 L32 10 L35 14 L25 22 Z" fill="#2ca02c"/>
+            <text x="0" y="37" font-family="Inter" font-weight="900" font-size="22" fill="#5db9d9">aqualia</text>
+          </svg>
+        </div>
+        <div class="text-aqua text-sm font-bold tracking-widest uppercase">Double Materiality · 2027–2030</div>
+      </div>
+      <div class="text-right">
+        <div class="kicker text-aqua">IE Sustainability Datathon</div>
+        <div class="text-sm text-white/70 font-medium mt-1">March 2026 · Los Gatos de Datos</div>
+      </div>
+    </div>
+
+    <!-- Hero text -->
+    <div>
+      <h1 class="display text-white" style="font-size: 12rem;">Since&nbsp;1894.</h1>
+      <div class="mt-14 text-white/85 font-light max-w-4xl leading-[1.3]" style="font-size: 2.2rem;">
+        Across eight countries. Every day, <span class="text-aqua font-semibold">32 million people</span>
+        turn on a tap and trust it will work.
+        <br><br>
+        That trust is no longer a given.
+      </div>
+    </div>
+
+    <!-- Bottom KPI strip -->
+    <div class="flex items-end gap-0 border-t border-white/15 pt-8">
+      <div class="flex-1 border-r border-white/15 pr-10">
+        <div class="kicker text-aqua mb-2">Operating record</div>
+        <div class="bignum text-white" style="font-size: 4.5rem;">130 <span class="text-white/60 font-light text-3xl">years</span></div>
+      </div>
+      <div class="flex-1 border-r border-white/15 pr-10 pl-10">
+        <div class="kicker text-aqua mb-2">Users served</div>
+        <div class="bignum text-white" style="font-size: 4.5rem;">32 <span class="text-white/60 font-light text-3xl">M</span></div>
+      </div>
+      <div class="flex-1 pl-10">
+        <div class="kicker text-aqua mb-2">Countries</div>
+        <div class="bignum text-white" style="font-size: 4.5rem;">8</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 2 · WATER AS STRATEGY
+==================================================================== -->
+<section class="slide light bg-white" id="s2" data-note-caps="Slide 2 · 0:25 – 1:00"
+         data-note="Aqualia already does the hard work. Their 2025 review is serious — sixteen topics, eighty-three IROs. We were asked to sharpen it. Reduce to three. Test under uncertainty. Translate into a 2027–2030 strategy. And the reason it matters: forty-five percent of their revenue base already sits in basins classified high water-stress. By 2030 that number is seventy-nine. Business as usual is no longer a baseline.">
+  <div class="h-full grid grid-cols-2 gap-20 px-24 py-20">
+
+    <!-- Left: narrative -->
+    <div class="flex flex-col justify-center">
+      <div class="kicker text-slate/60 mb-4">01 · The new reality</div>
+      <h2 class="display text-navy" style="font-size: 5.5rem;">
+        Water is no longer<br>infrastructure.<br>
+        <span class="text-aqua">It is strategy.</span>
+      </h2>
+
+      <div class="mt-12 text-ink text-xl leading-relaxed max-w-xl">
+        <p>Aqualia's 2025 double materiality review is one of the most thorough in the Spanish water sector — sixteen topics, eighty-three specific impacts, risks, and opportunities. Serious work.</p>
+        <p class="mt-5">Our commission: reduce those sixteen priorities to three. Test the framework under uncertainty. Translate analysis into a funded, scheduled 2027–2030 strategy an executive committee can execute against.</p>
+      </div>
+    </div>
+
+    <!-- Right: water stress morph -->
+    <div class="flex flex-col justify-center">
+      <div class="kicker text-slate/60 mb-3">Revenue in High / Extremely High water-stress basins</div>
+      <div class="text-sm text-slate/70 mb-8">WRI Aqueduct 4.0 · baseline → BAU-2030 (SSP3/RCP 7.0)</div>
+
+      <div class="flex items-end gap-10 mb-6">
+        <!-- 2024 bar -->
+        <div class="flex flex-col items-center">
+          <div class="bignum text-aqua tnum" style="font-size: 6rem;">45<span class="text-slate/60 text-4xl font-light">%</span></div>
+          <div class="mt-3 w-44 bg-aqua rounded-t-lg" style="height: 200px;"></div>
+          <div class="mt-3 font-mono text-xs text-slate/70">2024 · baseline</div>
+        </div>
+        <!-- Arrow -->
+        <div class="flex flex-col items-center justify-center" style="height: 200px;">
+          <svg viewBox="0 0 60 40" class="w-16 h-12">
+            <path d="M5 20 L50 20 M40 10 L50 20 L40 30" stroke="#5db9d9" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="font-mono text-xs text-slate/70 mt-2">almost<br/>double</div>
+        </div>
+        <!-- 2030 bar -->
+        <div class="flex flex-col items-center">
+          <div class="bignum text-bad tnum" style="font-size: 6rem;">79<span class="text-slate/60 text-4xl font-light">%</span></div>
+          <div class="mt-3 w-44 bg-bad rounded-t-lg" style="height: 352px;"></div>
+          <div class="mt-3 font-mono text-xs text-slate/70">2030 · BAU</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 3 · THREE PLACES TO GO DEEPER
+==================================================================== -->
+<section class="slide light bg-[#fafbfc]" id="s3" data-note-caps="Slide 3 · 1:00 – 1:45"
+         data-note="Not three failures. Three places to go deeper. Digitalisation carries two IROs — peers list it as top-five. Affected communities are absorbed into consumer metrics — thirty-two million lives reading as one group average. And green finance is defended, not monetised — when Aqualia is already ahead of peers on Taxonomy alignment. These three become our three topics.">
+  <div class="h-full flex flex-col px-24 py-20">
+
+    <div>
+      <div class="kicker text-slate/60 mb-4">02 · The tension</div>
+      <h2 class="display text-navy" style="font-size: 5rem;">
+        Thorough work.<br>Three places to <span class="text-aqua">go deeper</span>.
+      </h2>
+    </div>
+
+    <!-- Three panels -->
+    <div class="flex-1 grid grid-cols-3 gap-10 items-stretch mt-16">
+
+      <div class="flex flex-col justify-between pr-10 border-r border-grid">
+        <div>
+          <div class="kicker text-t2 mb-4">A technology signal</div>
+          <div class="bignum text-t2 tnum" style="font-size: 9rem; line-height: 0.9;">2</div>
+          <div class="text-xl text-navy font-semibold mt-4">of 83 IROs assigned to digitalisation.</div>
+        </div>
+        <div class="text-base text-ink leading-relaxed mt-6">
+          Veolia names digital &amp; cyber a top-five strategic topic. Suez runs it as a named business unit. The EU Water Resilience Strategy lists it as Action Area 3 of 5. The sector is speaking clearly.
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between px-10 border-r border-grid">
+        <div>
+          <div class="kicker text-t1 mb-4">A community signal</div>
+          <div class="bignum text-t1 tnum" style="font-size: 9rem; line-height: 0.9;">32<span class="text-5xl font-light text-slate/60">M</span></div>
+          <div class="text-xl text-navy font-semibold mt-4">lives. One group-average metric.</div>
+        </div>
+        <div class="text-base text-ink leading-relaxed mt-6">
+          Aqualia's framework folds ESRS S3 (affected communities) into the consumer disclosure. A Murcian farmer under summer rationing and a Colombian household with intermittent supply read as the same "consumer."
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-between pl-10">
+        <div>
+          <div class="kicker text-t3 mb-4">A capital-markets signal</div>
+          <div class="bignum text-t3 tnum" style="font-size: 9rem; line-height: 0.9;">+25<span class="text-5xl font-light text-slate/60">bp</span></div>
+          <div class="text-xl text-navy font-semibold mt-4">current green-bond premium.</div>
+        </div>
+        <div class="text-base text-ink leading-relaxed mt-6">
+          Aqualia already leads Spanish water peers on Taxonomy alignment. The financial value of that lead — priced in basis points of cost of capital saved — is not quantified anywhere in the 2025 framework.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-14 pt-6 border-t border-grid text-sm text-slate/70 italic">
+      Peer cross-check against Veolia, Suez, Severn Trent, Global Omnium, Saur. Regulatory cross-check against CSRD, ESRS, EU Water Resilience Strategy 2025, Climate Bonds Initiative 2024.
+    </div>
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 4 · WE DID NOT ASSERT. WE MODELLED.
+==================================================================== -->
+<section class="slide light bg-white" id="s4" data-note-caps="Slide 4 · 1:45 – 2:30"
+         data-note="We kept Aqualia's own formulas — severity times probability, on both axes — so output is directly comparable to their internal work. Then four extensions: every threshold cites a public source, stakeholders weighted by the standard academic salience model, ten thousand Monte Carlo draws per topic, and a TF-IDF gap check against seventy-five ESRS datapoints. Critically — this slide hits all four criteria of Workshop 1's grading rubric. Justify, show your math, trace, actionable.">
+  <div class="h-full flex flex-col px-24 py-20">
+
+    <div>
+      <div class="kicker text-slate/60 mb-4">03 · How we tested the case</div>
+      <h2 class="display text-navy" style="font-size: 5rem;">
+        We did not assert.<br><span class="text-aqua">We modelled.</span>
+      </h2>
+    </div>
+
+    <!-- Formula row -->
+    <div class="mt-10 p-6 rounded-xl bg-[#f4f8fb] border border-grid">
+      <div class="font-mono text-navy text-lg">Impact Severity &nbsp;=&nbsp; mean(Scale, Scope, Remediability) × Probability</div>
+      <div class="font-mono text-navy text-lg mt-1">Financial Severity &nbsp;=&nbsp; Magnitude × Probability × Horizon discount</div>
+      <div class="text-xs text-slate/70 italic mt-3">
+        Aqualia's own nomenclature preserved, so results are directly comparable. Terminology mapping to the Datathon brief §3: Scale ✓ · Scope ✓ · Likelihood → Probability · Irreversibility → Remediability.
+      </div>
+    </div>
+
+    <!-- 2x2 extensions -->
+    <div class="flex-1 grid grid-cols-2 gap-6 mt-8">
+
+      <div class="p-7 rounded-xl border border-grid">
+        <div class="flex items-start gap-4">
+          <div class="text-aqua font-mono text-lg font-bold">(i)</div>
+          <div>
+            <div class="text-lg font-bold text-navy mb-2">Thresholds cited</div>
+            <div class="text-base text-ink leading-relaxed">Every 1–5 score band anchors to ESRS 1 §43–51, EFRAG IG-1, SASB Water Utilities, WRI Aqueduct, or MSCI 2024. No authorial opinion.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-7 rounded-xl border border-grid">
+        <div class="flex items-start gap-4">
+          <div class="text-aqua font-mono text-lg font-bold">(ii)</div>
+          <div>
+            <div class="text-lg font-bold text-navy mb-2">Stakeholder salience — Mitchell–Agle–Wood (1997)</div>
+            <div class="text-base text-ink leading-relaxed">The standard academic model for ranking stakeholders by how much their claims matter. Four reach Definitive in Aqualia's ecosystem: Regulators, Customers, Shareholders, Employees.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-7 rounded-xl border border-grid">
+        <div class="flex items-start gap-4">
+          <div class="text-aqua font-mono text-lg font-bold">(iii)</div>
+          <div>
+            <div class="text-lg font-bold text-navy mb-2">Monte Carlo uncertainty</div>
+            <div class="text-base text-ink leading-relaxed">10,000 draws per topic, plausible variation on every input. The matrix shows confidence ellipses — where each topic <i>could</i> land — not false-precision points.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-7 rounded-xl border border-grid">
+        <div class="flex items-start gap-4">
+          <div class="text-aqua font-mono text-lg font-bold">(iv)</div>
+          <div>
+            <div class="text-lg font-bold text-navy mb-2">ESRS gap heatmap</div>
+            <div class="text-base text-ink leading-relaxed">Bilingual TF-IDF across 873 paragraph chunks of Aqualia's 2022–2025 reports, scoring 75 canonical ESRS datapoints for coverage.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Workshop 1 rubric strip -->
+    <div class="mt-8 p-5 rounded-xl bg-navy text-white flex items-center justify-between gap-6">
+      <div class="text-aqua font-bold text-sm tracking-widest uppercase">Workshop 1 · Consultant's Checklist</div>
+      <div class="flex items-center gap-7 text-sm font-semibold">
+        <span><span class="text-aqua">✓</span> Justify your selection</span>
+        <span><span class="text-aqua">✓</span> Show your math</span>
+        <span><span class="text-aqua">✓</span> Trace the logic</span>
+        <span><span class="text-aqua">✓</span> Make it actionable</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 5 · THE MATRIX
+==================================================================== -->
+<section class="slide light bg-white" id="s5" data-note-caps="Slide 5 · 2:30 – 3:15"
+         data-note="Each bubble is the output of ten thousand Monte Carlo draws — we don't show a point, we show where each topic could plausibly sit. T1 solidly inside the target zone. T2 inside — and this is our repositioning; the 2-IRO framing would put it outside. T3 borderline, conditionally material — that's not a defect, it's diagnostic. And zero ranking flips under four alternate weighting schemes.">
+  <div class="h-full grid grid-cols-[65%_35%] gap-10 px-24 py-20">
+
+    <!-- Matrix -->
+    <div class="flex flex-col">
+      <div class="kicker text-slate/60 mb-3">04 · The matrix</div>
+      <h2 class="display text-navy mb-6" style="font-size: 4.5rem;">
+        Not a point.<br><span class="text-aqua">A distribution.</span>
+      </h2>
+      <div id="matrix" class="flex-1"></div>
+    </div>
+
+    <!-- Side column -->
+    <div class="flex flex-col justify-center gap-5">
+
+      <div class="card p-6">
+        <div class="kicker text-slate/60 mb-3">Three topics</div>
+        <div class="space-y-2 font-mono text-sm">
+          <div class="flex items-baseline justify-between"><span class="text-t1 font-bold">T1</span> <span class="text-navy">Water Resilience</span> <span class="text-slate/70">26 IROs</span></div>
+          <div class="flex items-baseline justify-between"><span class="text-t2 font-bold">T2</span> <span class="text-navy">Digital &amp; Cyber</span> <span class="text-slate/70">11 IROs</span></div>
+          <div class="flex items-baseline justify-between"><span class="text-t3 font-bold">T3</span> <span class="text-navy">Green Finance</span> <span class="text-slate/70">24 IROs</span></div>
+        </div>
+        <div class="text-sm text-slate/80 mt-4 pt-3 border-t border-grid">Absorbing <b class="text-navy">73%</b> of Aqualia's 83 IROs.</div>
+      </div>
+
+      <div class="card p-6 bg-navy text-white border-0">
+        <div class="kicker text-aqua mb-3">Robustness</div>
+        <div class="bignum tnum" style="font-size: 3rem;">0</div>
+        <div class="text-sm text-white/80 mt-2 leading-relaxed">ranking flips across four alternate stakeholder-weighting schemes. The selection is not an artefact of our weights.</div>
+      </div>
+
+      <div class="card p-6">
+        <div class="kicker text-slate/60 mb-3">Top sensitivity drivers</div>
+        <div class="space-y-2 text-sm">
+          <div><span class="font-mono text-t1 font-bold">T1</span> <span class="text-ink">· water-stress revenue exposure</span></div>
+          <div><span class="font-mono text-t2 font-bold">T2</span> <span class="text-ink">· digital tender-uplift probability</span></div>
+          <div><span class="font-mono text-t3 font-bold">T3</span> <span class="text-ink">· CSDDD enforcement pace</span></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 6 · 32 MILLION LIVES
+==================================================================== -->
+<section class="slide hero-bg text-white" id="s6" data-note-caps="Slide 6 · 3:15 – 3:55"
+         data-note="Thirty-two million lives depend on this framework getting it right. A farmer in Murcia rationing water through summer. A Po basin plant operator watching the river run two hundred years low. A customer in Cartagena who gave their service thirty-three percent against European peers at eighty-six to ninety-eight. A leak-detection team in Prague who kept the city supplied through drought. Aqualia's current framework folds ESRS S3 — affected communities — into S4. Our first recommendation: restore S3. Because group averages cannot hear these voices.">
+  <div class="h-full flex flex-col px-24 py-20">
+
+    <div class="text-center mb-10">
+      <div class="kicker text-aqua mb-4">05 · Why this matters beyond the matrix</div>
+      <h2 class="display text-white" style="font-size: 8rem;">32 million lives.</h2>
+      <div class="mt-6 text-white/85 font-light" style="font-size: 1.7rem;">
+        One sustainability framework has to speak to every one of them.
+      </div>
+    </div>
+
+    <!-- Four columns -->
+    <div class="flex-1 grid grid-cols-4 gap-0 mt-10">
+
+      <div class="px-6 border-r border-white/15">
+        <div class="kicker text-aqua mb-3">Murcia · Spain</div>
+        <div class="text-white font-bold text-xl mb-4">Segura basin</div>
+        <div class="text-white/80 text-base leading-relaxed">
+          Declared in structural water-stress by the Júcar Hydrographic Confederation. Farmers queuing for reduced allocations through summer 2024.
+        </div>
+      </div>
+
+      <div class="px-6 border-r border-white/15">
+        <div class="kicker text-aqua mb-3">Po basin · Italy</div>
+        <div class="text-white font-bold text-xl mb-4">Summer 2022–23</div>
+        <div class="text-white/80 text-base leading-relaxed">
+          Lowest river flow in 200 years. Barges grounded. Drinking-water intakes upstream-migrated by rule of physics, not policy.
+        </div>
+      </div>
+
+      <div class="px-6 border-r border-white/15">
+        <div class="kicker text-bad mb-3">Cartagena · Colombia</div>
+        <div class="text-white font-bold text-xl mb-4">
+          <span class="tnum">33%</span> satisfaction
+        </div>
+        <div class="text-white/80 text-base leading-relaxed">
+          Against 86–98% across Spain, Portugal, Italy, France, Czech Republic, and institutional markets. A lived reality the current framework averages away.
+        </div>
+      </div>
+
+      <div class="px-6">
+        <div class="kicker text-aqua mb-3">Prague · Czech Republic</div>
+        <div class="text-white font-bold text-xl mb-4">Vltava drought</div>
+        <div class="text-white/80 text-base leading-relaxed">
+          2024 summer where municipal supply held because the concession kept leak rates below 9%. The operational invisible.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Recommendation strip -->
+    <div class="mt-12 pt-6 border-t border-white/20 text-center">
+      <div class="text-white/80 italic text-lg max-w-4xl mx-auto leading-relaxed">
+        Aqualia's 2025 framework folds ESRS S3 (affected communities) into ESRS S4 (consumers).
+        <br>
+        <span class="text-aqua not-italic font-semibold">Our first recommendation: restore S3 as a stand-alone disclosure, starting with the 2027 reporting cycle.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 7 · THE ANSWER — €18M/yr. €500M. 2027–2030.
+==================================================================== -->
+<section class="slide light bg-white" id="s7" data-note-caps="Slide 7 · 3:55 – 4:40"
+         data-note="Eighteen million euros per year — recurring, un-priced by the current framework. Four hundred forty million of 2027–2030 CAPEX implied. Our funding recommendation: a five-hundred-million-euro EU-Taxonomy-aligned green bond programme, four tranches aligned to CAPEX drawdown. At the current twenty-five basis point spread, that captures thirty-one million of present-value interest savings. Every milestone has a named owner and a quantified KPI.">
+  <div class="h-full flex flex-col px-24 py-20">
+
+    <div>
+      <div class="kicker text-slate/60 mb-4">06 · The answer</div>
+      <h2 class="display text-navy" style="font-size: 6rem;">
+        <span class="tnum">€18 M/yr.</span> <span class="tnum">€500 M.</span>
+        <br><span class="text-aqua">2027 to 2030.</span>
+      </h2>
+    </div>
+
+    <!-- Derivation -->
+    <div class="mt-10 p-6 rounded-xl bg-[#f4f8fb] border border-grid">
+      <div class="text-sm kicker text-slate/70 mb-3">€18 M/yr · net recurring · derivation</div>
+      <div class="font-mono text-base space-y-1">
+        <div class="grid grid-cols-[80px_120px_1fr] text-navy"><span class="text-t1 font-bold">T1</span> <span class="tnum">−€15 M/yr</span> <span class="text-slate">revenue at risk minus reuse upside</span></div>
+        <div class="grid grid-cols-[80px_120px_1fr] text-navy"><span class="text-t2 font-bold">T2</span> <span class="tnum">−€8 M/yr</span> <span class="text-slate">cyber exposure minus digital tender uplift</span></div>
+        <div class="grid grid-cols-[80px_120px_1fr] text-navy"><span class="text-t3 font-bold">T3</span> <span class="tnum">+€5 M/yr</span> <span class="text-slate">green-finance cost-of-capital saving</span></div>
+        <div class="border-t border-grid mt-2 pt-2 grid grid-cols-[80px_120px_1fr] text-navy font-bold"><span>Total</span> <span class="tnum">−€18 M/yr</span> <span class="text-slate font-normal italic">recurring — currently un-priced</span></div>
+      </div>
+      <div class="text-xs text-slate/60 italic mt-4">Implied 2027–2030 CAPEX: €440 M base case (€285–685 M range). Full assumption log A01–A17 in Appendix B. Sensitivity ±20% revenue-anchor: €14–22 M/yr; sign stable.</div>
+    </div>
+
+    <!-- Funding structure -->
+    <div class="mt-8">
+      <div class="kicker text-slate/70 mb-4">The funding — one €500 M programme, four tranches</div>
+      <div class="grid grid-cols-[3fr_2fr] gap-10 items-end">
+        <div class="flex items-end gap-5" style="height: 200px;">
+          <div class="flex-1 flex flex-col items-center">
+            <div class="tnum text-navy font-bold text-2xl mb-2">€150 M</div>
+            <div class="w-full bg-gradient-to-b from-aqua to-navy rounded" style="height: 150px;"></div>
+            <div class="mt-2 text-sm font-mono text-slate">2027</div>
+            <div class="text-xs text-slate/60 mt-1 text-center">EU Taxonomy · use of proceeds</div>
+          </div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="tnum text-navy font-bold text-2xl mb-2">€150 M</div>
+            <div class="w-full bg-gradient-to-b from-aqua to-navy rounded" style="height: 150px;"></div>
+            <div class="mt-2 text-sm font-mono text-slate">2028</div>
+            <div class="text-xs text-slate/60 mt-1 text-center">CSRD limited assurance</div>
+          </div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="tnum text-navy font-bold text-2xl mb-2">€120 M</div>
+            <div class="w-full bg-gradient-to-b from-aqua to-navy rounded" style="height: 120px;"></div>
+            <div class="mt-2 text-sm font-mono text-slate">2029</div>
+            <div class="text-xs text-slate/60 mt-1 text-center">ISO 14001:2026</div>
+          </div>
+          <div class="flex-1 flex flex-col items-center">
+            <div class="tnum text-navy font-bold text-2xl mb-2">€80 M</div>
+            <div class="w-full bg-gradient-to-b from-aqua to-navy rounded" style="height: 80px;"></div>
+            <div class="mt-2 text-sm font-mono text-slate">2030</div>
+            <div class="text-xs text-slate/60 mt-1 text-center">TCFD + TNFD full</div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-navy text-white">
+          <div class="kicker text-aqua mb-3">PV interest savings</div>
+          <div class="bignum tnum" style="font-size: 4.5rem;">€31 <span class="text-3xl font-light text-white/70">M</span></div>
+          <div class="text-sm text-white/80 leading-relaxed mt-3">
+            at the current 25 bp green-bond spread over vanilla IG water-utility issuance (Climate Bonds Initiative, 2024 Green Bond Pricing Report). Ten-year tenor. 8% discount rate.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 text-sm text-slate/70 italic">
+      Every milestone owned by a named Executive-Committee role from Aqualia's Risk Map. Every KPI quantified. Every disclosure anchored to ESRS.
+    </div>
+  </div>
+</section>
+
+
+<!-- ====================================================================
+     SLIDE 8 · THE TRUST STILL HOLDS
+==================================================================== -->
+<section class="slide hero-bg text-white" id="s8" data-note-caps="Slide 8 · 4:40 – 5:00"
+         data-note="In 2030, when a tap opens in Cartagena, or Rome, or Murcia, or Prague — it opens with confidence. Not because the water happened to arrive. Because someone planned for the climate that came. Three material topics. A five-hundred-million-euro green bond programme. Thirty-one million of interest savings. One strategy. Water as strategy. The trust still holds. Thank you.">
+  <div class="h-full flex flex-col justify-between px-24 py-16">
+
+    <div class="kicker text-aqua text-center">07 · 2030</div>
+
+    <!-- Core message -->
+    <div class="flex-1 flex flex-col justify-center">
+      <h2 class="display text-white text-center" style="font-size: 9rem;">
+        The trust<br><span class="text-aqua">still holds.</span>
+      </h2>
+
+      <div class="mt-12 text-white/80 font-light text-center max-w-5xl mx-auto leading-relaxed" style="font-size: 1.5rem;">
+        In 2030, when a tap opens in Cartagena, or Rome, or Murcia, or Prague,
+        it opens with confidence. Not because the water happened to arrive.
+        Because someone planned for the climate that came.
+      </div>
+
+      <!-- Four deliverables -->
+      <div class="mt-16 text-center space-y-3" style="font-size: 2.2rem; line-height: 1.15;">
+        <div class="text-white font-bold">Three material topics.</div>
+        <div class="text-white font-bold"><span class="text-aqua tnum">€500 M</span> green bond programme.</div>
+        <div class="text-white font-bold"><span class="text-aqua tnum">€31 M</span> present-value interest savings.</div>
+        <div class="text-white font-bold">One strategy.</div>
+      </div>
+    </div>
+
+    <!-- Bottom band -->
+    <div class="flex items-end justify-between pt-8 border-t border-white/15">
+
+      <div class="max-w-2xl">
+        <div class="kicker text-white/55 mb-2">What this methodology cannot do</div>
+        <div class="text-xs text-white/55 leading-relaxed">
+          No external stakeholder interviews this cycle (MAW compensates, does not replace).
+          Financial figures are ranges anchored to FCC segment data pending Aqualia's internal cost of capital.
+          ESRS gap heatmap uses TF-IDF; dense-embedding upgrade would sharpen but not reverse conclusions.
+        </div>
+      </div>
+
+      <!-- QR + attribution -->
+      <div class="flex items-end gap-6">
+        <div class="text-right">
+          <div class="kicker text-aqua mb-2">Los Gatos de Datos</div>
+          <div class="text-xs text-white/60 leading-snug">IE Master in Business Analytics & Data Science<br/>IE Sustainability Datathon · March 2026</div>
+        </div>
+        <div class="bg-white p-2 rounded-lg">
+          <!-- Inline QR (placeholder — points to live dashboard) -->
+          <img src="qr_dashboard.png" class="w-[140px] h-[140px]" alt="ma731.github.io/Aqualia-Datathon" onerror="this.style.display='none'"/>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+</div>
+
+<!-- ==============================
+     DOT NAV + SPEAKER NOTES
+============================== -->
+<div class="dots" id="dots"></div>
+
+<div class="notes" id="notes">
+  <div class="caps" id="notesCaps">Slide 1</div>
+  <div id="notesBody"></div>
+</div>
+
+<div class="helpOverlay" id="help">
+  <div>
+    <div class="text-aqua text-sm font-bold uppercase tracking-widest mb-6 text-center">Keyboard shortcuts</div>
+    <table>
+      <tr><td>→ · Space</td><td>Next slide</td></tr>
+      <tr><td>←</td><td>Previous slide</td></tr>
+      <tr><td>Home</td><td>First slide</td></tr>
+      <tr><td>End</td><td>Last slide</td></tr>
+      <tr><td>F</td><td>Toggle fullscreen</td></tr>
+      <tr><td>N</td><td>Toggle speaker notes</td></tr>
+      <tr><td>?</td><td>This help</td></tr>
+      <tr><td>Ctrl + P</td><td>Export to PDF (landscape)</td></tr>
+    </table>
+    <div class="text-center text-xs text-white/50 mt-8">Press any key to dismiss.</div>
+  </div>
+</div>
+
+<script>
+// ============ Nav ============
+const N_SLIDES = 8;
+let cur = 0;
+const deck = document.getElementById('deck');
+const slides = deck.querySelectorAll('.slide');
+const dots = document.getElementById('dots');
+for (let i = 0; i < N_SLIDES; i++) {
+  const d = document.createElement('span');
+  d.addEventListener('click', () => go(i));
+  dots.appendChild(d);
+}
+function go(i) {
+  cur = Math.max(0, Math.min(N_SLIDES - 1, i));
+  deck.style.transform = `translateX(-${cur * 100}vw)`;
+  [...dots.children].forEach((d, k) => d.classList.toggle('active', k === cur));
+  // Dot colour against slide theme
+  const isLight = slides[cur].classList.contains('light');
+  document.body.style.background = isLight ? 'white' : '#001a38';
+  [...dots.children].forEach(d => {
+    d.style.background = d.classList.contains('active')
+      ? (isLight ? '#002f5f' : '#5db9d9')
+      : (isLight ? 'rgba(0,47,95,0.22)' : 'rgba(255,255,255,0.28)');
+  });
+  // Notes
+  const n = slides[cur];
+  document.getElementById('notesCaps').textContent = n.dataset.noteCaps || `Slide ${i+1}`;
+  document.getElementById('notesBody').textContent = n.dataset.note || '';
+  // Restart any per-slide animation hook
+  if (i === 4) renderMatrix();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { go(cur + 1); e.preventDefault(); }
+  else if (e.key === 'ArrowLeft') { go(cur - 1); e.preventDefault(); }
+  else if (e.key === 'Home') go(0);
+  else if (e.key === 'End') go(N_SLIDES - 1);
+  else if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+  else if (e.key === 'n' || e.key === 'N') {
+    document.getElementById('notes').classList.toggle('visible');
+  }
+  else if (e.key === '?') {
+    document.getElementById('help').classList.toggle('visible');
+  } else if (document.getElementById('help').classList.contains('visible')) {
+    document.getElementById('help').classList.remove('visible');
+  }
+});
+
+// ============ Matrix (Plotly) ============
+function buildEllipse(cx, cy, rx, ry, angleDeg) {
+  const ang = angleDeg * Math.PI / 180;
+  const xs = [], ys = [];
+  for (let i = 0; i <= 200; i++) {
+    const t = (i / 200) * 2 * Math.PI;
+    const ex = rx * Math.cos(t);
+    const ey = ry * Math.sin(t);
+    xs.push(ex * Math.cos(ang) - ey * Math.sin(ang) + cx);
+    ys.push(ex * Math.sin(ang) + ey * Math.cos(ang) + cy);
+  }
+  return { x: xs, y: ys };
+}
+
+function renderMatrix() {
+  if (document.getElementById('matrix').dataset.rendered === 'true') return;
+  const topics = [
+    { key:'T1', name:'Water Resilience', cx:3.07, cy:3.98, rx:0.24, ry:0.18, rot:0,  color:'#1f77b4' },
+    { key:'T2', name:'Digital & Cyber',  cx:2.75, cy:3.08, rx:0.28, ry:0.22, rot:-6, color:'#ff7f0e' },
+    { key:'T3', name:'Green Finance',    cx:2.42, cy:3.24, rx:0.30, ry:0.26, rot:3,  color:'#2ca02c' },
+  ];
+  const traces = [];
+  traces.push({ type:'scatter', mode:'none', x:[2.5,5.2,5.2,2.5,2.5], y:[2.5,2.5,5.2,5.2,2.5],
+    fill:'toself', fillcolor:'rgba(44,160,44,0.10)', hoverinfo:'skip', showlegend:false });
+  topics.forEach(t => {
+    const pts = buildEllipse(t.cx, t.cy, t.rx, t.ry, t.rot);
+    traces.push({
+      type:'scatter', mode:'lines', x: pts.x, y: pts.y,
+      fill:'toself', fillcolor: t.color + '40',
+      line:{ color: t.color, width: 3 }, name: t.key + ' · ' + t.name, hoverinfo:'name',
+    });
+    traces.push({
+      type:'scatter', mode:'markers+text', x:[t.cx], y:[t.cy],
+      marker:{ size: 22, color: t.color, line:{ color:'white', width: 3 } },
+      text:[t.key], textposition:'middle center',
+      textfont:{ color:'white', size: 13, family:'Inter', weight: 700 },
+      hovertemplate: `<b>${t.key} ${t.name}</b><br>Financial: ${t.cx}<br>Impact: ${t.cy}<extra></extra>`,
+      showlegend:false,
+    });
+    // Outside label
+    traces.push({
+      type:'scatter', mode:'text', x:[t.cx + t.rx + 0.12], y:[t.cy],
+      text:[`<b>${t.key}</b> ${t.name}`], textposition:'middle right',
+      textfont:{ color: t.color, size: 14, family:'Inter' }, hoverinfo:'skip', showlegend:false,
+    });
+  });
+  const layout = {
+    margin:{ l: 70, r: 160, t: 30, b: 60 },
+    paper_bgcolor:'white', plot_bgcolor:'white',
+    font:{ family:'Inter', size: 13, color:'#4a5663' },
+    xaxis:{ title:{ text:'Financial Severity', font:{ size: 14, color:'#002f5f' } },
+            range:[1.4, 5.2], dtick: 0.5, gridcolor:'#e6e8eb', zeroline:false },
+    yaxis:{ title:{ text:'Impact Severity', font:{ size: 14, color:'#002f5f' } },
+            range:[1.4, 5.2], dtick: 0.5, gridcolor:'#e6e8eb', zeroline:false, scaleanchor:'x' },
+    shapes:[
+      { type:'line', x0:2.5, x1:2.5, y0:1.4, y1:5.2, line:{ color:'#888', width: 1.2, dash:'dash' } },
+      { type:'line', x0:1.4, x1:5.2, y0:2.5, y1:2.5, line:{ color:'#888', width: 1.2, dash:'dash' } },
+    ],
+    annotations:[
+      { x: 5.12, y: 5.08, xanchor:'right', yanchor:'top', text:'<b>TARGET ZONE</b>',
+        showarrow:false, font:{ color:'#2ca02c', size: 13 } },
+    ],
+    showlegend: false,
+  };
+  Plotly.newPlot('matrix', traces, layout, { displayModeBar: false, responsive: true });
+  document.getElementById('matrix').dataset.rendered = 'true';
+}
+
+// Initial nav state
+go(0);
+
+// Render matrix lazily on first mount too (in case slide 5 is first)
+setTimeout(() => { if (document.getElementById('matrix')) renderMatrix(); }, 400);
+
+// Brief idle help hint
+setTimeout(() => {
+  const hint = document.createElement('div');
+  hint.style.cssText = 'position:fixed; top:20px; right:24px; background:rgba(0,0,0,0.6); color:#5db9d9; font-size:11px; padding:6px 12px; border-radius:6px; font-family:Inter; z-index:150; letter-spacing:0.1em;';
+  hint.textContent = '← → navigate · F fullscreen · N notes · ? help';
+  document.body.appendChild(hint);
+  setTimeout(() => hint.style.opacity = '0', 5000);
+  hint.style.transition = 'opacity 1s';
+  setTimeout(() => hint.remove(), 6500);
+}, 800);
+</script>
+
+</body>
+</html>

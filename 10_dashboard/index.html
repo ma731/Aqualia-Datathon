@@ -1238,6 +1238,16 @@ tailwind.config = {
 
       <div class="md:col-span-2 bg-white rounded-3xl border border-grid p-6" data-aos="fade-up">
         <div id="peer-chart" style="height:460px;"></div>
+        <div class="text-xs text-slate/60 leading-relaxed mt-4 pt-4 border-t border-grid">
+          <b class="text-slate/80">Sources &amp; method.</b> Aqualia's 35% ESRS coverage score is computed by the
+          bilingual TF-IDF heatmap in <span class="font-mono">03_analysis/esrs_gap_heatmap.py</span>
+          run against Aqualia's 2022–2025 sustainability corpus (873 paragraph chunks · 75 canonical
+          ESRS datapoints). Peer scores for Veolia, Suez, Severn Trent, and Global Omnium are
+          <i>directional estimates</i> triangulated from each peer's 2024 Universal Registration
+          Document and published material-topics list; full TF-IDF replication against peer corpora
+          is flagged in Limitations (§9.1) and does not reverse the directional conclusion that
+          Aqualia sits below the sector average.
+        </div>
       </div>
 
       <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">

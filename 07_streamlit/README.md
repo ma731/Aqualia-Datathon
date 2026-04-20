@@ -1,55 +1,29 @@
-# Streamlit Dashboard — Interactive Matrix
+# 07_streamlit — Archived
 
-Single-file Streamlit app — the QR-code destination for the pitch
-deck. Shows the Monte Carlo matrix, ESRS gap heatmap, findings, and
-methodology. Zero backend.
+> **This folder is superseded.** The primary interactive deliverable
+> is the single-file HTML dashboard in [`10_dashboard/`](../10_dashboard/),
+> deployed at **https://ma731.github.io/Aqualia-Datathon/**.
 
-## Run locally
+The Streamlit application here was an early prototype of the
+interactive layer for the project. It was replaced in April 2026 by
+the premium single-file HTML dashboard (Tailwind + Plotly + GSAP),
+which:
+
+- Runs without a Python server (static site, GitHub Pages)
+- Integrates tighter brand typography and motion design
+- Adds the NGFS climate-scenario toggle, stakeholder salience radar,
+  and peer-benchmark chart that were out of scope for the Streamlit
+  version
+- Embeds the QR-code destination cited in the pitch deck
+
+The code in this folder is retained for reference only. It is not
+part of the submission and is no longer maintained. If you want to
+run it for local inspection:
 
 ```bash
-pip install -r 07_streamlit/requirements.txt
-streamlit run 07_streamlit/app.py
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Opens at `http://localhost:8501`.
-
-## Deploy to Streamlit Community Cloud (free)
-
-1. Push the whole `Sustainability Datathon/` directory to a public
-   GitHub repo.
-2. Go to https://share.streamlit.io/ → "New app".
-3. Select the repo, branch, main file `07_streamlit/app.py`.
-4. Deploy. Takes ~2 min. You'll get a URL like
-   `https://aqualia-datathon.streamlit.app`.
-5. Generate a QR code for that URL → paste on slide 5 of the deck.
-
-## Static fallback
-
-If Streamlit Cloud ever hiccups on demo day, use the static artefacts
-already in the repo:
-
-- `04_matrix/matrix_mc.png` — matrix image
-- `04_matrix/matrix_mc.html` — interactive Plotly, no server needed
-- `04_matrix/esrs_gap_heatmap.html` — interactive heatmap
-- `04_matrix/matrix_tornado.png` — sensitivity
-
-Serve them via `python -m http.server` or GitHub Pages.
-
-## What to demo in the pitch
-
-20 seconds is enough:
-
-1. Show the QR code at the start of the methodology slide.
-2. While speaking, pull up the app on the presenter laptop.
-3. On the Matrix tab, flip between "Salience" and "Investor-first"
-   weighting schemes — centroids barely move. That visual is the
-   robustness point.
-4. Jump to the Heatmap tab, hover over the S3 row. Say "see the
-   Colombia gap?" Move on.
-
-Do not try to explain the sliders. Judges do not want another slide
-of methodology in the pitch — they want to see that it works.
-
-## Do not extend this to a full-stack app
-
-Resist the urge. `what_actually_wins.md §1` is explicit on why.
+For the up-to-date interactive experience, open the dashboard:
+**https://ma731.github.io/Aqualia-Datathon/**

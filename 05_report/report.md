@@ -215,14 +215,21 @@ metrics (NRW, pipe replacement, effluent non-compliance), WRI Aqueduct
 population-exposure bands, and MSCI's 2024 Water Utilities
 sub-weights.
 
-The Financial Magnitude scale is anchored to an Aqualia revenue proxy
-of **€1.4 B** (Assumption A01), drawn from FCC Group 2024 segment
-disclosure with the Aqualia water segment at ~28% of group revenue.
-Band 3 (Moderate) corresponds to 0.5–2% of revenue (€7–28 M), a
-material budget line but recoverable from normal operations. Band 5
-(Severe) exceeds 5% (€70 M), enterprise-level impact. Section 7 of
-`financials.md` shows that rank ordering of topics is stable under
-±20% revenue anchor shifts.
+The Financial Magnitude scale is anchored to Aqualia's 2024 revenue.
+Our initial base case used **€1.4 B** (Assumption A01) as a
+conservative proxy derived from FCC Group segment disclosure.
+Aqualia's 2024 Sustainability Report (p. 103) subsequently discloses
+a total revenue-volume of business of **€1,674.7 M**, of which 98.8%
+is EU-Taxonomy-eligible and 45.74% is Taxonomy-aligned. We retain
+the €1.4 B base case for conservatism; the actual figure sits inside
+our published ±20% sensitivity band, and Section 7 of
+`financials.md` confirms that the rank ordering of topics and the
+sign of the €18 M/yr headline are stable under both anchors. Band 3
+(Moderate) corresponds to 0.5–2% of revenue (€7–28 M at the
+conservative anchor; €8–33 M at the disclosed anchor), a material
+budget line but recoverable from normal operations. Band 5 (Severe)
+exceeds 5% (€70 M conservative; €84 M disclosed), enterprise-level
+impact.
 
 ### 3.4 Stakeholder salience
 Aqualia's 2025 review was scored internally by its Sustainability
