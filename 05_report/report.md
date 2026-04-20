@@ -444,7 +444,7 @@ high) anchored to Aqualia's public financial scale, peer disclosures,
 and regulatory cost factors. Full assumption log A01–A17 is in
 Appendix B; detail at `financials.md`.
 
-### 6.0.1 Financial causal bridge (how ESG hits P&L/BS/CF)
+### 6.1.1 Financial causal bridge (how ESG hits P&L/BS/CF)
 
 For each topic, we explicitly map:
 
@@ -751,16 +751,6 @@ Six honest limitations, each with a remediation path.
    parameter is reported at PERTURB = 1.0 in the appendix, and topic
    rankings are stable.
 
-### 9.4 Submission integrity checks
-
-Before final submission we run a final gate:
-
-- All headline numbers trace to a table cell and source reference.
-- All Tier C assumptions have at least one corroborating Tier A/B source.
-- All three topic positions are reproducible by re-running scripts.
-- Language consistency pass (single language per section; no mixed labels).
-- Citation pass (regulatory references complete and correctly named).
-
 ### 9.2 Reverse stress test (Exhibit 17)
 For each topic, we ask: *what would inputs have to do for this topic
 to exit the Target Zone?*
@@ -793,60 +783,258 @@ blind spots, the framing is corrective rather than adversarial. The
 purpose is to strengthen Aqualia's framework, which is already among
 the most mature in the Spanish water sector.
 
+### 9.4 Submission integrity checks
+Before final submission we run a final gate:
+
+- All headline numbers trace to a table cell and source reference.
+- All Tier C assumptions have at least one corroborating Tier A/B source.
+- All three topic positions are reproducible by re-running scripts.
+- Language consistency pass (single language per section; no mixed labels).
+- Citation pass (regulatory references complete and correctly named).
+
 ---
 
 ## Appendices
 
 ### Appendix A — Scoring threshold sheet
-Full version of `03_analysis/scoring_rubric.md` §2–§3 reproduced.
-Each sub-criterion (Scale, Scope, Remediability, Probability,
-Magnitude) with 1–5 thresholds, water-sector calibrations, and cited
-sources (ESRS 1 §43–51; EFRAG IG-1 §53–69; SASB Water Utilities metric
-set; WRI Aqueduct population bands; MSCI 2024 Water Utilities sub-
-weights).
+
+Full 1–5 threshold system for every scoring sub-criterion, reproduced
+from `03_analysis/scoring_rubric.md §2–§3`. Every band cites a public
+source.
+
+#### A.1 Impact Severity — Scale
+
+| Score | Band | Threshold | Water-sector calibration |
+|---|---|---|---|
+| 1 | Negligible | Localised, minor, fully reversible within 1 year. No stakeholder health or livelihood effect. | NRW <5%; WTP upset <1 day; zero non-compliance events |
+| 2 | Minor | Measurable but contained within a single municipality / single operational site. Reversible within 3 years. | NRW 5–15%; <1% service interruption >4h/yr; rare discharge exceedances |
+| 3 | Moderate | Affects multiple municipalities or a regional concession. Reversible within 10 years with planned investment. | NRW 15–25%; 1–3% service interruption >4h; isolated pollution events |
+| 4 | Major | Country-level operation or full service area affected. Reversible only via structural CAPEX. Livelihoods / public health threatened for some populations. | NRW 25–35%; chronic water-quality breach; restricted-access advisories |
+| 5 | Critical | Group-wide or priority river basin. Irreversible on human timescales (aquifer depletion, ecosystem collapse). Systemic public health crisis. | Aquifer collapse; mass service denial; WFD ecosystem status breach |
+
+*Anchor: ESRS 1 §43(a); EFRAG IG-1 §53; WRI Aqueduct 4.0 stress classes; SASB Water Utilities NRW metric.*
+
+#### A.2 Impact Severity — Scope
+
+| Score | Population / geography | Example |
+|---|---|---|
+| 1 | <10k people, single installation | Pumping station incident |
+| 2 | 10k–100k people, single municipality | Small concession |
+| 3 | 100k–1M people, province / region | Andalucía rural corridor |
+| 4 | 1M–10M people, country-level operation | Spain or Portugal subsidiary |
+| 5 | >10M people, multi-country or river basin | Group-wide; Tagus + Segura basins |
+
+*Anchor: ESRS 1 §43(b); WRI Aqueduct 4.0 population exposure.*
+
+#### A.3 Impact Severity — Remediability
+
+| Score | Remediability | Cost / horizon |
+|---|---|---|
+| 1 | Fully remediable with routine operations | Recover within 1 year, BAU OPEX |
+| 2 | Remediable with targeted intervention | 1–3 year remediation, <€1 M |
+| 3 | Remediable with material CAPEX | 3–10 year remediation, €1–10 M |
+| 4 | Remediable only via structural programme | >10 year remediation, >€10 M, policy change needed |
+| 5 | Effectively irremediable on business time horizon | >25 year horizon or ecological tipping point crossed |
+
+*Anchor: ESRS 1 §43(c); EFRAG IG-1 §55; TNFD LEAP "Assess".*
+
+#### A.4 Probability (applies to both axes)
+
+| Score | Band | Likelihood / horizon |
+|---|---|---|
+| 1 | Remote | <5% in next 5 years |
+| 2 | Unlikely | 5–15% in next 5 years |
+| 3 | Possible | 15–40% in next 5 years |
+| 4 | Likely | 40–75% in next 5 years |
+| 5 | Almost certain | >75% in next 3 years, or currently occurring |
+
+*Anchor: Aqualia Methodology p. 6 (extended from 4 to 5 bands).*
+
+#### A.5 Financial Magnitude
+
+| Score | Band | % of revenue (€1,400 M anchor) | € equivalent | Justification anchor |
+|---|---|---|---|---|
+| 1 | Immaterial | <0.1% | <€1.4 M | Below FCC segment materiality threshold |
+| 2 | Minor | 0.1–0.5% | €1.4–7 M | EFRAG IG-1 §68 low-mat trigger |
+| 3 | Moderate | 0.5–2% | €7–28 M | ~10% of Aqualia's €40 M/yr sustainability CAPEX |
+| 4 | Major | 2–5% | €28–70 M | Multi-year single-topic CAPEX programme |
+| 5 | Severe | >5% | >€70 M | Enterprise-level impact; group capital reallocation |
+
+*Anchor: EFRAG IG-1 §68; FCC Group 2024 segment reporting.*
+
+#### A.6 Time-horizon discount (financial axis only)
+
+| Horizon | Discount factor |
+|---|---|
+| Short-term (≤3 y) | 1.00 |
+| Medium-term (3–10 y) | 0.80 |
+| Long-term (>10 y) | 0.60 |
+
+*Anchor: EFRAG IG-1 §69; standard DCF 8% for long-term water infrastructure.*
+
+#### A.7 Sub-criterion weighting schemes (§7.4 robustness)
+
+| Scheme | Scale | Scope | Remediability | Rationale |
+|---|---|---|---|---|
+| Balanced (default) | 0.33 | 0.33 | 0.33 | Matches Aqualia's internal method |
+| MSCI-inspired | 0.40 | 0.40 | 0.20 | Rater emphasis on severity + breadth |
+| EFRAG severity-first | 0.50 | 0.25 | 0.25 | Severity-of-harm dominates per EFRAG IG-1 |
+| Irreversibility-sensitive | 0.25 | 0.25 | 0.50 | Weights irreversibility heavily for planetary boundaries |
+
+Topic rankings are stable under all four schemes — see §7.4 and `03_analysis/mc_robustness.csv`.
 
 ### Appendix B — Assumption log (A01–A17)
-Every numeric assumption used in the financial section, with source,
-range, and the section of the report where it appears. Numbered for
-audit cross-reference.
 
-### Appendix C — ESRS datapoint coverage (Exhibit — full heatmap)
-Output from `03_analysis/coverage_matrix.csv`. One row per ESRS
-datapoint with coverage band, cosine-similarity score, and the
-top-matching Aqualia report chunk (with source file and page number)
-for audit.
+Every numeric assumption used in §6, with source and evidence tier.
+
+| ID | Topic | Assumption | Source | Tier |
+|---|---|---|---|---|
+| A01 | Anchor | Aqualia group revenue €1,400 M | FCC 2024 URD segment proxy (~28% of group) | B |
+| A02 | Anchor | EBITDA margin 22% (≈€308 M) | Industry average for mature integrated water utilities | B |
+| A03 | T1 | 4% of revenue at risk from water-stress concession loss (base) | Severn Trent ofwat PR24 revenue-at-risk bands; WRI Aqueduct 4.0 per-basin overlay (45% of Aqualia revenue in High/Extreme basins today, 79% BAU 2030) | B |
+| A04 | T1 | Reuse-market upside = 30% of EU water-reuse TAM × Aqualia share | RD 1985/2024; EC "Water Efficiency First" Plans | A |
+| A05 | T1 | Energy costs +1.5%/yr above inflation under climate stress | EU ETS extension; Aqualia risk O7 | B |
+| A06 | T1 | €85 M/yr CAPEX × 4 yrs = €340 M base | Aqualia €40 M/yr baseline + UWWTD recast; Veolia desalination unit costs | B |
+| A07 | T1 | Fines + write-downs ≈ 0.5× annual OPEX impact | SASB Water Utilities effluent non-compliance benchmark | B |
+| A08 | T2 | Single-incident revenue loss = 7% of revenue × 15% annual probability | IBM Cost of a Data Breach 2024; Severn Trent + Thames Water 2024 incidents | B |
+| A09 | T2 | Digital tender differentiation captures 1–3% extra win rate | Veolia AquaCIS / Suez Aquadvanced pricing disclosures | B |
+| A10 | T2 | Cyber OPEX baseline 0.3–0.7% revenue; sector target 0.8–1.2% | Gartner water-utility cyber spend benchmark 2024 | B |
+| A11 | T2 | Digital-twin + AI CAPEX = €15–40 per serviced person over 4 yrs | Global Omnium GoAigua; SWAN Forum utility benchmarks | B |
+| A12 | T2 | NIS2 fines ≤2% global revenue; GDPR ≤4%; probability 10–30% in period | NIS2 Directive Art. 34; GDPR Art. 83 | A |
+| A13 | T3 | ESG-laggard spread 15–40 bp (base 25 bp); refinanceable debt ≈€1.2 B | ICMA Green Bond Principles; FCC Euro MTN programme | B |
+| A14 | T3 | Green premium 15–25 bp in IG Euro water-utility issuance | Climate Bonds Initiative 2024 Pricing Report | B |
+| A15 | T3 | 15–40 bp saving phased over refinancing cycle on €1.2 B stack | Typical water-utility debt-maturity profile | C |
+| A16 | T3 | €18 M one-off CSRD + CSDDD + ISO 14001:2026 compliance | Deloitte 2025 CSRD readiness survey | B |
+| A17 | T3 | CSDDD liability probability 10% in the period; Omnibus I relief ~30% | CSDDD Art. 29; Omnibus I Simplification Package (Dec 2024) | A |
+
+**Evidence-tier policy.** A = auditable (company disclosure, regulation text, audited financials). B = benchmark (peer disclosure, industry report, rating methodology). C = expert estimate. No final headline number in §6 relies on Tier C alone; every C-tier line is triangulated with at least one A/B source.
+
+### Appendix C — ESRS datapoint coverage (summary of full heatmap)
+
+The gap heatmap is computed from `03_analysis/esrs_gap_heatmap.py` against 75 canonical ESRS datapoints (E1–E5, S1–S4, G1 + six Aqualia-specific sector addenda) and 873 bilingual paragraph chunks extracted from Aqualia's 2022–2025 sustainability reports and the 2025 Double Materiality Review.
+
+**Coverage-band distribution**
+
+| Band | Datapoints | % | Interpretation |
+|---|---|---|---|
+| Green (≥0.12 cosine) | 12 | 16% | Solid narrative + quantitative coverage |
+| Amber (0.08–0.12) | 14 | 19% | Mentioned but underdeveloped |
+| Red (0.06–0.08) | 19 | 25% | Weak coverage — single passing mention |
+| Dark red (<0.06) | 30 | 40% | Effectively absent |
+
+**Per-family coverage (green band only)**
+
+| ESRS family | Assessed | Green | % green |
+|---|---|---|---|
+| Environment (E1–E5) | 31 | 6 | 19% |
+| Social (S1–S4) | 25 | 3 | 12% |
+| Governance (G1) | 8 | 0 | 0% |
+| Aqualia sector (AQ-*) | 11 | 3 | 27% |
+
+**Top 5 best-covered datapoints**
+
+| DP ID | Disclosure requirement | Cosine |
+|---|---|---|
+| E1-2 | Policies (climate change) | 0.152 |
+| AQ-FIN-3 | TNFD alignment | 0.149 |
+| E1-9 | Anticipated financial effects | 0.148 |
+| S1-14 | Health and safety | 0.140 |
+| AQ-FIN-2 | EU Taxonomy alignment | 0.128 |
+
+**Bottom 5 — priority disclosure gaps**
+
+| DP ID | Disclosure requirement | Cosine |
+|---|---|---|
+| S1-2 | Workforce engagement | 0.034 |
+| S1-6 | Workforce characteristics | 0.036 |
+| E2-4 | Pollution emissions | 0.038 |
+| S1-17 | Discrimination incidents | 0.039 |
+| S4-3 | Consumer remediation | 0.043 |
+
+**Reading note.** Governance (G1) is uniformly weak in the corpus — zero green datapoints — despite being a mandatory ESRS family. Social (S1–S4) is the second-weakest area, dominated by workforce and community-engagement gaps. Environment (E1–E5) is the strongest, reflecting Aqualia's operational focus on water and energy. Full per-row data — including each datapoint's top-matching text chunk with source file and page number for audit — is in `03_analysis/coverage_matrix.csv` (75 rows × 11 columns).
 
 ### Appendix D — Monte Carlo technical note
-Triangular distribution specification; Dirichlet prior on stakeholder
-weights; top-k aggregation derivation; 2D χ² ellipse construction;
-seed control (42) for reproducibility.
+
+**Inputs.** For each topic: Scale, Scope, Remediability, Probability (per IRO); Magnitude low/base/high (per risk or opportunity); stakeholder salience weights.
+
+**Distributions.**
+
+| Parameter | Distribution | Support |
+|---|---|---|
+| Scale / Scope / Remediability / Probability | Discrete uniform ±0.7 around base score | Truncated to [1, 5] |
+| Financial magnitude (€) | Triangular(low, base, high) | Per A03–A17 |
+| Stakeholder weights | Dirichlet centred on salience vector | Simplex of 10 groups |
+
+**Simulation.** 10,000 independent draws per topic; random seed 42 for reproducibility (`matrix_mc.py`, line 14). Per-draw Topic Impact and Topic Financial scores are computed via the formulas in Appendix A, then aggregated.
+
+**Outputs.** Mean, median, standard deviation, 5th and 95th percentile of Topic Impact and Topic Financial scores. The 2D covariance matrix yields a 90% confidence ellipse via χ²(2) scaling (χ² critical value 4.605 at 90%). Ellipse axes are the square root of the eigenvalues of the scaled covariance matrix; orientation is the angle of the first eigenvector.
+
+**Robustness.** The simulation is re-run under each of the four sub-criterion weighting schemes in Appendix A.7. All three topics retain their Target-Zone positions under every scheme (`03_analysis/mc_robustness.csv`). The sensitivity tornado in Exhibit 13 identifies A03 (T1 water-stress revenue exposure) and A08 (T2 cyber-incident probability) as the two inputs with the largest marginal effect on matrix position.
+
+**Artefacts.** `03_analysis/matrix_mc.py` (simulation); `matrix_inputs.py` (topic input definitions); `mc_results.csv` (per-draw outputs); `mc_robustness.csv` (cross-scheme positions); `04_matrix/matrix_mc.png` and interactive HTML (rendered ellipses).
 
 ### Appendix E — Peer material-topic cross-walk
-Full 14-column version of the peer-benchmark matrix (Veolia, Suez,
-Saur, Facsa, Global Omnium, Severn Trent), with qualitative coverage
-marks and short justification per cell. Exhibit 3.
+
+The peer benchmark covers six comparator utilities selected for regulatory overlap with Aqualia.
+
+| Peer | Country | Role in benchmark |
+|---|---|---|
+| Veolia | France | Largest European integrated operator — disclosure leader |
+| Suez | France | Direct competitor on concession tenders; similar scale |
+| Saur | France | Smaller French operator; stress-case for disclosure minimum |
+| Facsa | Spain | Domestic peer; same regulatory context |
+| Global Omnium | Spain | Domestic peer; digital-leadership reference (GoAigua) |
+| Severn Trent | UK | Regulated UK comparator (ofwat); financial-materiality benchmark |
+
+For every Aqualia material-topic cluster we classify peer treatment on a three-band scale (explicit / implicit / absent) across twelve attributes — stand-alone topic, dedicated KPIs, capital allocation, stakeholder-engagement depth, assurance scope, target granularity, and six others. The full 14-column matrix is in `01_research/peer_benchmark.md`; the summary figure is Exhibit 3 in §4.2 of this report. Two findings from the cross-walk drive the narrative: (i) every peer treats digital-and-cyber as a top-five strategic topic, validating our T2 repositioning, and (ii) none of the peers cleanly separates affected-community (ESRS S3) from consumer (ESRS S4) disclosure — the gap our T1 recommendation addresses.
 
 ### Appendix F — Expert input
-To be populated after the LinkedIn outreach in §P2.1 of the
-Final Readiness punch list. Format: one-paragraph attribution, one
-direct quote, one follow-up question trail.
+
+*Not included in this submission cycle.* The challenge brief (§2) acknowledges that external stakeholder consultation is out-of-scope for a two-week analytical engagement. Production-grade implementation of the Mitchell–Agle–Wood stakeholder model (§3.4) would require at least one interview per stakeholder group — ten interviews spanning regulators, investors, municipal concessionaires, local communities, employees, suppliers, NGOs, rating agencies, bondholders, and customer panels. The protocol, interview guide, and attribution framework are documented in `03_analysis/stakeholder_salience.md §5`. Pending that work, Appendix F in the final delivered version would contain one-paragraph attributions, one direct quote per interview, and a follow-up question trail. We flag this gap explicitly as Limitation 1 in §9.1.
 
 ### Appendix G — References / Bibliography
-47 entries grouped by source type: EU/European regulation (13);
-Spanish regulation (3); standards & frameworks (7); rating-agency
-methodologies (3); data sources (7); academic references (3);
-industry/peer disclosures (11). Full list at
-`05_report/references.md`.
+
+Forty-seven cited sources, organised by type. Full bibliography lives at `05_report/references.md`; summary counts below.
+
+| Category | Entries | Representative source |
+|---|---|---|
+| EU / European regulation | 13 | CSRD (Directive (EU) 2022/2464); ESRS (Regulation (EU) 2023/2772); CSDDD; Omnibus I |
+| Spanish regulation | 3 | Ley 7/2021 climate law; RD 1985/2024 wastewater reuse; Ley 11/2018 EINF |
+| Standards & frameworks | 7 | EFRAG IG-1/2/3; SASB Water Utilities; ISO 14001:2026; TCFD; TNFD; AA1000; ICMA GBP |
+| Rating-agency methodologies | 3 | MSCI Water Utilities 2024; S&P Global CSA; Sustainalytics |
+| Data sources | 7 | WRI Aqueduct 4.0; NGFS Phase IV; IPCC AR6 WGII; WEF Global Risks 2025–26; CBI 2024 Pricing |
+| Academic | 3 | Mitchell–Agle–Wood (1997); Eccles et al. (2014); Khan et al. (2016) |
+| Industry / peer disclosures | 11 | Aqualia SR 2022–2024; Veolia URD 2024; Suez URD 2024; Severn Trent AR 2024; FCC 2024 URD |
+| **Total** | **47** | |
 
 ### Appendix H — Data and code
-Reproducibility trail. All analysis artefacts are in the repo at
-`03_analysis/` (scoring rubric, stakeholder salience, financials,
-Monte Carlo, gap heatmap) and `04_matrix/` (rendered figures).
-Python pipeline files: `matrix_mc.py`, `matrix_inputs.py`,
-`esrs_gap_heatmap.py`, `esrs_datapoints.csv`. Interactive
-dashboard: `10_dashboard_react/` (Vite + React + Plotly). Visual
-system: `08_visual_system/`. Every exhibit in this report ties to a
-file in the repo.
+
+Every exhibit in this report is reproducible from files in the repository. Run order: `matrix_inputs.py` → `matrix_mc.py` → `esrs_gap_heatmap.py`. Random seed is fixed at 42 in `matrix_mc.py` line 14.
+
+| Area | Artefact | Purpose |
+|---|---|---|
+| Methodology | `03_analysis/scoring_rubric.md` | 1–5 threshold system; source anchors |
+| Methodology | `03_analysis/stakeholder_salience.md` | Mitchell–Agle–Wood weights |
+| Methodology | `03_analysis/short_list_lock.md` | Justification for T1 / T2 / T3 short-list |
+| Inputs | `03_analysis/financials.md` | €-range triangular distributions per topic (A01–A17) |
+| Inputs | `03_analysis/matrix_inputs.py` | Python encoding of topic inputs |
+| Inputs | `03_analysis/esrs_datapoints.csv` | 75 ESRS datapoints + 6 sector addenda |
+| Simulation | `03_analysis/matrix_mc.py` | Monte Carlo (10k draws) + ellipse fitting |
+| Simulation | `03_analysis/mc_results.csv` | Per-draw Topic Impact / Financial outputs |
+| Simulation | `03_analysis/mc_robustness.csv` | Cross-scheme robustness results |
+| Simulation | `03_analysis/mc_tornado.csv` | Sensitivity-tornado data (Exhibit 13) |
+| Coverage | `03_analysis/esrs_gap_heatmap.py` | TF-IDF similarity pipeline |
+| Coverage | `03_analysis/coverage_matrix.csv` | 75-row coverage table (Appendix C) |
+| Figures | `04_matrix/matrix_mc.png` + HTML | Monte Carlo matrix (Exhibit 12) |
+| Figures | `04_matrix/matrix_tornado.png` + CSV | Sensitivity tornado (Exhibit 13) |
+| Figures | `04_matrix/esrs_gap_heatmap.png` + HTML | ESRS gap heatmap |
+| Interactive | `10_dashboard_react/` | React + Vite + Plotly interactive dashboard |
+| Report | `05_report/report.md` | Markdown source for this document |
+| Report | `05_report/build_docx.py` | Converter → `report.docx` with Aqualia styling |
+| Report | `05_report/executive_summary.md` | Stand-alone one-page summary |
+| Report | `05_report/references.md` | Full bibliography (47 entries) |
+| Presentation | `06_presentation/deck_script.md` | Five-minute pitch script + speaker notes |
+| Visual system | `08_visual_system/visual_system.md` | Brand palette, typography, rules |
 
 ---
 
