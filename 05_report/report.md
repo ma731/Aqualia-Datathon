@@ -158,6 +158,27 @@ mean of the top-k IRO (or R&O) scores where k = max(3, round(N × 0.6)).
 Top-k aggregation mirrors standard practice of pricing materiality off
 the most material subset rather than an undifferentiated mean.
 
+**Terminology mapping to the Aqualia Datathon brief.** The brief
+(§3) lists four impact-materiality factors: *scale, scope, likelihood,
+irreversibility*. Our formulas preserve Aqualia's published
+nomenclature (`Methodology Double Materiality Assessment Review.pdf`)
+so that output remains directly comparable to Aqualia's 2025 internal
+review. The mapping is one-to-one:
+
+| Brief term | Our term | Relationship |
+|---|---|---|
+| Scale | Scale | identical |
+| Scope | Scope | identical |
+| Likelihood | Probability | synonymous (P[occur] on the 1–5 scale) |
+| Irreversibility | Remediability | inverse — high remediability implies low irreversibility |
+
+The factor *set* is identical to the brief; the aggregation *pattern*
+follows Aqualia's published practice (severity = mean of the first
+three, multiplied by probability) rather than a single 4-factor mean.
+The Monte Carlo pipeline propagates uncertainty in all four factors
+simultaneously, so no factor is suppressed in the final matrix
+position.
+
 ### 3.3 Threshold calibration
 Threshold bands for every sub-criterion are documented in
 `03_analysis/scoring_rubric.md` §2–§3 and reproduced in Appendix A.
@@ -399,6 +420,41 @@ from green-bond coupon savings (A14); cost-of-capital saving
 cumulative** on compliance systems (A16); contingent liabilities
 **€3–35 M** from CSDDD civil-liability and Omnibus-I interactions
 (A17).
+
+**Five-dimension mapping to the brief.** The Aqualia Datathon brief
+(§3) requires financial materiality to be assessed against *revenues,
+costs, assets, liabilities, or overall enterprise value*. Each
+topic's principal R&O channels tag explicitly to these five
+dimensions:
+
+| Topic | Revenues | Costs | Assets | Liabilities | Enterprise value |
+|---|---|---|---|---|---|
+| **T1** | Concession revenue at risk €25–110 M; reuse-market upside €15–75 M | OPEX €8–32 M/yr (UWWTD, chemicals, emerging pollutants) | €220–520 M CAPEX creates and protects asset base; stranded-asset risk on water-stressed infrastructure | Contingent €10–65 M (WFD, CSDDD civil liability, service-continuity fines) | Concession-renewal multiple discount under sustained water stress |
+| **T2** | Tender-win uplift €8–45 M on digital differentiation; cyber-incident service-interruption revenue risk | Cyber + digital OPEX €4–14 M/yr; incident-response cost | €45–130 M CAPEX — digital-twin platform and OT/IT segmentation asset base | GDPR / NIS2 fines €5–56 M; contract SLA penalties | Technology-differentiation multiple uplift vs peers |
+| **T3** | — | Cost-of-capital saving ~€8 M/yr nominal (€31 M PV, 10 y) | — | Green-bond liability priced ≤ vanilla comparable; contingent CSDDD €3–35 M | ESG-rating-driven enterprise value re-rating |
+
+This satisfies the brief's explicit five-dimension requirement and
+makes the P&L and balance-sheet incidence of each topic auditable by
+Aqualia's CFO office at channel level.
+
+**The €18 M/yr headline — full derivation.** Aggregating *net
+recurring* annual financial materiality (revenue at risk minus
+revenue upside minus cost-of-capital saving; CAPEX excluded because
+it is investment, not recurring materiality; full workings in
+`financials.md §6`):
+
+| Topic | Net recurring (€ M/yr, base) | Composition |
+|---|---|---|
+| **T1** | **−15** | −55 revenue at risk + 40 reuse upside |
+| **T2** | **−8** | −30 revenue at risk + 22 tender-uplift |
+| **T3** | **+5** | −22 compliance drag + 15 rating premium + 12 cost-of-capital saving |
+| **Total** | **−18 M/yr** | Net drag Aqualia's current framework under-weights |
+
+This €18 M/yr is recurring, not one-off, and excludes the €440 M
+cumulative 2027–2030 CAPEX implication. Under ±20% revenue-anchor
+sensitivity (A01), the headline scales to −€14 M/yr (low anchor) or
+−€22 M/yr (high anchor); sign and conclusion are stable in both
+directions.
 
 ### 6.2 Matrix-position financial scores
 Monte Carlo propagation of the triangular ranges through the scoring

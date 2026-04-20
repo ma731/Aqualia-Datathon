@@ -633,30 +633,30 @@ tailwind.config = {
             <span class="chip bg-white/15 text-white text-sm">Regulators</span>
             <span class="chip bg-white/15 text-white text-sm">Customers</span>
             <span class="chip bg-white/15 text-white text-sm">Shareholders</span>
+            <span class="chip bg-white/15 text-white text-sm">Employees</span>
           </div>
-          <p class="text-sm text-white/75 leading-relaxed">All three attributes present. These groups can demand action — and expect compliance — simultaneously.</p>
+          <p class="text-sm text-white/75 leading-relaxed">All three MAW attributes present (Power + Legitimacy + Urgency). These groups can demand action — and expect compliance — simultaneously.</p>
         </div>
 
         <div class="bg-white border border-grid rounded-3xl p-7">
           <div class="section-kicker text-slate/60 mb-3">Expectant · Weight 8% each</div>
           <div class="flex flex-wrap gap-2 mb-3">
             <span class="chip bg-grid text-navy text-sm">Investors</span>
-            <span class="chip bg-grid text-navy text-sm">Employees</span>
-            <span class="chip bg-grid text-navy text-sm">Communities</span>
-            <span class="chip bg-grid text-navy text-sm">Society</span>
-            <span class="chip bg-grid text-navy text-sm">Environment</span>
             <span class="chip bg-grid text-navy text-sm">Suppliers</span>
             <span class="chip bg-grid text-navy text-sm">Partners</span>
+            <span class="chip bg-grid text-navy text-sm">Society</span>
+            <span class="chip bg-grid text-navy text-sm">Communities</span>
+            <span class="chip bg-grid text-navy text-sm">Environment</span>
           </div>
-          <p class="text-sm text-slate/70">Two attributes. Actively engaged but lack the full combination to compel unilateral action.</p>
+          <p class="text-sm text-slate/70">Two attributes (Dominant: P+L, or Dependent: L+U). Actively engaged but lack the full combination to compel unilateral action.</p>
         </div>
 
         <div class="bg-white border border-grid rounded-3xl p-6">
-          <div class="section-kicker text-slate/60 mb-3">Dormant · Weight 4%</div>
+          <div class="section-kicker text-slate/60 mb-3">Latent · Weight 4% (Discretionary)</div>
           <div class="flex flex-wrap gap-2 mb-3">
             <span class="chip bg-grid text-slate text-sm">Academia</span>
           </div>
-          <p class="text-sm text-slate/70">Power attribute only. Influential on long horizons; limited urgency in water-utility operations.</p>
+          <p class="text-sm text-slate/70">Legitimacy attribute only. Influential on long horizons via research partnerships; limited power and urgency in water-utility operations.</p>
         </div>
 
       </div>
@@ -1462,21 +1462,24 @@ renderAqueduct();
 
 
 // -------- 9. Stakeholder Salience Radar --------
+// Source of truth: 03_analysis/stakeholder_salience.md §2.1
+// Binary Mitchell-Agle-Wood scoring (Power, Legitimacy, Urgency ∈ {0,1})
+// rendered on a 1-3 scale for visual clarity (1 = attribute absent, 3 = present).
 function renderSalienceRadar() {
   const groups = [
-    { name: 'Regulators',    P:3, L:3, U:3, type:'Definitive'  },
-    { name: 'Customers',     P:3, L:3, U:3, type:'Definitive'  },
-    { name: 'Shareholders',  P:3, L:3, U:3, type:'Definitive'  },
-    { name: 'Investors',     P:2, L:3, U:2, type:'Expectant'   },
-    { name: 'Employees',     P:2, L:3, U:2, type:'Expectant'   },
-    { name: 'Communities',   P:2, L:2, U:3, type:'Expectant'   },
-    { name: 'Society',       P:1, L:3, U:2, type:'Expectant'   },
-    { name: 'Environment',   P:1, L:3, U:3, type:'Expectant'   },
-    { name: 'Suppliers',     P:2, L:2, U:2, type:'Expectant'   },
-    { name: 'Partners',      P:2, L:2, U:1, type:'Latent'      },
-    { name: 'Academia',      P:1, L:2, U:1, type:'Dormant'     },
+    { name: 'Regulators',    P:3, L:3, U:3, type:'Definitive'     }, // 1,1,1
+    { name: 'Customers',     P:3, L:3, U:3, type:'Definitive'     }, // 1,1,1
+    { name: 'Shareholders',  P:3, L:3, U:3, type:'Definitive'     }, // 1,1,1
+    { name: 'Employees',     P:3, L:3, U:3, type:'Definitive'     }, // 1,1,1  (was wrong in v1.2)
+    { name: 'Investors',     P:3, L:3, U:1, type:'Expectant'      }, // 1,1,0  Dominant
+    { name: 'Suppliers',     P:3, L:3, U:1, type:'Expectant'      }, // 1,1,0  Dominant
+    { name: 'Partners',      P:3, L:3, U:1, type:'Expectant'      }, // 1,1,0  Dominant  (was Latent)
+    { name: 'Society',       P:1, L:3, U:3, type:'Expectant'      }, // 0,1,1  Dependent
+    { name: 'Communities',   P:1, L:3, U:3, type:'Expectant'      }, // 0,1,1  Dependent
+    { name: 'Environment',   P:1, L:3, U:3, type:'Expectant'      }, // 0,1,1  Dependent
+    { name: 'Academia',      P:1, L:3, U:1, type:'Latent'         }, // 0,1,0  Discretionary (was Dormant)
   ];
-  const typeColor = { 'Definitive':'#002f5f', 'Expectant':'#5db9d9', 'Latent':'#f2b039', 'Dormant':'#bbbbbb' };
+  const typeColor = { 'Definitive':'#002f5f', 'Expectant':'#5db9d9', 'Latent':'#f2b039' };
   const theta = groups.map(g => g.name);
   theta.push(theta[0]); // close loop
 
