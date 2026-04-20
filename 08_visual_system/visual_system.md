@@ -1,7 +1,7 @@
 # Aqualia Datathon — Visual System
 
-*Apply everywhere. Report, deck, Streamlit, all exports. Consistency =
-credibility.*
+*Apply everywhere. Report, deck, React dashboard, all exports.
+Consistency = credibility.*
 
 ---
 
@@ -88,7 +88,7 @@ Line-height 1.35 for body text everywhere.
 - `08_visual_system/aqualia_palette.py` — importable palette constants
 - `08_visual_system/matplotlibrc` — drop-in rcParams
 - `08_visual_system/plotly_template.py` — `pio.templates["aqualia"]`
-- `08_visual_system/style.css` — Streamlit + GitHub Pages shared CSS
+- `08_visual_system/style.css` — palette reference / export CSS
 - `08_visual_system/figure_rebuild.py` — re-renders the three hero
   figures (matrix, tornado, heatmap) using the visual system
 
@@ -115,12 +115,12 @@ import plotly.io as pio
 pio.templates.default = "aqualia"
 ```
 
-### Streamlit
+### React dashboard
 
-The app `07_streamlit/app.py` is already colour-matched. CSS override
-lives in `08_visual_system/style.css` — copy into
-`07_streamlit/.streamlit/custom.css` or inject via
-`st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)`.
+The app in `10_dashboard_react/` is already colour-matched. The
+palette lives in `10_dashboard_react/tailwind.config.js` as custom
+theme tokens (`aqualia-navy`, `aqualia-aqua`, etc.) and mirrors the
+CSS variables in `08_visual_system/style.css`.
 
 ### PowerPoint / Keynote / Slides
 

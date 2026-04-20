@@ -162,7 +162,7 @@ tracked as trigger conditions in the roadmap.
 - [ ] Add a fourth topic hypothetical (e.g. Biodiversity E4 alone) to
       show that omitted topics fall outside the zone — proves scoring
       discrimination.
-- [ ] Export the Monte Carlo draws as a `.parquet` so the Streamlit
+- [ ] Export the Monte Carlo draws as a `.parquet` so the React
       dashboard can read live without rerunning simulation.
 - [ ] Stress test at ±20% revenue anchor (financials.md §7) — re-rank.
 - [ ] One-page "Matrix reading guide" for the judge before the reveal

@@ -154,4 +154,3 @@ disclosure-roadmap action.
       internet / package install is available.
 - [ ] Expand DP library from curated 75 to EFRAG XBRL full 1,144.
 - [ ] Manual 20-DP calibration audit (spot-check top-match chunks).
-- [ ] Add streamlit wrapper for live jury demo (Tier 3 moonshot).

@@ -120,7 +120,7 @@ scatter references across chapters.*
   `water_stress.md`
 - `04_matrix/matrix_mc.png`, `matrix_tornado.png`,
   `esrs_gap_heatmap.png`, interactive HTMLs
-- `07_streamlit/app.py`
+- `10_dashboard_react/` (React dashboard, Vite + Tailwind + Plotly)
 - `05_report/executive_summary.md`, `report_skeleton.md`,
   `references.md`
 - `06_presentation/deck_script.md`

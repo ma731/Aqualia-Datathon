@@ -229,14 +229,14 @@ Each cell: one action + one KPI + owner tag. Colour-coded by topic.
 **Slide title:** (none — use a single large statement)
 
 **Visual.** Black background. One sentence, three lines. QR code
-bottom-right pointing to the Streamlit dashboard.
+bottom-right pointing to the React dashboard.
 
 ```
 Three material topics.
 €18 M/yr of under-weighted materiality.
 A €500 M green bond programme that funds the answer.
 
-                                              [QR → Streamlit dashboard]
+                                              [QR → React dashboard]
 ```
 
 **Speaker script (verbatim, no improvisation):**
@@ -389,4 +389,4 @@ Six rehearsals minimum. Three recorded and watched back. Protocol:
 - [ ] Slide 7 QR code tested on 3 phones
 - [ ] Speaker notes pasted into PowerPoint/Keynote presenter mode
 - [ ] Fallback PDF export with embedded fonts in case laptop swap
-- [ ] Backup offline Streamlit HTML on a USB stick
+- [ ] Backup offline React dashboard build (`10_dashboard_react/dist/`) on a USB stick

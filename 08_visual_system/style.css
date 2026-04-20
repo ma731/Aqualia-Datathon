@@ -1,5 +1,7 @@
-/* Aqualia Datathon — shared stylesheet for Streamlit and GitHub Pages.
-   Palette and typography locked in visual_system.md. */
+/* Aqualia Datathon — shared palette and typography reference.
+   Locked in visual_system.md. Mirrored into
+   10_dashboard_react/tailwind.config.js and used as an export
+   stylesheet for any HTML surfaces. */
 
 :root {
   --aqualia-navy:   #002f5f;
@@ -18,7 +20,7 @@
   --t3: #2ca02c;
 }
 
-html, body, [class*="st-"] {
+html, body {
   font-family: Inter, "Helvetica Neue", Arial, sans-serif !important;
   color: var(--aqualia-slate);
 }
@@ -75,10 +77,3 @@ th { background: var(--aqualia-sand); color: var(--aqualia-navy);
      text-align: left; padding: 6px 10px; }
 td { padding: 6px 10px; border-bottom: 1px solid var(--aqualia-grid); }
 
-/* Streamlit-specific overrides */
-.stButton>button { background: var(--aqualia-navy); color: white; border: none; }
-.stButton>button:hover { background: var(--aqualia-deep); color: white; }
-.stTabs [data-baseweb="tab-list"] { gap: 8px; }
-.stTabs [data-baseweb="tab"] { font-weight: 600; }
-.stTabs [aria-selected="true"] { color: var(--aqualia-navy) !important;
-                                  border-bottom-color: var(--aqualia-aqua) !important; }

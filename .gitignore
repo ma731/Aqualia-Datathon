@@ -1,7 +1,7 @@
 # --- Large binaries we don't want in the public repo -------------------
 # The 4 full Aqualia Sustainability Reports are ~180 MB total and are
-# Aqualia's own publicly-available PDFs. Keep them local; the Streamlit
-# app does not need them at runtime.
+# Aqualia's own publicly-available PDFs. Keep them local; the
+# dashboards do not need them at runtime.
 02_sources/full_reports/
 
 # IE datathon brief materials (IE IP — keep local, reference via README)
@@ -50,7 +50,5 @@ Thumbs.db
 *.swp
 *.swo
 
-# --- Streamlit runtime -------------------------------------------------
-.streamlit/secrets.toml
 ~*.docx
 .*lock*

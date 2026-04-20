@@ -175,7 +175,7 @@ Embedding similarity can fire on tangential language. Mitigations:
 - Tool: Plotly heatmap with hover tooltips; export as static SVG for
   the report and interactive HTML for the appendix.
 
-### 5.2  Drill-down (appendix / Streamlit)
+### 5.2  Drill-down (appendix / React dashboard)
 - Click any cell → see: ESRS DP ID + text, top-3 matching Aqualia
   chunks with page refs, peer matches, suggested 2027–2030
   disclosure action.
@@ -232,7 +232,7 @@ whole submission.
    coverage scores.
 4. `04_matrix/esrs_gap_heatmap.svg` — static hero image.
 5. `04_matrix/esrs_gap_heatmap.html` — interactive Plotly dashboard
-   (appendix / Streamlit link).
+   (appendix / React dashboard link).
 6. One paragraph + figure caption for the report's Executive Summary.
 
 ---

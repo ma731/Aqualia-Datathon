@@ -844,9 +844,9 @@ Reproducibility trail. All analysis artefacts are in the repo at
 Monte Carlo, gap heatmap) and `04_matrix/` (rendered figures).
 Python pipeline files: `matrix_mc.py`, `matrix_inputs.py`,
 `esrs_gap_heatmap.py`, `esrs_datapoints.csv`. Interactive
-dashboard: `07_streamlit/app.py`. Visual system:
-`08_visual_system/`. Every exhibit in this report ties to a file in
-the repo.
+dashboard: `10_dashboard_react/` (Vite + React + Plotly). Visual
+system: `08_visual_system/`. Every exhibit in this report ties to a
+file in the repo.
 
 ---
 

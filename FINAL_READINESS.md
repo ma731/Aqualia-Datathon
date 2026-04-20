@@ -29,14 +29,13 @@ lands the 5-minute pitch on a €-number close.**
 | A10 | **Monte Carlo matrix** (10k draws, 90% CI) | `04_matrix/matrix_mc.png` + HTML + notes |
 | A11 | Sensitivity tornado | `04_matrix/matrix_tornado.png` + CSV |
 | A12 | Robustness check (4 weighting schemes) | `03_analysis/mc_robustness.csv` |
-| A13 | Streamlit interactive dashboard | `07_streamlit/app.py` |
+| A13 | React interactive dashboard | `10_dashboard_react/` |
 | A14 | 5-min deck slide-by-slide script | `06_presentation/deck_script.md` |
 | A15 | Executive summary (1 page) | `05_report/executive_summary.md` |
 | A16 | Report skeleton (13-page outline) | `05_report/report_skeleton.md` |
 | A17 | References / bibliography | `05_report/references.md` |
-| A18 | Strategy memo — what actually wins | `what_actually_wins.md` |
 
-18 major deliverables drafted. Nothing in this list is a blocker.
+17 major deliverables drafted. Nothing in this list is a blocker.
 
 ---
 
@@ -140,19 +139,19 @@ lands the 5-minute pitch on a €-number close.**
 - Expected uplift: moderate, specifically memorable for finance-
   inclined judges.
 
-### P2.5 — Streamlit deploy + QR code
-- `07_streamlit/app.py` ready.
-- Push repo to GitHub → connect to Streamlit Community Cloud →
-  deploy free.
+### P2.5 — React dashboard deploy + QR code
+- `10_dashboard_react/` ready (`npm install && npm run build`).
+- Host options: Vercel / Netlify (zero-config, free tier) or GitHub
+  Pages from `10_dashboard_react/dist/`.
 - Generate QR code (qr-code-generator.com) → paste on slide 7.
 - Effort: 2 hours including DNS / SSL testing.
 - Fallback: open `04_matrix/matrix_mc.html` directly in the browser
-  if Streamlit Cloud is down.
+  if the hosted React dashboard is unreachable.
 
 ### P2.6 — GitHub Pages landing
 - Single-page repo-sibling site at
   `ma731.github.io/aqualia-datathon` linking to the report PDF,
-  Streamlit, and heatmap HTML.
+  the React dashboard, and the heatmap HTML.
 - Effort: 2 hours.
 - Expected uplift: small-to-moderate — signals polish more than
   substance.
@@ -191,8 +190,6 @@ acceptable assumptions.
 
 ## ⏱️ Suggested 60-hour team budget allocation
 
-Drawn from `what_actually_wins.md §4`:
-
 ```
 Report body writing               18 hrs   P1.1
 Deck production                   10 hrs   P1.2
@@ -204,7 +201,7 @@ Expert outreach + call             2 hrs   P2.1  ← start day 1
 Aqueduct map                       3 hrs   P2.2
 Monte Carlo tightening             1 hr    P2.3
 Real Options upgrade               2 hrs   P2.4
-Streamlit deploy                   2 hrs   P2.5
+React dashboard deploy             2 hrs   P2.5
 GitHub Pages                       2 hrs   P2.6
 ────── P2 total                  12 hrs
 
@@ -237,21 +234,20 @@ Total 20 hrs. Everything else is bonus.
 
 ## ⚠️ Things to NOT do (resist the urge)
 
-1. **Full-stack Node/React app.** See `what_actually_wins.md §1`.
-2. **New scoring methodologies after rubric lock.** Additional
+1. **New scoring methodologies after rubric lock.** Additional
    perturbations belong in sensitivity, not re-scoring.
-3. **New material topics after short-list lock.** The rebuttal in
+2. **New material topics after short-list lock.** The rebuttal in
    `short_list_lock.md §4` defends the 13 dropped; leave it.
-4. **Trying to push T3 into Target Zone.** It's a feature, not a
+3. **Trying to push T3 into Target Zone.** It's a feature, not a
    bug — see `matrix_mc_notes.md §2.3`.
-5. **Adding emoji / clip-art / decorative graphics** anywhere.
-6. **Presenting from 2 people** unless there's a strong reason.
+4. **Adding emoji / clip-art / decorative graphics** anywhere.
+5. **Presenting from 2 people** unless there's a strong reason.
    Solo is safer.
-7. **Reading from the slide** during the pitch. Slides support, not
+6. **Reading from the slide** during the pitch. Slides support, not
    lead.
-8. **Quoting Aqualia's own 2025 review** without attribution — our
+7. **Quoting Aqualia's own 2025 review** without attribution — our
    methodology extends theirs; always name the source.
-9. **Improvising the close.** Slide 7 is cardinal; recite verbatim.
+8. **Improvising the close.** Slide 7 is cardinal; recite verbatim.
 
 ---
 
@@ -259,9 +255,9 @@ Total 20 hrs. Everything else is bonus.
 
 - [ ] Report PDF (linearised, embedded fonts) on 2 USB sticks
 - [ ] Deck PDF backup on 2 USB sticks
-- [ ] Streamlit QR code tested on 3 phones
+- [ ] React dashboard QR code tested on 3 phones
 - [ ] Offline `matrix_mc.html` + `esrs_gap_heatmap.html` on USB as
-      fallback if Streamlit cloud is down
+      fallback if the hosted React dashboard is unreachable
 - [ ] Laptop on wall power + backup laptop available
 - [ ] Presenter-mode notes loaded
 - [ ] Water on stage

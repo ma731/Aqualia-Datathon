@@ -371,7 +371,7 @@ A <strong style="color:var(--aqua)">€500 M</strong> green bond programme that 
 <div style="text-align:center">
 
 <div style="background:white;padding:20px;border-radius:12px;display:inline-block">
-<!-- Replace with actual QR when Streamlit is deployed -->
+<!-- Replace with actual QR when the React dashboard is deployed -->
 <div style="width:180px;height:180px;background:repeating-linear-gradient(45deg,#002f5f,#002f5f 4px,#ffffff 4px,#ffffff 8px);border-radius:4px"></div>
 </div>
 <p style="color:white;font-size:0.8em;margin-top:12px;opacity:0.85">

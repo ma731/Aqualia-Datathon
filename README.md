@@ -1,16 +1,12 @@
 # Aqualia Datathon — Double Materiality & ESG Strategy
 
-### Interactive deliverables
+### Interactive deliverable
 
-- **React dashboard (primary)** — [`10_dashboard_react/`](10_dashboard_react/) ·
+- **React dashboard** — [`10_dashboard_react/`](10_dashboard_react/) ·
   Vite + React 18 + Tailwind + Plotly + Framer Motion. Premium single
   page with the Aqualia logo, animated hero orb with floating T1/T2/T3
   dots, interactive Monte Carlo matrix, ESRS gap heatmap, Aqueduct
   water-stress view, and the roadmap grid. Run with `npm install && npm run dev`.
-- **Streamlit cockpit (secondary)** — [`07_streamlit/app.py`](07_streamlit/app.py) ·
-  zero-build demo route with live Monte Carlo re-weighting (500–10 000
-  draws), scenario toggles, Jury Simulator, and auto-tour coach. Run
-  with `streamlit run 07_streamlit/app.py`.
 
 ---
 
@@ -193,8 +189,8 @@ existing Strategic Sustainability Plan pillars. OKRs, not just KPIs.
 
 ## 7. Tier 3 — Moonshots (pursue all, prioritize by traction)
 
-- **Interactive Streamlit matrix** — QR code on deck; jury can adjust
-  weights live.
+- **Interactive React dashboard** — QR code on deck; jury can adjust
+  weights live (see `10_dashboard_react/`).
 - **Text‑similarity benchmark** — sentence‑embedding cosine similarity
   between Aqualia's topics and each peer's. Quantifies "how
   differentiated is Aqualia's framing."
@@ -303,9 +299,7 @@ Sustainability Datathon/
 - [x] **Monte Carlo matrix** with 90% CI ellipses — `04_matrix/matrix_mc.{png,html}` + `03_analysis/matrix_mc_notes.md`
 - [x] **Sensitivity tornado** — `04_matrix/matrix_tornado.png` + `03_analysis/mc_tornado.csv`
 - [x] **Robustness check** (4 weighting schemes) — `03_analysis/mc_robustness.csv` — no ranking flips
-- [x] **React interactive dashboard** — `10_dashboard_react/` (primary, for QR-code deck link)
-- [x] **Streamlit interactive dashboard** — `07_streamlit/app.py` (secondary, live Monte Carlo cockpit)
-- [x] **Strategy memo — what actually wins** — `what_actually_wins.md` (read this before scope creep)
+- [x] **React interactive dashboard** — `10_dashboard_react/` (for QR-code deck link)
 - [x] **5-minute deck script** — slide-by-slide, timings, Q&A prep — `06_presentation/deck_script.md`
 - [x] **Executive summary** — one-page stand-alone — `05_report/executive_summary.md`
 - [x] **13-page report skeleton** — section briefs + exhibits + citations — `05_report/report_skeleton.md`

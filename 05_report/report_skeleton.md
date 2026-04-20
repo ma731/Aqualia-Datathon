@@ -209,7 +209,6 @@ three topics, the headline €-number, and the ask.
 
 **Sources to cite**
 - `03_analysis/matrix_mc_notes.md` §7
-- `what_actually_wins.md` §5 (the honest list)
 - EFRAG IG-1 §90–95 (limitations discussion)
 
 **Key exhibits**
