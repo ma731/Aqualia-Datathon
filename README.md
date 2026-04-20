@@ -1,19 +1,30 @@
 # Aqualia Datathon — Double Materiality & ESG Strategy
 
-**IE Sustainability Datathon — March 2026**
-**Track:** Double Materiality & ESG Strategy – Aqualia
-**Target:** 1st place. €3,000 prize. McKinsey / PhD level execution.
+### 🔗 Live interactive dashboard: **https://ma731.github.io/Aqualia-Datathon/**
+
+Premium single-page dashboard — hero KPIs, interactive Monte Carlo
+matrix with stakeholder-weighting toggle, ESRS gap heatmap, Aqueduct
+water-stress overlay, roadmap grid. Built with TailwindCSS, Plotly,
+GSAP, AOS. Source: [`10_dashboard/`](10_dashboard/) · mirrored for
+Pages at [`docs/`](docs/).
+
+---
+
+**Track:** Double Materiality & ESG Strategy – Aqualia · IE
+Sustainability Datathon · March 2026.
 
 External ESG advisory engagement simulated for the IE Sustainability
-Datathon. Deliverable: a CSRD/ESRS‑aligned double materiality assessment
-and strategic sustainability roadmap for Aqualia at a level of rigor
-that would survive review by its executive committee or sustainability
-board — and unmistakably outclass a student field.
+Datathon. Deliverable: a CSRD/ESRS‑aligned double materiality
+assessment and strategic sustainability roadmap for Aqualia at a
+level of rigor suitable for executive-committee or sustainability-
+board review.
 
-> **Winning thesis.** Judges remember three things: a methodology they
-> haven't seen in a student submission, a finding they can't refute,
-> and a deck that lands in 5 minutes. Every item below serves one of
-> those three.
+> **Thesis.** Three assets carry the submission: a methodology that
+> combines Monte Carlo, bilingual TF-IDF, and Mitchell–Agle–Wood
+> salience in a way rarely seen at this scale; a finding (Colombia
+> 33% customer satisfaction, ESRS S3 absorbed into S4) traceable to
+> Aqualia's own published data; and a deck built to land in five
+> minutes without losing technical rigor.
 
 ### Workshop 1 Consultant's Checklist (the judges' explicit rubric)
 
