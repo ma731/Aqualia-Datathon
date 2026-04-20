@@ -1,55 +1,76 @@
-# Streamlit Dashboard — Interactive Matrix
+# 07_streamlit — Interactive dashboard (secondary)
 
-Single-file Streamlit app — the QR-code destination for the pitch
-deck. Shows the Monte Carlo matrix, ESRS gap heatmap, findings, and
-methodology. Zero backend.
+Streamlit single-file app that mirrors the React dashboard's visual
+language (navy / aqua palette, Fraunces + Inter typography, animated
+water ambience, glassy KPI cards, pill tabs) while preserving the
+full analyst cockpit: live Monte Carlo re-weighting, scenario
+toggles, ESRS gap heatmap, Aqueduct geo view, Jury Simulator, and
+auto-tour coach for live demos.
 
-## Run locally
+## Primary vs secondary
+
+The **React dashboard** in [`10_dashboard_react/`](../10_dashboard_react/)
+is the primary interactive deliverable cited on the pitch deck. This
+Streamlit app is a secondary path, retained because:
+
+- Zero-build demo: one `streamlit run` line, no Node toolchain.
+- Deeper interactivity (live slider-driven Monte Carlo recomputation
+  with N draws adjustable from 500 to 10 000) that would be expensive
+  to reproduce in static React.
+- Backup route in case the React build is unreachable during the jury
+  session.
+
+## Run it
 
 ```bash
-pip install -r 07_streamlit/requirements.txt
-streamlit run 07_streamlit/app.py
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-Opens at `http://localhost:8501`.
+Opens on `http://localhost:8501`. The `.streamlit/config.toml` at the
+repo root configures the Aqualia theme and enables static file
+serving.
 
-## Deploy to Streamlit Community Cloud (free)
+## Optional hero video
 
-1. Push the whole `Sustainability Datathon/` directory to a public
-   GitHub repo.
-2. Go to https://share.streamlit.io/ → "New app".
-3. Select the repo, branch, main file `07_streamlit/app.py`.
-4. Deploy. Takes ~2 min. You'll get a URL like
-   `https://aqualia-datathon.streamlit.app`.
-5. Generate a QR code for that URL → paste on slide 5 of the deck.
+Drop a muted, short (8–15 s) looping `.mp4` at `static/hero-video.mp4`
+and it auto-activates as the hero background. If the file is absent,
+the app falls back to a CSS-animated water ambience (28 seeded
+droplets + two flowing SVG waves) so the dashboard always looks good
+out of the box. See [`static/README.md`](static/README.md) for an
+`ffmpeg` one-liner.
 
-## Static fallback
+## What's in the tabs
 
-If Streamlit Cloud ever hiccups on demo day, use the static artefacts
-already in the repo:
+1. **Matrix** — Monte Carlo double-materiality plot with 90 %
+   χ²-derived confidence ellipses, portfolio-shape radar, delta vs
+   base, and rank-by-composite.
+2. **Finance** — Green-bond cockpit: spread slider, PV-savings
+   waterfall, tranche schedule, spread sensitivity.
+3. **ESRS Gap Heatmap** — embeds `04_matrix/esrs_gap_heatmap.html`
+   with the coverage-score detail table.
+4. **Geo Risk** — WRI Aqueduct choropleth with executive takeaway
+   and KPI bundle.
+5. **Findings** — the three hero cards, storyboard, evidence
+   quick-reference.
+6. **Methodology** — scoring formulas, artefact links, one-click
+   CSV / PNG downloads.
+7. **Requirements Fit** — live checklist mapping each dashboard view
+   to the official evaluation criteria.
+8. **Jury Simulator** — stress-test the pitch under alternate jury
+   priorities (methodology-heavy, storytelling-heavy, skeptical-risk
+   judges) with a live score gauge.
 
-- `04_matrix/matrix_mc.png` — matrix image
-- `04_matrix/matrix_mc.html` — interactive Plotly, no server needed
-- `04_matrix/esrs_gap_heatmap.html` — interactive heatmap
-- `04_matrix/matrix_tornado.png` — sensitivity
+## Inputs it reads
 
-Serve them via `python -m http.server` or GitHub Pages.
+- `03_analysis/matrix_inputs.py` — scoring primitives, IROs, ROs,
+  stakeholder weights, horizon discounts.
+- `03_analysis/coverage_matrix.csv` — ESRS gap bands.
+- `03_analysis/mc_robustness.csv` — cross-scheme ranking stability.
+- `04_matrix/esrs_gap_heatmap.html` — embedded iframe.
+- `04_matrix/aqueduct_choropleth.html` (or fallback PNG) — geo view.
 
-## What to demo in the pitch
-
-20 seconds is enough:
-
-1. Show the QR code at the start of the methodology slide.
-2. While speaking, pull up the app on the presenter laptop.
-3. On the Matrix tab, flip between "Salience" and "Investor-first"
-   weighting schemes — centroids barely move. That visual is the
-   robustness point.
-4. Jump to the Heatmap tab, hover over the S3 row. Say "see the
-   Colombia gap?" Move on.
-
-Do not try to explain the sliders. Judges do not want another slide
-of methodology in the pitch — they want to see that it works.
-
-## Do not extend this to a full-stack app
-
-Resist the urge. `what_actually_wins.md §1` is explicit on why.
+All artefacts are produced by the reproducible pipeline in
+`03_analysis/`. No live recomputation is needed for the baseline
+view — sliders re-run only the Monte Carlo, not the upstream
+TF-IDF / Aqueduct workloads.

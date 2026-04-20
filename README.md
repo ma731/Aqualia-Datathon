@@ -1,19 +1,34 @@
 # Aqualia Datathon — Double Materiality & ESG Strategy
 
-**IE Sustainability Datathon — March 2026**
-**Track:** Double Materiality & ESG Strategy – Aqualia
-**Target:** 1st place. €3,000 prize. McKinsey / PhD level execution.
+### Interactive deliverables
+
+- **React dashboard (primary)** — [`10_dashboard_react/`](10_dashboard_react/) ·
+  Vite + React 18 + Tailwind + Plotly + Framer Motion. Premium single
+  page with the Aqualia logo, animated hero orb with floating T1/T2/T3
+  dots, interactive Monte Carlo matrix, ESRS gap heatmap, Aqueduct
+  water-stress view, and the roadmap grid. Run with `npm install && npm run dev`.
+- **Streamlit cockpit (secondary)** — [`07_streamlit/app.py`](07_streamlit/app.py) ·
+  zero-build demo route with live Monte Carlo re-weighting (500–10 000
+  draws), scenario toggles, Jury Simulator, and auto-tour coach. Run
+  with `streamlit run 07_streamlit/app.py`.
+
+---
+
+**Track:** Double Materiality & ESG Strategy – Aqualia · IE
+Sustainability Datathon · March 2026.
 
 External ESG advisory engagement simulated for the IE Sustainability
-Datathon. Deliverable: a CSRD/ESRS‑aligned double materiality assessment
-and strategic sustainability roadmap for Aqualia at a level of rigor
-that would survive review by its executive committee or sustainability
-board — and unmistakably outclass a student field.
+Datathon. Deliverable: a CSRD/ESRS‑aligned double materiality
+assessment and strategic sustainability roadmap for Aqualia at a
+level of rigor suitable for executive-committee or sustainability-
+board review.
 
-> **Winning thesis.** Judges remember three things: a methodology they
-> haven't seen in a student submission, a finding they can't refute,
-> and a deck that lands in 5 minutes. Every item below serves one of
-> those three.
+> **Thesis.** Three assets carry the submission: a methodology that
+> combines Monte Carlo, bilingual TF-IDF, and Mitchell–Agle–Wood
+> salience in a way rarely seen at this scale; a finding (Colombia
+> 33% customer satisfaction, ESRS S3 absorbed into S4) traceable to
+> Aqualia's own published data; and a deck built to land in five
+> minutes without losing technical rigor.
 
 ### Workshop 1 Consultant's Checklist (the judges' explicit rubric)
 
@@ -288,7 +303,8 @@ Sustainability Datathon/
 - [x] **Monte Carlo matrix** with 90% CI ellipses — `04_matrix/matrix_mc.{png,html}` + `03_analysis/matrix_mc_notes.md`
 - [x] **Sensitivity tornado** — `04_matrix/matrix_tornado.png` + `03_analysis/mc_tornado.csv`
 - [x] **Robustness check** (4 weighting schemes) — `03_analysis/mc_robustness.csv` — no ranking flips
-- [x] **Streamlit interactive dashboard** — `07_streamlit/app.py` (for QR-code deck link)
+- [x] **React interactive dashboard** — `10_dashboard_react/` (primary, for QR-code deck link)
+- [x] **Streamlit interactive dashboard** — `07_streamlit/app.py` (secondary, live Monte Carlo cockpit)
 - [x] **Strategy memo — what actually wins** — `what_actually_wins.md` (read this before scope creep)
 - [x] **5-minute deck script** — slide-by-slide, timings, Q&A prep — `06_presentation/deck_script.md`
 - [x] **Executive summary** — one-page stand-alone — `05_report/executive_summary.md`
@@ -357,4 +373,6 @@ Sustainability Datathon/
 
 ## 15. Team
 
-- [@ma731](https://github.com/ma731)
+**Los Gatos de Datos** — IE Master in Business Analytics & Data Science.
+
+- [@ma731](https://github.com/ma731) — Marco Ortiz Togashi

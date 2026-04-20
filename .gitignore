@@ -52,3 +52,5 @@ Thumbs.db
 
 # --- Streamlit runtime -------------------------------------------------
 .streamlit/secrets.toml
+~*.docx
+.*lock*
