@@ -368,4 +368,6 @@ Sustainability Datathon/
 
 ## 15. Team
 
-- [@ma731](https://github.com/ma731)
+**Los Gatos de Datos** — IE Master in Business Analytics & Data Science.
+
+- [@ma731](https://github.com/ma731) — Marco Ortiz Togashi

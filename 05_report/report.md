@@ -778,5 +778,5 @@ the repo.
 
 ---
 
-*Report compiled by Team @ma731 for the IE Sustainability Datathon
+*Report compiled by Los Gatos de Datos for the IE Sustainability Datathon
 March 2026, Double Materiality & ESG Strategy track, Aqualia brief.*
