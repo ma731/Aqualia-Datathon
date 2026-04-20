@@ -25,6 +25,7 @@ import math
 import sys
 import time
 from pathlib import Path
+from textwrap import dedent
 
 import numpy as np
 import pandas as pd
@@ -53,15 +54,26 @@ st.set_page_config(
 )
 
 AQUALIA_NAVY = "#002f5f"
+AQUALIA_NAVY2 = "#00153d"
+AQUALIA_DEEP = "#00224a"
 AQUALIA_AQUA = "#5db9d9"
+AQUALIA_AQUA2 = "#8ed3e6"
 ACCENT_RED = "#c83c35"
+ACCENT_GREEN = "#8cc640"
 SAND = "#d6cdb7"
+SAND2 = "#efe7cf"
+GRID = "#e5ecf3"
 
 TOPIC_COLORS = {
     "T1 Water Resilience & Equitable Access": "#1f77b4",
     "T2 Digital & Cyber Infrastructure":      "#ff7f0e",
     "T3 Green Finance & Integrity":           "#2ca02c",
 }
+
+# Path for an optional looping hero video. Drop a muted mp4 here and it
+# will auto-activate as the hero background (served via Streamlit's
+# static file server, enabled in .streamlit/config.toml).
+HERO_VIDEO_PATH = Path(__file__).parent / "static" / "hero-video.mp4"
 
 SCENARIO_BLURBS = {
     "Base": "Reference calibration from current assumptions and salience weighting.",
@@ -251,53 +263,390 @@ def build_radar(draws: dict[str, dict]) -> go.Figure:
 design_mode = st.session_state.get("design_mode", "Executive Clean")
 is_clean = design_mode == "Executive Clean"
 
-_app_bg = (
-    "background:#f6f9fc;"
-    if is_clean
-    else (
-        "background: radial-gradient(1200px 500px at 8% -5%, rgba(93,185,217,0.18), transparent 45%),"
-        "radial-gradient(900px 450px at 95% 5%, rgba(0,47,95,0.15), transparent 40%),#f7fbff;"
-    )
-)
+# ---- Global visual system — mirrors 10_dashboard_react ---------------
+
+_has_video = HERO_VIDEO_PATH.exists()
+_video_src = "app/static/hero-video.mp4" if _has_video else ""
 
 st.markdown(
-    """
+    dedent("""
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-    .stApp { __APP_BG__ }
-    .wow-chip {
-      display:inline-block;
-      padding:4px 10px;
-      margin-right:6px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:600;
-      color:#002f5f;
-      background:rgba(93,185,217,0.25);
-      border:1px solid rgba(0,47,95,0.12);
+    :root {
+      --aq-navy: #002f5f;
+      --aq-navy2: #00153d;
+      --aq-deep: #00224a;
+      --aq-aqua: #5db9d9;
+      --aq-aqua2: #8ed3e6;
+      --aq-ink: #0b1e3d;
+      --aq-slate: #334e68;
+      --aq-slate2: #5a7a99;
+      --aq-grid: #e5ecf3;
+      --aq-sand: #efe7cf;
+      --aq-green: #8cc640;
+      --aq-red: #c83c35;
     }
-    .hero-note {
-      border-left:4px solid #5db9d9;
-      background:#ffffff;
-      padding:10px 14px;
-      border-radius:8px;
-      font-size:14px;
+
+    html, body, [class*="css"], .stApp, .main, .block-container {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif !important;
+      color: var(--aq-ink);
     }
+
+    /* Subtle grid backdrop on the whole app */
+    .stApp {
+      background:
+        radial-gradient(1200px 600px at 8% -8%, rgba(93,185,217,0.18), transparent 50%),
+        radial-gradient(900px 450px at 95% 5%, rgba(0,47,95,0.12), transparent 45%),
+        linear-gradient(180deg, #f4f8fb 0%, #eaf2f8 100%) !important;
+    }
+
+    /* Kill top padding so hero can bleed to the edge */
+    .main > div.block-container { padding-top: 0 !important; max-width: 1400px; }
+
+    /* ===== Hero ===== */
+    .aq-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      padding: 72px 56px 88px;
+      margin: 0 0 32px 0;
+      color: #ffffff;
+      background:
+        radial-gradient(1200px 500px at 10% 10%, rgba(93,185,217,0.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 90%, rgba(140,198,64,0.18), transparent 55%),
+        linear-gradient(135deg, var(--aq-navy2) 0%, var(--aq-deep) 45%, var(--aq-navy) 100%);
+      box-shadow: 0 30px 80px -20px rgba(0,47,95,0.35), 0 10px 30px -10px rgba(0,0,0,0.25);
+    }
+    .aq-hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 25% 30%, rgba(255,255,255,0.35) 1px, transparent 2px),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.25) 1px, transparent 2px),
+        radial-gradient(1px 1px at 45% 80%, rgba(255,255,255,0.28) 1px, transparent 2px);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .aq-hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .aq-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,21,61,0.75) 0%, rgba(0,34,74,0.6) 50%, rgba(0,47,95,0.8) 100%);
+      pointer-events: none;
+    }
+    .aq-hero-inner { position: relative; z-index: 2; }
+
+    /* Falling droplets (CSS water ambience) */
+    .aq-drop {
+      position: absolute;
+      top: -10%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #bfe6f1, #5db9d9);
+      box-shadow: 0 0 6px rgba(142,211,230,0.6);
+      animation: aq-drop-fall linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+    @keyframes aq-drop-fall {
+      0%   { transform: translateY(0) scaleY(0.6); opacity: 0; }
+      15%  { opacity: 0.75; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(130vh) scaleY(1.2); opacity: 0; }
+    }
+
+    /* Flowing wave at the bottom of the hero */
+    .aq-wave {
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 70px;
+      background:
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,40 C240,70 480,10 720,30 C960,50 1200,65 1440,25 L1440,80 L0,80 Z' fill='%23f4f8fb'/></svg>") repeat-x 0 0/1440px 70px,
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path d='M0,55 C300,25 600,65 900,40 C1200,15 1320,55 1440,30 L1440,80 L0,80 Z' fill='%23eaf2f8'/></svg>") repeat-x 0 0/1440px 70px;
+      animation: aq-wave-flow 22s linear infinite;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @keyframes aq-wave-flow {
+      from { background-position: 0 0, 0 0; }
+      to   { background-position: -1440px 0, -720px 0; }
+    }
+
+    .aq-kicker {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--aq-aqua2); margin-bottom: 16px;
+    }
+    .aq-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 14px; border-radius: 999px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.02em;
+      background: rgba(255,255,255,0.10); color: var(--aq-aqua2);
+      border: 1px solid rgba(255,255,255,0.18); margin-right: 8px;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .aq-title {
+      font-family: 'Fraunces', 'Inter', serif !important;
+      font-weight: 300;
+      font-size: clamp(40px, 5.5vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin: 22px 0 12px 0;
+      color: #ffffff;
+    }
+    .aq-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--aq-aqua2);
+    }
+    .aq-title .accent { color: var(--aq-aqua); }
+    .aq-subtitle {
+      font-size: 18px; line-height: 1.55; color: rgba(255,255,255,0.85);
+      max-width: 760px; margin: 22px 0 0 0;
+    }
+
+    /* ===== Glassy KPI cards ===== */
+    .aq-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 40px;
+    }
+    .aq-kpi {
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+    .aq-kpi:hover { transform: translateY(-2px); background: rgba(255,255,255,0.12); }
+    .aq-kpi .v {
+      font-family: 'Inter', sans-serif;
+      font-size: 28px; font-weight: 800; letter-spacing: -0.01em;
+      color: #ffffff; font-variant-numeric: tabular-nums;
+    }
+    .aq-kpi .l {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--aq-aqua2); margin-top: 6px;
+    }
+    .aq-kpi .h {
+      font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 6px;
+    }
+    @media (max-width: 960px) {
+      .aq-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .aq-hero { padding: 40px 24px 60px; }
+    }
+
+    /* ===== Sidebar ===== */
+    section[data-testid="stSidebar"] {
+      background: linear-gradient(180deg, var(--aq-navy2) 0%, var(--aq-deep) 100%) !important;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    section[data-testid="stSidebar"] * { color: #e6eef7 !important; }
+    section[data-testid="stSidebar"] h1,
+    section[data-testid="stSidebar"] h2,
+    section[data-testid="stSidebar"] h3,
+    section[data-testid="stSidebar"] h4 { color: #ffffff !important; font-weight: 700; }
+    section[data-testid="stSidebar"] .stSelectbox label,
+    section[data-testid="stSidebar"] .stSlider label,
+    section[data-testid="stSidebar"] .stCheckbox label,
+    section[data-testid="stSidebar"] .stRadio label {
+      color: var(--aq-aqua2) !important;
+      font-weight: 600 !important; font-size: 12px !important; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    section[data-testid="stSidebar"] [data-baseweb="select"] > div,
+    section[data-testid="stSidebar"] input {
+      background: rgba(255,255,255,0.08) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+    }
+    section[data-testid="stSidebar"] .stButton > button {
+      background: var(--aq-aqua) !important; color: var(--aq-navy2) !important;
+      border: none; font-weight: 700; letter-spacing: 0.02em;
+      border-radius: 10px; padding: 8px 14px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    section[data-testid="stSidebar"] .stButton > button:hover {
+      background: var(--aq-aqua2) !important; transform: translateY(-1px);
+    }
+    /* Sidebar captions/links are info-grey, not aqua (aqua reserved for labels) */
+    section[data-testid="stSidebar"] .stCaption,
+    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+    section[data-testid="stSidebar"] p { color: rgba(230,238,247,0.7) !important; }
+
+    /* ===== Tabs — pills ===== */
+    .stTabs [data-baseweb="tab-list"] {
+      gap: 8px;
+      background: rgba(255,255,255,0.7);
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid var(--aq-grid);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .stTabs [data-baseweb="tab"] {
+      height: auto;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--aq-slate);
+      font-weight: 600;
+      font-size: 13.5px;
+      letter-spacing: 0.01em;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+      background: rgba(93,185,217,0.10);
+      color: var(--aq-navy);
+    }
+    .stTabs [aria-selected="true"] {
+      background: linear-gradient(135deg, var(--aq-navy) 0%, var(--aq-deep) 100%) !important;
+      color: #ffffff !important;
+      border-color: transparent !important;
+      box-shadow: 0 8px 20px -8px rgba(0,47,95,0.5);
+    }
+    .stTabs [data-baseweb="tab-highlight"] { display: none; }
+
+    /* ===== Metric (st.metric) cards in body ===== */
+    [data-testid="stMetric"] {
+      background: #ffffff;
+      border: 1px solid var(--aq-grid);
+      border-radius: 14px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 2px rgba(11,30,61,0.04);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    [data-testid="stMetric"]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 28px -12px rgba(0,47,95,0.2);
+    }
+    [data-testid="stMetricLabel"] { color: var(--aq-slate2) !important; font-weight: 600; font-size: 11px !important; letter-spacing: 0.12em; text-transform: uppercase; }
+    [data-testid="stMetricValue"] { color: var(--aq-navy) !important; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+    /* ===== Dataframes ===== */
+    div[data-testid="stDataFrame"] {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--aq-grid);
+      box-shadow: 0 1px 2px rgba(11,30,61,0.04);
+    }
+
+    /* ===== Buttons (main area) ===== */
+    .stButton > button {
+      border-radius: 10px; font-weight: 700; letter-spacing: 0.01em;
+      border: 1px solid var(--aq-grid);
+      background: #ffffff; color: var(--aq-navy);
+      transition: all 0.2s ease;
+    }
+    .stButton > button:hover {
+      border-color: var(--aq-aqua); color: var(--aq-aqua);
+      box-shadow: 0 8px 20px -10px rgba(93,185,217,0.5);
+    }
+    .stDownloadButton > button {
+      background: var(--aq-navy) !important; color: #ffffff !important;
+      border: none !important; font-weight: 700;
+    }
+    .stDownloadButton > button:hover {
+      background: var(--aq-deep) !important;
+    }
+
+    /* ===== Headings inside body ===== */
+    h1, h2, h3, h4, h5 {
+      color: var(--aq-navy) !important;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    h2 { font-family: 'Fraunces', 'Inter', serif !important; font-weight: 400; }
+
+    /* ===== Info/success/warning boxes ===== */
+    [data-testid="stNotification"] {
+      border-radius: 12px;
+      border-left-width: 4px;
+    }
+
+    /* ===== Plotly charts ===== */
+    .js-plotly-plot, .plot-container {
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    /* ===== Section divider ===== */
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--aq-grid), transparent);
+      margin: 32px 0;
+    }
+
+    /* Hide Streamlit default header/footer chrome */
+    #MainMenu { visibility: hidden; }
+    footer { visibility: hidden; }
+    header[data-testid="stHeader"] { background: transparent; height: 0; }
     </style>
-    """.replace("__APP_BG__", _app_bg),
+    """),
     unsafe_allow_html=True,
+)
+
+# Generate 28 seeded droplets so they don't jitter on every rerun
+_RNG_DROPS = np.random.default_rng(42)
+_drops_html = "".join(
+    f'<span class="aq-drop" style="left:{_RNG_DROPS.uniform(0, 100):.1f}%;'
+    f'width:{_RNG_DROPS.uniform(2, 5):.1f}px;'
+    f'height:{_RNG_DROPS.uniform(10, 18):.1f}px;'
+    f'animation-duration:{_RNG_DROPS.uniform(7, 14):.1f}s;'
+    f'animation-delay:-{_RNG_DROPS.uniform(0, 12):.1f}s;'
+    f'opacity:{_RNG_DROPS.uniform(0.4, 0.85):.2f};"></span>'
+    for _ in range(28)
+)
+
+_video_block = (
+    f'<video class="aq-hero-video" autoplay muted loop playsinline preload="metadata">'
+    f'  <source src="{_video_src}" type="video/mp4">'
+    f'</video>'
+    f'<div class="aq-hero-overlay"></div>'
+    if _has_video
+    else ""
 )
 
 st.markdown(
-    f"""
-    <div style="padding:18px 24px;border-radius:12px;background:linear-gradient(90deg,{AQUALIA_NAVY},{AQUALIA_AQUA});color:white">
-      <div style="font-size:28px;font-weight:700">Aqualia Double Materiality — Interactive Matrix</div>
-      <div style="font-size:15px;opacity:0.9">IE Sustainability Datathon 2026 · Consulting appendix</div>
+    dedent(f"""
+    <div class="aq-hero">
+      {_video_block}
+      {_drops_html}
+      <div class="aq-hero-inner">
+        <div>
+          <span class="aq-chip">IE SUSTAINABILITY DATATHON · 2026</span>
+          <span class="aq-chip">CSRD · ESRS-aligned</span>
+          <span class="aq-chip">Monte Carlo · 10k draws</span>
+        </div>
+        <h1 class="aq-title">
+          Three topics.<br/>
+          One <em>€500M</em> capital call.<br/>
+          <span class="accent">Ten years of runway.</span>
+        </h1>
+        <p class="aq-subtitle">
+          A double materiality assessment for Aqualia that is auditable by scipy,
+          legible by a board, and pricable by the bond desk. Monte Carlo for
+          uncertainty, real options for CAPEX, stakeholder salience for the
+          inside-out.
+        </p>
+        <div class="aq-kpis">
+          <div class="aq-kpi"><div class="v">3</div><div class="l">Priority topics</div><div class="h">T1 Water · T2 Digital · T3 Green finance</div></div>
+          <div class="aq-kpi"><div class="v">€18M/yr</div><div class="l">Net under-weighted materiality</div><div class="h">Current framework vs. our MC centroids</div></div>
+          <div class="aq-kpi"><div class="v">€500M</div><div class="l">Strategic funding ask</div><div class="h">EU-Taxonomy green bond programme 2027–2030</div></div>
+          <div class="aq-kpi"><div class="v">€31M</div><div class="l">PV interest savings</div><div class="h">At 25 bp green spread, 10-year annuity</div></div>
+        </div>
+      </div>
+      <div class="aq-wave"></div>
     </div>
-    """,
+    """),
     unsafe_allow_html=True,
 )
-
-st.write("")
 
 # -------------------------------------------------------------------
 # Sidebar — controls
@@ -469,34 +818,35 @@ weights_vec = get_weights(scheme)
 base_draws = compute_topic_scores(weights_vec, perturb, n_draws, seed=42)
 scenario_draws = apply_scenario_adjustment(base_draws, scenario)
 
-# Executive KPI strip
-k1, k2, k3, k4 = st.columns(4)
-k1.metric("Priority Topics", "3")
-k2.metric("Net Underweighted Materiality", "€18M/yr")
-k3.metric("Strategic Funding Ask", "€500M")
-k4.metric("PV Savings Potential", "€31M")
-if not is_clean:
-    st.markdown(
-        '<span class="wow-chip">CSRD-aligned</span>'
-        '<span class="wow-chip">Monte Carlo 10k</span>'
-        '<span class="wow-chip">Scenario-ready</span>'
-        '<span class="wow-chip">Board-grade output</span>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="hero-note"><b>Executive thesis:</b> three topics, one quantified gap, one fundable response. '
-        'Use the scenario toggle to show robustness, then close on finance.</div>',
-        unsafe_allow_html=True,
-    )
-else:
-    st.caption("Executive thesis: three topics, one quantified gap, one fundable response.")
+# Executive thesis strip (KPIs already live inside the hero)
+st.markdown(
+    dedent("""
+    <div style="display:flex;align-items:center;gap:14px;margin:-4px 0 22px 0;
+                padding:14px 20px;border-radius:14px;background:#ffffff;
+                border:1px solid var(--aq-grid);
+                box-shadow:0 1px 2px rgba(11,30,61,0.04);">
+      <div style="width:4px;align-self:stretch;background:var(--aq-aqua);border-radius:4px;"></div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.16em;
+                    text-transform:uppercase;color:var(--aq-slate2);">Executive thesis</div>
+        <div style="font-size:15px;color:var(--aq-ink);margin-top:2px;">
+          <b>Three topics, one quantified gap, one fundable response.</b>
+          Use the scenario toggle to show robustness, then close on finance.
+        </div>
+      </div>
+    </div>
+    """),
+    unsafe_allow_html=True,
+)
 if demo_mode:
     st.markdown(
-        f"""
-        <div style="margin-top:8px;padding:10px 12px;border-radius:8px;background:#fff8e6;border:1px solid #f0d98a">
+        dedent(f"""
+        <div style="margin:0 0 18px 0;padding:12px 16px;border-radius:12px;
+                    background:linear-gradient(90deg,rgba(255,248,230,0.9),rgba(255,243,205,0.9));
+                    border:1px solid #f0d98a;color:#6b4f10;">
           <b>Live cue:</b> {demo_step}
         </div>
-        """,
+        """),
         unsafe_allow_html=True,
     )
 
@@ -782,28 +1132,65 @@ with tab_map:
 
 with tab_findings:
     st.markdown("### Three hero findings")
-    c1, c2, c3 = st.columns(3)
-    with c1:
-        st.markdown(f"<div style='background:{AQUALIA_NAVY};color:white;padding:18px;border-radius:10px;height:230px'>"
-                    "<h4 style='color:white;margin-top:0'>1 · Colombia outlier</h4>"
-                    "<p style='font-size:13px'>Aqualia's satisfaction is 92–98% across European and institutional "
-                    "segments but <b>33% in Colombia</b>. ESRS S3 folded into S4 buries this equity-access issue. "
-                    "Restoring S3 converts a disclosure gap into a concession-renewal signal.</p></div>",
-                    unsafe_allow_html=True)
-    with c2:
-        st.markdown(f"<div style='background:{AQUALIA_NAVY};color:white;padding:18px;border-radius:10px;height:230px'>"
-                    "<h4 style='color:white;margin-top:0'>2 · Digitalisation blind spot</h4>"
-                    "<p style='font-size:13px'><b>2 IROs</b> in Aqualia's 2025 review — peers treat digital as "
-                    "core, EU makes it Action Area 3 of 5, WEF ranks cyber top-10. Our Monte Carlo repositions "
-                    "the cluster firmly into the Target Zone.</p></div>",
-                    unsafe_allow_html=True)
-    with c3:
-        st.markdown(f"<div style='background:{AQUALIA_NAVY};color:white;padding:18px;border-radius:10px;height:230px'>"
-                    "<h4 style='color:white;margin-top:0'>3 · Green-finance differentiator</h4>"
-                    "<p style='font-size:13px'>Aqualia is ahead of peers on promoting green finance to "
-                    "stand-alone material status. Our roadmap proposes a <b>€500 M EU-Taxonomy-aligned green "
-                    "bond programme</b> 2027–2030 → ~€31 M PV interest savings.</p></div>",
-                    unsafe_allow_html=True)
+
+    _finding_cards = [
+        {
+            "num": "01",
+            "title": "Colombia outlier",
+            "body": (
+                "Aqualia's satisfaction is <b>92–98%</b> across European and institutional segments "
+                "but only <b>33% in Colombia</b>. ESRS S3 folded into S4 buries this equity-access "
+                "issue. Restoring S3 converts a disclosure gap into a concession-renewal signal."
+            ),
+            "tag": "ESRS S3",
+        },
+        {
+            "num": "02",
+            "title": "Digitalisation blind spot",
+            "body": (
+                "Only <b>2 IROs</b> in Aqualia's 2025 review. Peers treat digital as core, EU makes "
+                "it Action Area 3 of 5, WEF ranks cyber top-10. Our Monte Carlo repositions the "
+                "cluster firmly into the Target Zone."
+            ),
+            "tag": "T2 · Blind spot",
+        },
+        {
+            "num": "03",
+            "title": "Green-finance differentiator",
+            "body": (
+                "Aqualia is ahead of peers on promoting green finance to stand-alone material "
+                "status. Our roadmap proposes a <b>€500M EU-Taxonomy-aligned green bond programme</b> "
+                "2027–2030 → <b>~€31M PV interest savings</b>."
+            ),
+            "tag": "T3 · Upside",
+        },
+    ]
+
+    _cards_html = ""
+    for c in _finding_cards:
+        _cards_html += f"""
+        <div style="flex:1 1 0;min-width:260px;position:relative;overflow:hidden;
+                    background:linear-gradient(135deg,var(--aq-navy2) 0%,var(--aq-deep) 60%,var(--aq-navy) 100%);
+                    color:#ffffff;padding:24px 22px 22px 22px;border-radius:18px;
+                    box-shadow:0 20px 50px -20px rgba(0,47,95,0.45),0 6px 18px -8px rgba(0,0,0,0.25);">
+          <div style="position:absolute;top:-40px;right:-40px;width:140px;height:140px;
+                      border-radius:50%;background:radial-gradient(circle,rgba(93,185,217,0.28),transparent 70%);"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+                      letter-spacing:0.18em;color:var(--aq-aqua2);">{c['tag']}</div>
+          <div style="font-family:'Fraunces','Inter',serif;font-size:44px;font-weight:300;
+                      color:rgba(255,255,255,0.18);line-height:1;margin-top:2px;">{c['num']}</div>
+          <h4 style="color:#ffffff !important;margin:6px 0 10px 0;font-weight:700;font-size:18px;">
+            {c['title']}
+          </h4>
+          <p style="font-size:13.5px;line-height:1.55;color:rgba(255,255,255,0.82);margin:0;">
+            {c['body']}
+          </p>
+        </div>
+        """
+    st.markdown(
+        f'<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;">{_cards_html}</div>',
+        unsafe_allow_html=True,
+    )
 
     st.markdown("### The 30-second close")
     st.info(
