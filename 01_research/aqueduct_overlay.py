@@ -101,7 +101,7 @@ def render_matplotlib(df: pd.DataFrame) -> None:
     ax_bar.set_xlabel("WRI Aqueduct 4.0 Baseline Water Stress  (withdrawals ÷ supply)",
                       fontsize=10)
     ax_bar.set_title(
-        "Aqualia water-stress exposure — 60% of revenue in High or Extreme stress basins today",
+        "Aqualia water-stress exposure — 45% of revenue in High or Extreme stress basins today",
         fontsize=12, color=PALETTE["navy"], fontweight="bold", loc="left",
     )
     ax_bar.axvline(3.0, color="#888", linewidth=0.7, linestyle="--")
